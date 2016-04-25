@@ -1,0 +1,121 @@
+#############################################################################
+### File ............: .tcshrc                                     
+### Description:.....: general purpose .tcshrc file            
+### Author: .........: Alexandros Attikis   
+### Email ...........: attikis@cern.ch         
+### Comments ........: http://info.eps.surrey.ac.uk/FAQ/loginfiles.html
+#############################################################################
+if ( -r /usr/local/lib/hepix/central_env.csh ) then
+	source /usr/local/lib/hepix/central_env.csh
+endif
+
+#############################################################################
+### How can you change your prompt:
+#############################################################################
+### Definition		 	# Result	# Comment
+# set prompt="$HOST "	 	# plus1		# 
+# set prompt='\! > '	 	# 3 >		# 3 means the third 
+# set prompt='\! %~ %# '	# 3 ~/public >	# 
+# set prompt="[$HOST] > "	# [plus1] > 	#
+# set prompt='R; '		# R;		# for VM hackers!
+set prompt = '[%n@%m:%c]%#'
+
+#############################################################################
+### How can you set aliases:
+#############################################################################
+alias emacs emacs -nw
+alias H 'history -r | fgrep "\!*"'	     # just type H latex to get the 
+alias h history	                             # just type h for the history
+alias rm rm -i                               # ask confirmation before deleting!
+#alias ls ls -apt --color=auto                # enable automatic list-highlight 
+alias ls ls -pt --color=auto                # enable automatic list-highlight 
+alias lsd 'ls -lpt --color=force | grep ^d' # list only the directories
+alias finder nautilus                        # launch nautilus
+### execture screen program at login and define setup
+alias reattach "screen -r"
+if ( "$TERM" == "screen" ) then
+  if (!~ $?SHOWED_SCREEN_MESSAGE ) then
+    set detached_screens=`screen -list | grep Detached`
+    if ( "$detached_screens" != "" ) then   
+      echo "+-------------------------------------+"
+      echo "| Detached screens are available:     |"
+      echo "$detached_screens"
+      echo "+-------------------------------------+"
+    else
+      echo "[ screen is activated ]"
+    endif
+    setenv SHOWED_SCREEN_MESSAGE true
+  endif
+endif
+### screen setup
+
+#############################################################################
+### How can you change the path:
+#############################################################################
+### To include the access to new programs after the defaults:
+### set path=( $path new_directory ) 
+
+### Grid related environments
+#set path=( $path /usr/bin /afs/cern.ch/user/a/attikis/w0/scripts/)
+
+#############################################################################
+### Add or change environment variables
+#############################################################################
+setenv EDITOR emacs
+#echo ".tcshrc *** Default EDITOR is 'emacs -nw'"
+setenv PRINTER 40-4b-cor
+#echo ".tcshrc *** Default PRINTER is '40-4b-cor'"
+
+### ROOT related
+#setenv ROOTSYS /afs/cern.ch/sw/lcg/app/releases/ROOT/5.28.00/x86_64-slc5-gcc43-dbg/root/ 
+#setenv ROOTSYS /afs/cern.ch/sw/lcg/app/releases/ROOT/5.30.00/x86_64-slc5-gcc43-dbg/root/  
+#setenv ROOTSYS /afs/cern.ch/sw/lcg/app/releases/ROOT/5.34.00/x86_64-slc5-gcc43-dbg/root/
+#setenv ROOTSYS /afs/cern.ch/sw/lcg/app/releases/ROOT/6.02.10/x86_64-slc5-gcc43-dbg/root/
+#setenv ROOTSYS /afs/cern.ch/sw/lcg/app/releases/ROOT/6.04.00/x86_64-slc6-gcc48-opt/root #HIP
+setenv ROOTSYS /afs/cern.ch/sw/lcg/app/releases/ROOT/6.04.00/x86_64-slc6-gcc43-dbg/root
+setenv PATH $ROOTSYS/bin:$PATH 
+#echo ".tcshrc *** ROOTSYS = " $ROOTSYS
+ 
+### SCRAM Architecture. See: https://cmssdt.cern.ch/SDT/cgi-bin/ReleasesXML
+#setenv SCRAM_ARCH slc5_amd64_gcc434 
+#setenv SCRAM_ARCH slc5_amd64_gcc462 # commented on 28 May 2015
+#setenv SCRAM_ARCH slc6_amd64_gcc472 # HLTaus
+#setenv SCRAM_ARCH slc6_amd64_gcc481 # ttH 
+#setenv SCRAM_ARCH slc6_amd64_gcc491 # ttH (CMSSW_7_5_2)
+#setenv SCRAM_ARCH slc6_amd64_gcc493  # HPLus (CMSS_7_6_5) 
+
+### Setup Git
+#setenv PATH /afs/cern.ch/user/k/kaitanie/public/git-1.6.6.2/bin:${PATH}
+
+### To fix a compilation problem of CMSSW (Added on 28 May 2015)
+setenv LANGUAGE "C"
+setenv LC_ALL "C"
+
+
+# If the LD_LIBRARY_PATH is not defined already define it
+if( ! $?LD_LIBRARY_PATH ) then
+setenv LD_LIBRARY_PATH $ROOTSYS/lib
+else # If the LD_LIBRARY_PATH is defined already add to it
+setenv LD_LIBRARY_PATH $ROOTSYS/lib:$LD_LIBRARY_PATH
+endif
+setenv PATH $ROOTSYS/bin:$PATH
+setenv LD_LIBRARY_PATH $ROOTSYS/lib
+
+### The number of commands remembered is usually 40. To change this:
+set histsize=1000
+
+#############################################################################
+### Changing the shell behaviour:
+#############################################################################
+### Normally, redirecting command output to a file, for example
+###
+###      /bin/ls > file.list
+###
+### will OVERWRITE any existing file.list. As the default you can't overwrite
+### existing files. If you dislike it uncomment the following line:
+# unset noclobber
+### If you have this option set you can override the extra protection by
+### adding a '!' - e.g.: 
+###
+###      /bin/ls >! file.list
+###

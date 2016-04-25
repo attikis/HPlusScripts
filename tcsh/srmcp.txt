@@ -1,0 +1,4 @@
+### To copy a file from MADHATTER:
+srmcp -srm_protocol_version=2 -server_mode=passive -streams_num=1
+srm://madhatter.csc.fi:8443/pnfs/csc.fi/data/cms/store/group/local/HiggsChToTauNuFullyHadronic/pattuples/CMSSW_3_8_X/BTau_146240-148107/BTau/Run2010B_PromptReco_v2_RECO_pattuple_v6_1/43c3132ebadd44967499e6cca288e3ab/pattuple_7_1_cJr.root
+file:////afs/cern.ch/user/a/attikis/w0/pattuple_7_1_cJr.root

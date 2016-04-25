@@ -1,0 +1,19 @@
+#############################################################################
+### File ............: $HOME/.logout
+### Description:.....: general purpose .login file where one defines commands
+###                    to be executed only once per login:
+###                    terminal setting (tset)
+###                    mailbox checking (checkmail)
+###                    status checks and messages (echo, uptime, date etc)
+### Author: .........: Alexandros Attikis
+### Email ...........: attikis@cern.ch
+### Comments ........: http://info.eps.surrey.ac.uk/FAQ/loginfiles.html
+#############################################################################
+echo "=== $HOME/.logout\n\t Terminating the SSH agent before logout:"
+if ( "$SSH_AGENT_PID" != "" ) then
+        eval `/usr/bin/ssh-agent -k`
+endif
+
+#NOTE: SSH agents you invoke yourself don't die automatically when you log out
+#      You must kill them explicitly. When you run an agent, it defines the 
+#      environment variable SSH_AGENT_PID. What does 'echo $SSH_AGENT_PID' give?

@@ -1,0 +1,15 @@
+### REMINDER!
+# 1) Setup crab environment! 
+# e.g. |terminal > source myScripts/cmssw428.csh 
+# 2) Initiate voms proxy
+#      |terminal > voms-proxy-init
+
+### TauData2011
+lcg-cp
+srm://madhatter.csc.fi:8443/pnfs/csc.fi/data/cms/store/group/local/HiggsChToTauNuFullyHadronic/pattuples/CMSSW_4_1_X/Tau_160431-161016_Prompt/Tau/Run2011A_PromptReco_v1_AOD_160431_pattuple_v11b/30bec5347ffdac4381c1a8c0982c0f67/pattuple_9_1_ZS7.root
+test.root
+
+### TTJets_TuneZ2_Spring11
+lcg-cp srm://madhatter.csc.fi:8443/pnfs/csc.fi/data/cms/store/group/local/HiggsChToTauNuFullyHadronic/pattuples/CMSSW_4_1_X/TTJets_TuneZ2_Spring11/TTJets_TuneZ2_7TeV-madgraph-tauola/Spring11_PU_S1_START311_V1G1_v1_AODSIM_pattuple_v11b/8f83bb72c10133f1e52d950030b925c8/pattuple_9_1_BRC.root
+ttjets_mc_pattuple_9_1_BRC.root
+
