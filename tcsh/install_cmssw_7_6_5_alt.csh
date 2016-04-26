@@ -11,7 +11,7 @@ if ($#argv != 3) then
     echo "2=$2"
     echo "3=$3"
     echo "\n=== For example:"
-    echo "~/HPlusScripts/tcsh/install_cmssw_7_6_5.csh ~/scratch0/ CMSSW_7_6_5 cmssw76x" #or heitor
+    echo "~/HPlusScripts/tcsh/install_cmssw_7_6_5_alt.csh ~/scratch0/ CMSSW_7_6_5 cmssw76x"
     echo 
     exit 1
 endif
