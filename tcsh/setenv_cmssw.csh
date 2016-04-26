@@ -49,7 +49,8 @@ echo "\n=== Working with ROOT version $myROOTSYS"; pwd
 echo "\n=== Setting Standalone environment"; pwd
 cd $ENDPATH
 pwd
-source setup.csh
+sh +x setup.sh
+#source setup.csh #problematic for some reason
 
 
 set cwd = `pwd`
