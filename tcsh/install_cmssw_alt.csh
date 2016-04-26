@@ -4,16 +4,12 @@
 # Ensure all script arguments are passed from command line
 #================================================================================================
 if ($#argv != 3) then
-    echo "=== You must give exactly 3 arguments, in this order:"
+    echo "=== You must give exactly 3 argument ($#argv given):"
     echo "1=INSTALLATION_PATH"
     echo "2=CMSSW_RELEASE"
     echo "3=GIT_BRANCH"
-    echo "\n=== The arguments you provided were:"
-    echo "1=$1"
-    echo "2=$2"
-    echo "3=$3"
     echo "\n=== For example:"
-    echo "~/HPlusScripts/tcsh/install_cmssw_7_6_5_alt.csh ~/scratch0/ CMSSW_7_6_5 cmssw76x"
+    echo "~/HPlusScripts/tcsh/install_cmssw_7_6_5_alt.csh ~/scratch0/ 7_6_5 cmssw76x"
     echo 
     exit 1
 endif
@@ -21,9 +17,9 @@ endif
 #================================================================================================
 # Define variables
 #================================================================================================
-set INSTALLATION_PATH=$1 #~/scratch0/"
-set CMSSW_RELEASE=$2 #"CMSSW_7_6_5"
-set GIT_BRANCH=$3 #"heitor"
+set INSTALLATION_PATH=$1
+set CMSSW_RELEASE="CMSSW_"$2
+set GIT_BRANCH=$3
 set HIGGS_SCRIPTS_TCSH=`echo $0 | sed 's,/*[^/]\+/*$,,'`
 set HIGGS_SCRIPTS=`echo $HIGGS_SCRIPTS_TCSH | sed 's,/*[^/]\+/*$,,'`
 set HIGGS_SCRIPTS_BASH=$HIGGS_SCRIPTS/bash/

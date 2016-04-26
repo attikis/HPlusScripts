@@ -4,16 +4,12 @@
 # Ensure all script arguments are passed from command line
 #================================================================================================
 if ($#argv != 3) then
-    echo "=== You must give exactly 3 arguments, in this order:"
+    echo "=== You must give exactly 3 argument ($#argv given):"
     echo "1=INSTALLATION_PATH"
     echo "2=CMSSW_RELEASE"
     echo "3=GIT_BRANCH"
-    echo "\n=== The arguments you provided were:"
-    echo "1=$1"
-    echo "2=$2"
-    echo "3=$3"
     echo "\n=== For example:"
-    echo "~/HPlusScripts/tcsh/install_cmssw_7_6_5.csh ~/scratch0/ CMSSW_7_6_5 cmssw76x"
+    echo "~/HPlusScripts/tcsh/install_cmssw_7_6_5.csh ~/scratch0/ 7_6_5 cmssw76x"
     echo 
     exit 1
 endif
@@ -21,9 +17,9 @@ endif
 #================================================================================================
 # Define variables
 #================================================================================================
-set INSTALLATION_PATH=$1 #~/scratch0/"
-set CMSSW_RELEASE=$2 #"CMSSW_7_6_5"
-set GIT_BRANCH=$3 #"heitor"
+set INSTALLATION_PATH=$1
+set CMSSW_RELEASE="CMSSW_"$2
+set GIT_BRANCH=$3
 set HIGGS_SCRIPTS_TCSH=`echo $0 | sed 's,/*[^/]\+/*$,,'`
 set HIGGS_SCRIPTS=`echo $HIGGS_SCRIPTS_TCSH | sed 's,/*[^/]\+/*$,,'`
 set HIGGS_SCRIPTS_BASH=$HIGGS_SCRIPTS/bash/
@@ -49,48 +45,48 @@ else
 endif
 
 
-echo "\n=== Changing directory to $INSTALLATION_PATH + Listing available CMSSW releases"; pwd
+echo "\n=== Changing directory to $INSTALLATION_PATH + Listing available CMSSW releases"#; pwd
 cd $INSTALLATION_PATH
 scram list | grep CMSSW
 
 
-echo "\n=== Creating a local release area for $CMSSW_RELEASE (cmsrel)"; pwd
+echo "\n=== Creating a local release area for $CMSSW_RELEASE (cmsrel)"#; pwd
 cmsrel $CMSSW_RELEASE
 
 
-echo "\n=== Setting up CMS Runtime Environment (cmsenv)"; pwd
+echo "\n=== Setting up CMS Runtime Environment (cmsenv)"#; pwd
 cd $CMSSW_RELEASE/src/
 cmsenv #alias for `scramv1 runtime -sh\
 
 
-echo "\n=== Installing branch $GIT_BRANCH using installation script $INSTALLATION_SCRIPT"; pwd
+echo "\n=== Installing branch $GIT_BRANCH using installation script $INSTALLATION_SCRIPT"#; pwd
 sh +x $INSTALLATION_SCRIPT $GIT_BRANCH
 
 
-echo "\n=== Changing directory to $GIT_REPO_DIR"; pwd
+echo "\n=== Changing directory to $GIT_REPO_DIR"#; pwd
 cd $GIT_REPO_DIR
 
 
-echo "\n=== Install External Packages (BOOST)"; pwd
+echo "\n=== Install External Packages (BOOST)"#; pwd
 sh +x installexternals.sh
 
 
-echo "\n=== Rehashing"; pwd
+echo "\n=== Rehashing"#; pwd
 rehash
 
 
-#echo "\n=== Setting environment"; pwd
-#source setup.csh
+echo "\n=== Setting environment"#; pwd
+source setup.csh
 
 
-echo "\n=== Building NtupleAnalysis code (standalone code)"; pwd
+echo "\n=== Building NtupleAnalysis code (standalone code)"#; pwd
 cd NtupleAnalysis
 make -j 16
 
 
-echo "\n=== Building MiniAOD2TTree code (CMSSW code)"; pwd
+echo "\n=== Building MiniAOD2TTree code (CMSSW code)"#; pwd
 cd ../MiniAOD2TTree/
 scram b -j 16
 
 
-echo "\n=== Done"; pwd
+echo "\n=== Done"#; pwd
