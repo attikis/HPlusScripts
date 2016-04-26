@@ -1,6 +1,8 @@
 #!/bin/csh
 
-### Ensure all script arguments are passed from command line
+#================================================================================================
+# Ensure all script arguments are passed from command line
+#================================================================================================
 if ($#argv != 3) then
     echo "=== You must give exactly 3 arguments, in this order:"
     echo "1=INSTALLATION_PATH"
@@ -11,12 +13,14 @@ if ($#argv != 3) then
     echo "2=$2"
     echo "3=$3"
     echo "\n=== For example:"
-    echo "~/HPlusScripts/tcsh/install_cmssw_7_6_5.csh ~/scratch0/ CMSSW_7_6_5 cmssw76x"
+    echo "~/HPlusScripts/tcsh/install_cmssw_7_6_5_alt.csh ~/scratch0/ CMSSW_7_6_5 cmssw76x"
     echo 
     exit 1
 endif
 
-### Define variables
+#================================================================================================
+# Define variables
+#================================================================================================
 set INSTALLATION_PATH=$1 #~/scratch0/"
 set CMSSW_RELEASE=$2 #"CMSSW_7_6_5"
 set GIT_BRANCH=$3 #"heitor"
@@ -28,7 +32,9 @@ set GIT_REPO_DIR="HiggsAnalysis"
 set GIT_REPO="http://cmsdoc.cern.ch/~slehti/HiggsAnalysis.git"
 
 
-### Execute commands
+#================================================================================================
+# Execute commands
+#================================================================================================
 echo "\n=== Will install $CMSSW_RELEASE (branch=$GIT_BRANCH) under $INSTALLATION_PATH for USER=$USER, using script $INSTALLATION_SCRIPT.\nContinue ? (Y/N)"
 set proceed=$<
 
@@ -56,35 +62,40 @@ cd $CMSSW_RELEASE/src/
 cmsenv #alias for `scramv1 runtime -sh\
 
 
-echo "\n=== Installing branch $GIT_BRANCH using installation script $INSTALLATION_SCRIPT"; pwd
-sh +x $INSTALLATION_SCRIPT $GIT_BRANCH
+echo "\n=== Cloning git-repository $GIT_REPO"
+git clone $GIT_REPO
 
 
-echo "\n=== Changing directory to $GIT_REPO_DIR"; pwd
+echo "\n=== Changing directory to $GIT_REPO_DIR"
 cd $GIT_REPO_DIR
+pwd
 
 
-echo "\n=== Install External Packages (BOOST)"; pwd
+echo "\n=== Checking out branch $GIT_BRANCH"
+git branch -a
+git checkout -b $GIT_BRANCH origin/$GIT_BRANCH
+
+
+echo "\n=== Install External Packages (BOOST)"
 sh +x installexternals.sh
 
 
-echo "\n=== Rehashing"; pwd
+echo "\n=== Rehashing"
 rehash
 
 
-#echo "\n=== Setting environment"; pwd
+#echo "\n=== Setting environment"
 #source setup.csh
 
 
-echo "\n=== Building NtupleAnalysis code (standalone code)"; pwd
+echo "\n=== Building NtupleAnalysis code (standalone code)"
 cd NtupleAnalysis
 make -j 16
 
 
-echo "\n=== Building MiniAOD2TTree code (CMSSW code)"; pwd
+echo "\n=== Building MiniAOD2TTree code (CMSSW code)"
 cd ../MiniAOD2TTree/
 scram b -j 16
 
 
 echo "\n=== Done"; pwd
-
