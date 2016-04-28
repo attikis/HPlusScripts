@@ -3,7 +3,7 @@
 # 23.10.2012/LAW added support for use from outside lxplus
 
 #REPOSITORY="http://cmsdoc.cern.ch/~${USER}/HiggsAnalysis.git"
-REPOSITORY="http://cmsdoc.cern.ch/~slehti/HiggsAnalysis.git"
+REPOSITORY=https://github.com/attikis/HiggsAnalysis.git
 DIRPREFIX=""
 MYUSER=$USER
 
@@ -45,8 +45,8 @@ git remote add lauri ${DIRPREFIX}~wendland/public/html/HiggsAnalysis.git
 git remote add ritva ${DIRPREFIX}~kinnunen/public/html/HiggsAnalysis.git
 git remote add alexandros ${DIRPREFIX}~attikis/public/html/HiggsAnalysis.git
 git remote add attikis https://github.com/attikis/HiggsAnalysis.git
-#git remote add tapio ${DIRPREFIX}~tlampen/public/html/HiggsAnalysis.git
-#git remote add cristina ${DIRPREFIX}~cferro/public/html/HiggsAnalysis.git
+git remote add tapio ${DIRPREFIX}~tlampen/public/html/HiggsAnalysis.git
+git remote add cristina ${DIRPREFIX}~cferro/public/html/HiggsAnalysis.git
 git remote add stefan ${DIRPREFIX}~strichte/public/html/HiggsAnalysis.git
 git remote add erik ${DIRPREFIX}~epekkari/public/html/HiggsAnalysis.git
 git remote add santeri ${DIRPREFIX}~slaurila/public/html/HiggsAnalysis.git
