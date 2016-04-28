@@ -9,15 +9,24 @@
 ### Email ...........: attikis@cern.ch
 ### Comments ........: http://info.eps.surrey.ac.uk/FAQ/loginfiles.html
 #############################################################################
-set uptime = `uptime`
-echo "=== $HOME/.login: The current system has been running since:\n\t $uptime"
+echo "\n=== $HOME/.login"
+
+set uptime=`uptime`
+echo "The current system has been running since:\n$uptime"
 #sleep 1
 echo
 
 #############################################################################
-set users = `users`
-echo "=== $HOME/.login: The users currently logged on this machine are:\n\t $users"
+set users=`users`
+echo "The users currently logged on this machine are:\n$users"
 echo
+
+
+#############################################################################
+set envScript=myEnvironment.csh
+echo "Sourcing custom environment script:\n$envScript"
+source myEnvironment.csh
+
 
 #############################################################################
 #echo ".login *** Launching screen:"
