@@ -13,6 +13,8 @@ REPOSITORY="http://cmsdoc.cern.ch/~$USER/HiggsAnalysis.git"
 #REPOSITORY="http://cmsdoc.cern.ch/~slehti/HiggsAnalysis.git"
 DIRPREFIX=""
 MYUSER=$USER
+PUBLICREPO="public/html/HiggsAnalysis.git"
+GITHUB="https://github.com"
 
 if [ $1 ]; then
     BRANCH=$1
@@ -26,30 +28,91 @@ git clone ${REPOSITORY}
 printf "\nChanging directory to HiggsAnalysis"
 cd HiggsAnalysis
 
+
 printf "\nAdding own repository alias as public"
-PUBLICREPO="public/html/HiggsAnalysis.git"
 if [[ $HOST == lxplus* ]]; then
     git remote add public $HOME/$PUBLICREPO
+
+    printf "\nAdding git aliases for other users (lxplus)"
+    git remote add alexandros ${DIRPREFIX}~attikis/$PUBLICREPO
+    git remote add cristina ${DIRPREFIX}~cferro/$PUBLICREPO
+    git remote add erik ${DIRPREFIX}~epekkari/$PUBLICREPO
+    git remote add joona ${DIRPREFIX}~jhavukai/$PUBLICREPO
+    git remote add lauri ${DIRPREFIX}~wendland/$PUBLICREPO
+    git remote add matti ${DIRPREFIX}~mkortela/$PUBLICREPO
+    git remote add ritva ${DIRPREFIX}~kinnunen/$PUBLICREPO
+    git remote add sami ${DIRPREFIX}~slehti/$PUBLICREPO
+    git remote add santeri ${DIRPREFIX}~slaurila/$PUBLICREPO
+    git remote add stefan ${DIRPREFIX}~strichte/$PUBLICREPO
+    git remote add tapio ${DIRPREFIX}~tlampen/$PUBLICREPO
+
+    printf "\nAdding git aliases for other users (GitHub)"
+    git remote add attikis $GITHUB/attikis/HiggsAnalysis.git
+    git remote add heitor $GITHUB/heitorPB/HiggsAnalysis.git
+    git remote add laura $GITHUB/sorda/HiggsAnalysis.git
 else
-    DIRPREFIX="http://cmsdoc.cern.ch/"
-    git remote add public ssh://${USER}@lxplus.cern.ch/afs/cern.ch/user/${MYUSER:0:1}/$USER/$PUBLICREPO
+    git remote add public ssh://${USER}@lxplus.cern.ch/afs/cern.ch/user/${USER:0:1}/$USER/$PUBLICREPO
+
+    printf "\nAdding git aliases for other users (lxplus)"
+    MYALIAS=alexandros
+    MYUSER=attikis
+    git remote add $MYALIAS ssh://${USER}@lxplus.cern.ch:/afs/cern.ch/user/${MYUSER:0:1}/$MYUSER/$PUBLICREPO
+
+    MYALIAS=cristina
+    MYUSER=cferro
+    git remote add $MYALIAS ssh://${USER}@lxplus.cern.ch:/afs/cern.ch/user/${MYUSER:0:1}/$MYUSER/$PUBLICREPO
+
+    MYALIAS=erik
+    MYUSER=epekkari
+    git remote add erik ssh://${USER}@lxplus.cern.ch:/afs/cern.ch/user/${MYUSER:0:1}/$MYUSER/$PUBLICREPO
+
+    MYALIAS=joona
+    MYUSER=jhavukai
+    git remote add joona ssh://${USER}@lxplus.cern.ch:/afs/cern.ch/user/${MYUSER:0:1}/$MYUSER/$PUBLICREPO
+
+    MYALIAS=lauri
+    MYUSER=wendland
+    git remote add lauri ssh://${USER}@lxplus.cern.ch:/afs/cern.ch/user/${MYUSER:0:1}/$MYUSER/$PUBLICREPO
+
+    MYALIAS=matti
+    MYUSER=mkortela
+    git remote add matti ssh://${USER}@lxplus.cern.ch:/afs/cern.ch/user/${MYUSER:0:1}/$MYUSER/$PUBLICREPO
+
+    MYALIAS=ritva
+    MYUSER=kinnunen
+    git remote add $MYALIAS ssh://${USER}@lxplus.cern.ch:/afs/cern.ch/user/${MYUSER:0:1}/$MYUSER/$PUBLICREPO
+
+    MYALIAS=sami
+    MYUSER=slehti
+    git remote add $MYALIAS ssh://${USER}@lxplus.cern.ch:/afs/cern.ch/user/${MYUSER:0:1}/$MYUSER/$PUBLICREPO
+
+    MYALIAS=santeri
+    MYUSER=slaurila
+    git remote add $MYALIAS ssh://${USER}@lxplus.cern.ch:/afs/cern.ch/user/${MYUSER:0:1}/$MYUSER/$PUBLICREPO
+
+    MYALIAS=stefan
+    MYUSER=strichte
+    git remote add $MYALIAS ssh://${USER}@lxplus.cern.ch:/afs/cern.ch/user/${MYUSER:0:1}/$MYUSER/$PUBLICREPO
+
+    MYALIAS=tapio
+    MYUSER=tlampen
+    git remote add $MYALIAS ssh://${USER}@lxplus.cern.ch:/afs/cern.ch/user/${MYUSER:0:1}/$MYUSER/$PUBLICREPO
+
+
+    printf "\nAdding git aliases for other users (GitHub)"
+    MYALIAS=attikis
+    MYUSER=attikis
+    git remote add $MYALIAS $GITHUB/$MYUSER/HiggsAnalysis.git
+
+    MYALIAS=heitor
+    MYUSER=heitorPB
+    git remote add $MYALIAS $GITHUB/$MYUSER/HiggsAnalysis.git
+
+    MYALIAS=laura
+    MYUSER=sorda
+    git remote add $MYALIAS $GITHUB/$MYUSER/HiggsAnalysis.git
 fi
 
-printf "\nAdding git aliases"
-git remote add sami ${DIRPREFIX}~slehti/public/html/HiggsAnalysis.git
-git remote add matti ${DIRPREFIX}~mkortela/public/html/HiggsAnalysis.git
-git remote add lauri ${DIRPREFIX}~wendland/public/html/HiggsAnalysis.git
-git remote add ritva ${DIRPREFIX}~kinnunen/public/html/HiggsAnalysis.git
-git remote add alexandros ${DIRPREFIX}~attikis/public/html/HiggsAnalysis.git
-git remote add attikis https://github.com/attikis/HiggsAnalysis.git
-git remote add tapio ${DIRPREFIX}~tlampen/public/html/HiggsAnalysis.git
-git remote add cristina ${DIRPREFIX}~cferro/public/html/HiggsAnalysis.git
-git remote add stefan ${DIRPREFIX}~strichte/public/html/HiggsAnalysis.git
-git remote add erik ${DIRPREFIX}~epekkari/public/html/HiggsAnalysis.git
-git remote add santeri ${DIRPREFIX}~slaurila/public/html/HiggsAnalysis.git
-git remote add joona ${DIRPREFIX}~jhavukai/public/html/HiggsAnalysis.git
-git remote add heitor https://github.com/heitorPB/HiggsAnalysis.git
-git remote add laura https://github.com/sorda/HiggsAnalysis.git
 
 
 printf "\nChecking out repository branch $BRANCH"
