@@ -1,9 +1,16 @@
 #!/bin/bash
+#================================================================================================ 
 # 18.10.2012/S.Lehti
 # 23.10.2012/LAW added support for use from outside lxplus
+#================================================================================================ 
+printf "=== Higgs"
 
-#REPOSITORY="http://cmsdoc.cern.ch/~${USER}/HiggsAnalysis.git"
-REPOSITORY=https://github.com/attikis/HiggsAnalysis.git
+#================================================================================================ 
+# Set variables
+#================================================================================================ 
+REPOSITORY="http://cmsdoc.cern.ch/~$USER/HiggsAnalysis.git"
+#REPOSITORY="https://github.com/$USER/HiggsAnalysis.git"
+#REPOSITORY="http://cmsdoc.cern.ch/~slehti/HiggsAnalysis.git"
 DIRPREFIX=""
 MYUSER=$USER
 
@@ -11,34 +18,24 @@ if [ $1 ]; then
     BRANCH=$1
 else
     BRANCH="master"
-#    echo
-#    echo "        Branch not set. Please define branch"
-#    if [[ $0 =~ ".*/(\S+)" ]]; then
-#	echo "        Usage: "${BASH_REMATCH[1]}" <branch>"
-#    fi
-#    echo
-#    echo "        Available branches:"
-#    output=$(git-ls-remote ${REPOSITORY})
-#    for line in $output
-#    do
-#	if [[ $line =~ "refs/heads/(\S+)" ]]; then
-#	    echo "                "${BASH_REMATCH[1]}
-#	fi
-#	
-#    done
-#    exit
 fi
 
+printf "\nCloning git repository $REPOSITORY\n"
 git clone ${REPOSITORY}
-#git clone $HOME/public/html/HiggsAnalysis.git
 
+printf "\nChanging directory to HiggsAnalysis"
 cd HiggsAnalysis
+
+printf "\nAdding own repository alias as public"
+PUBLICREPO="public/html/HiggsAnalysis.git"
 if [[ $HOST == lxplus* ]]; then
-    git remote add public $HOME/public/html/HiggsAnalysis.git
+    git remote add public $HOME/$PUBLICREPO
 else
     DIRPREFIX="http://cmsdoc.cern.ch/"
-    git remote add public ssh://${USER}@lxplus.cern.ch/afs/cern.ch/user/${MYUSER:0:1}/$USER/public/html/HiggsAnalysis.git
+    git remote add public ssh://${USER}@lxplus.cern.ch/afs/cern.ch/user/${MYUSER:0:1}/$USER/$PUBLICREPO
 fi
+
+printf "\nAdding git aliases"
 git remote add sami ${DIRPREFIX}~slehti/public/html/HiggsAnalysis.git
 git remote add matti ${DIRPREFIX}~mkortela/public/html/HiggsAnalysis.git
 git remote add lauri ${DIRPREFIX}~wendland/public/html/HiggsAnalysis.git
@@ -54,24 +51,25 @@ git remote add joona ${DIRPREFIX}~jhavukai/public/html/HiggsAnalysis.git
 git remote add heitor https://github.com/heitorPB/HiggsAnalysis.git
 git remote add laura https://github.com/sorda/HiggsAnalysis.git
 
+
+printf "\nChecking out repository branch $BRANCH"
 if [ ${BRANCH} != "master" ]; then
     git branch --track ${BRANCH} origin/${BRANCH}
 fi
+
 if [ ${BRANCH} == "2011" ]; then
     git branch --track 2012 origin/2012
 fi
+
 git checkout ${BRANCH}
 git branch -a
 
+
+printf "\nThe following git aliases have been set up (check that the path for public is correct!):"
+git remote -v
+
+
+printf "\nLeaving HiggsAnalysis directory"
 cd ..
 
-#if [ ! $2 ]; then
-#    ./HiggsAnalysis/HeavyChHiggsToTauNu/test/checkoutTags.sh
-#fi
-
-# Show list of git aliases 
-#cd HiggsAnalysis
-#echo "The following git aliases have been set up (check that the path for public is correct!):"
-#git remote -v
-#cd ..
-
+printf "\n"
