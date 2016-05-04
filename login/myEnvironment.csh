@@ -146,4 +146,25 @@ echo "SCRAM_ARCH=$SCRAM_ARCH"
 #setenv CMSSW /afs/cern.ch/user/$INITIAL/$USER/scratch0/CMSSW_7_5_2/src/UCYHiggsAnalysis
 #setenv CVSROOT ":ext:slehti@lxplus5.cern.ch:/afs/cern.ch/user/c/cvscmssw/public/CMSSW"
 
+
+### To fix a compilation problem of CMSSW (Added on 28 May 2015): https://hypernews.cern.ch/HyperNews/CMS/get/linux/150/1/1.html
+#setenv LANGUAGE "C"
+#setenv LC_ALL "C"
+echo "\nLOCALE settings:"
+setenv LANG "en_US.UTF-8"
+setenv LC_CTYPE "en_US.UTF-8"
+setenv LC_NUMERIC "en_US.UTF-8"
+setenv LC_TIME "en_US.UTF-8"
+setenv LC_COLLATE "en_US.UTF-8"
+setenv LC_MONETARY "en_US.UTF-8"
+setenv LC_MESSAGES "en_US.UTF-8"
+setenv LC_PAPER "en_US.UTF-8"
+setenv LC_NAME "en_US.UTF-8"
+setenv LC_ADDRESS "en_US.UTF-8"
+setenv LC_TELEPHONE "en_US.UTF-8"
+setenv LC_MEASUREMENT "en_US.UTF-8"
+setenv LC_IDENTIFICATION "en_US.UTF-8"
+#setenv LC_ALL 
+locale 
+
 echo

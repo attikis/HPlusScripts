@@ -8,9 +8,9 @@ printf "=== Higgs"
 #================================================================================================ 
 # Set variables
 #================================================================================================ 
-REPOSITORY="http://cmsdoc.cern.ch/~$USER/HiggsAnalysis.git"
+#REPOSITORY="http://cmsdoc.cern.ch/~$USER/HiggsAnalysis.git"
 #REPOSITORY="https://github.com/$USER/HiggsAnalysis.git"
-#REPOSITORY="http://cmsdoc.cern.ch/~slehti/HiggsAnalysis.git"
+REPOSITORY="http://cmsdoc.cern.ch/~slehti/HiggsAnalysis.git"
 DIRPREFIX=""
 MYUSER=$USER
 PUBLICREPO="public/html/HiggsAnalysis.git"
