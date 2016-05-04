@@ -18,7 +18,7 @@ endif
 #================================================================================================
 set DESTINATION=${1}
 set CMSSW="CMSSW_"${2}
-#set ENDPATH=$DESTINATION$CMSSW"/src/HiggsAnalysis/"
+set ENDPATH="HiggsAnalysis/"
 set SCRAM_ARCHITECTURE="slc6_amd64_gcc472"
 set CRAB_UI_ENV="/afs/cern.ch/cms/LCG/LCG-2/UI/cms_ui_env.csh"
 set CRAB="/afs/cern.ch/cms/ccs/wm/scripts/Crab/crab.csh"
@@ -45,10 +45,10 @@ echo "\n=== ROOT version is $myROOTSYS"
 
 
 #### Setup Standalone Environment
-#cd $ENDPATH
-#echo "\t Setting Standalone environment"
-##echo "source setup.csh"
-#source setup.csh
+cd $ENDPATH
+
+echo "\n=== Setting Standalone environment"
+source setup.csh
 
 
 echo "\n=== Done"
