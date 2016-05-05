@@ -8,9 +8,9 @@ printf "=== Higgs"
 #================================================================================================ 
 # Set variables
 #================================================================================================ 
-REPOSITORY="https://github.com/$USER/HiggsAnalysis.git"
+#REPOSITORY="https://github.com/$USER/HiggsAnalysis.git"
 #REPOSITORY="http://cmsdoc.cern.ch/~$USER/HiggsAnalysis.git" #EMPTY at the moment
-#REPOSITORY="http://cmsdoc.cern.ch/~slehti/HiggsAnalysis.git"
+REPOSITORY="http://cmsdoc.cern.ch/~slehti/HiggsAnalysis.git"
 
 DIRPREFIX=""
 MYUSER=$USER
@@ -116,15 +116,51 @@ fi
 
 
 
-printf "\nChecking out repository branch $BRANCH"
-if [ ${BRANCH} != "master" ]; then
-    git branch --track ${BRANCH} origin/${BRANCH}
-fi
+# Define list of branches to NOT be tracked
+ignoreList=("2011" "2011Inv_dev" "2012" "2012_LimitHp2cs 2012_TTEffDev" "44replicaOfHIG11019" "InvertedTau" "btagDB" "cmssw428_pattuplev18_Approved21022012" "pattuplev18_2" "pattuplev18_3"  "pattuplev44_5" "pattuplev44_5_taulegdev")
 
+printf "\n=== Tracking most relevant remote branches"
+# Loop over all remove branches
+for branch in `git branch -r`; do
+
+    skip=false
+    BEFORESLASH=${branch%/*}
+    AFTERSLASH=${branch#*/}
+
+    # Check if branch is in ignore-list    
+    for item in "${ignoreList[@]}"; do
+	if [ "$item" == "$AFTERSLASH" ]; then
+	    skip=true
+	fi
+    done
+	    
+    # If branch in ignore-list skip it
+    if [ "$skip" == true ]; then
+	printf "\nSkipping branch $branch\n"
+	continue
+    fi	
+
+    printf "\nTracking branch $branch\n"
+    git branch --track $AFTERSLASH $branch;
+
+    #printf "\ngit checkout $AFTERSLASH\n"
+    #git checkout $AFTERSLASH;
+
+    printf "\n"
+done
+
+
+#printf "\nSetting up tracking for special branches"
+#if [ ${BRANCH} != "master" ]; then
+#    git branch --track ${BRANCH} origin/${BRANCH}
+#fi
+
+# Is this obsolete?
 if [ ${BRANCH} == "2011" ]; then
     git branch --track 2012 origin/2012
 fi
 
+printf "\nChecking out repository branch $BRANCH"
 git checkout ${BRANCH}
 git branch -a
 
@@ -136,4 +172,6 @@ git remote -v
 printf "\nLeaving HiggsAnalysis directory"
 cd ..
 
+printf "\The following git branches are available:"
+git branch
 printf "\n"

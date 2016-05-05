@@ -51,12 +51,12 @@ endif
 
 
 echo "Setting SCRAM ARCHITECTURE"
-setenv SCRAM_ARCH 'slc6_amd64_gcc491'
+setenv SCRAM_ARCH 'slc6_amd64_gcc493'
 
 
 echo "\n=== Changing directory to $INSTALLATION_PATH + Listing available CMSSW releases"#; pwd
 cd $INSTALLATION_PATH
-scram list | grep CMSSW
+#scram list | grep CMSSW
 
 
 echo "\n=== Creating a local release area for $CMSSW_RELEASE (cmsrel)"#; pwd
