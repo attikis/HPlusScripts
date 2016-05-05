@@ -36,20 +36,19 @@ cd $DESTINATION/$CMSSW/src/
 cmsenv #alias for `scramv1 runtime -sh\
 
 
-echo "\n=== Setting CRAB3 Environment"#; pwd
-source $CRAB
+#echo "\n=== Setting CRAB3 Environment"#; pwd
+#source $CRAB
 
 
 set myROOTSYS = `echo $ROOTSYS`
 echo "\n=== ROOT version is $myROOTSYS" 
 
 
-#### Setup Standalone Environment
 cd $ENDPATH
-
 echo "\n=== Setting Standalone environment"
 source setup.csh
 
 
 echo "\n=== Done"
+ls
 echo
