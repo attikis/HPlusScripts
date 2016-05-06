@@ -2,14 +2,14 @@
 #================================================================================================ 
 # 18.10.2012/S.Lehti
 # 23.10.2012/LAW added support for use from outside lxplus
+# 06.05.2016/Attikis added tracking of most branches and echo information
 #================================================================================================ 
-printf "=== Higgs"
 
 #================================================================================================ 
 # Set variables
 #================================================================================================ 
 #REPOSITORY="https://github.com/$USER/HiggsAnalysis.git"
-#REPOSITORY="http://cmsdoc.cern.ch/~$USER/HiggsAnalysis.git" #EMPTY at the moment
+#REPOSITORY="http://cmsdoc.cern.ch/~$USER/HiggsAnalysis.git"
 REPOSITORY="http://cmsdoc.cern.ch/~slehti/HiggsAnalysis.git"
 
 DIRPREFIX=""
@@ -23,18 +23,18 @@ else
     BRANCH="master"
 fi
 
-printf "\nCloning git repository $REPOSITORY\n"
+printf "\n=== Cloning git repository $REPOSITORY\n"
 git clone ${REPOSITORY}
 
-printf "\nChanging directory to HiggsAnalysis"
+printf "\n=== Changing directory to HiggsAnalysis"
 cd HiggsAnalysis
 
 
-printf "\nAdding own repository alias as public"
+printf "\n=== Adding own repository alias as public"
 if [[ $HOST == lxplus* ]]; then
     git remote add public $HOME/$PUBLICREPO
 
-    printf "\nAdding git aliases for other users (lxplus)"
+    printf "\n=== Adding git aliases for other users (lxplus)"
     git remote add alexandros ${DIRPREFIX}~attikis/$PUBLICREPO
     git remote add cristina ${DIRPREFIX}~cferro/$PUBLICREPO
     git remote add erik ${DIRPREFIX}~epekkari/$PUBLICREPO
@@ -47,14 +47,14 @@ if [[ $HOST == lxplus* ]]; then
     git remote add stefan ${DIRPREFIX}~strichte/$PUBLICREPO
     git remote add tapio ${DIRPREFIX}~tlampen/$PUBLICREPO
 
-    printf "\nAdding git aliases for other users (GitHub)"
+    printf "\n=== Adding git aliases for other users (GitHub)"
     git remote add attikis $GITHUB/attikis/HiggsAnalysis.git
     git remote add heitor $GITHUB/heitorPB/HiggsAnalysis.git
     git remote add laura $GITHUB/sorda/HiggsAnalysis.git
 else
     git remote add public ssh://${USER}@lxplus.cern.ch/afs/cern.ch/user/${USER:0:1}/$USER/$PUBLICREPO
 
-    printf "\nAdding git aliases for other users (lxplus)"
+    printf "\n=== Adding git aliases for other users (lxplus)"
     MYALIAS=alexandros
     MYUSER=attikis
     git remote add $MYALIAS ssh://${USER}@lxplus.cern.ch:/afs/cern.ch/user/${MYUSER:0:1}/$MYUSER/$PUBLICREPO
@@ -100,7 +100,7 @@ else
     git remote add $MYALIAS ssh://${USER}@lxplus.cern.ch:/afs/cern.ch/user/${MYUSER:0:1}/$MYUSER/$PUBLICREPO
 
 
-    printf "\nAdding git aliases for other users (GitHub)"
+    printf "\n=== Adding git aliases for other users (GitHub)"
     MYALIAS=attikis
     MYUSER=attikis
     git remote add $MYALIAS $GITHUB/$MYUSER/HiggsAnalysis.git
@@ -117,7 +117,7 @@ fi
 
 
 # Define list of branches to NOT be tracked
-ignoreList=("2011" "2011Inv_dev" "2012" "2012_LimitHp2cs 2012_TTEffDev" "44replicaOfHIG11019" "InvertedTau" "btagDB" "cmssw428_pattuplev18_Approved21022012" "pattuplev18_2" "pattuplev18_3"  "pattuplev44_5" "pattuplev44_5_taulegdev")
+ignoreList=("master" "2011" "2011Inv_dev" "2012" "2012_LimitHp2cs 2012_TTEffDev" "44replicaOfHIG11019" "InvertedTau" "btagDB" "cmssw428_pattuplev18_Approved21022012" "pattuplev18_2" "pattuplev18_3"  "pattuplev44_5" "pattuplev44_5_taulegdev")
 
 printf "\n=== Tracking most relevant remote branches"
 # Loop over all remove branches
@@ -136,17 +136,13 @@ for branch in `git branch -r`; do
 	    
     # If branch in ignore-list skip it
     if [ "$skip" == true ]; then
-	printf "\nSkipping branch $branch\n"
+	printf "\n=== Skipping branch $branch\n"
 	continue
     fi	
 
-    printf "\nTracking branch $branch\n"
+    printf "\n=== Tracking branch $branch\n"
     git branch --track $AFTERSLASH $branch;
 
-    #printf "\ngit checkout $AFTERSLASH\n"
-    #git checkout $AFTERSLASH;
-
-    printf "\n"
 done
 
 
@@ -160,12 +156,12 @@ if [ ${BRANCH} == "2011" ]; then
     git branch --track 2012 origin/2012
 fi
 
-printf "\nChecking out repository branch $BRANCH"
+printf "\n=== Checking out repository branch $BRANCH"
 git checkout ${BRANCH}
 git branch -a
 
 
-printf "\nThe following git aliases have been set up (check that the path for public is correct!):"
+printf "\n=== The following git aliases have been set up (check that the path for public is correct!):"
 git remote -v
 
 
