@@ -81,7 +81,7 @@ echo "./$SCRIPTS_FILE $GIT_BRANCH"
 ./$SCRIPTS_FILE $GIT_BRANCH
 
 
-echo "\n=== Deleting installation script $SCRIPTS_FILE"
+echo "\n=== Deleting installation script"
 echo "rm -f $SCRIPTS_FILE"
 rm -f $SCRIPTS_FILE
 
