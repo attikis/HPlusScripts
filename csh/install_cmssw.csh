@@ -71,16 +71,18 @@ cd $CMSSW_RELEASE/src/
 #pwd
 
 
-echo "\n=== Getting installation script $SCRIPTS_FILE from remote repository $SCRIPTS_REPO$SCRIPTS_PATH"
+echo "\n=== Getting installation script $SCRIPTS_FILE from remote repository"
 echo "git archive --remote=$SCRIPTS_REPO  HEAD:$SCRIPTS_PATH $SCRIPTS_FILE | tar -x"
 git archive --remote=$SCRIPTS_REPO  HEAD:$SCRIPTS_PATH $SCRIPTS_FILE | tar -x
 
 
 echo "\n=== Installing branch $GIT_BRANCH"
+echo "./$SCRIPTS_FILE $GIT_BRANCH"
 ./$SCRIPTS_FILE $GIT_BRANCH
 
 
 echo "\n=== Deleting installation script $SCRIPTS_FILE"
+echo "rm -f $SCRIPTS_FILE"
 rm -f $SCRIPTS_FILE
 
 
@@ -89,12 +91,14 @@ cd $GIT_REPO_DIR
 #pwd
 
 
-echo "\n=== Setting environment by sourcing setup.csh"
+echo "\n=== Setting environment"
 chmod +x setup.csh setup.sh
+echo "source setup.csh"
 source setup.csh
 
 
-echo "\n=== Rehashing"
+echo "\n=== Re-compute the internal hash table (to account for new commands added)"
+echo "rehash"
 rehash
 
 
