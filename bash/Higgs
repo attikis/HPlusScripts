@@ -39,14 +39,14 @@ aliasList=("alexandros" "cristina" "erik"     "joona"    "lauri"    "matti"    "
 userList=( "attikis"    "cferro"   "epekkari" "jhavukai" "wendland" "mkortela" "kinnunen" "slehti" "slaurila" "strichte" "tlampen")
 if [[ $HOST == lxplus* ]]; then
     printf "\n=== Adding public repo (lxplus)\n"
-    printf "git remote add public $HOME/$PUBLICREPO"
+    printf "\ngit remote add public $HOME/$PUBLICREPO\n"
     git remote add public $HOME/$PUBLICREPO
 
     printf "\n=== Adding git aliases for other users (lxplus)\n"
     for ((i=0; i<${#aliasList[@]}; ++i)); do
 	MYALIAS=${aliasList[i]}
 	MYUSER=${userList[i]}
-	printf "git remote add $MYALIAS ${DIRPREFIX}~$MYUSER/$PUBLICREPO"
+	printf "\ngit remote add $MYALIAS ${DIRPREFIX}~$MYUSER/$PUBLICREPO\n"
 	git remote add $MYALIAS ${DIRPREFIX}~$MYUSER/$PUBLICREPO
     done
 else
@@ -58,7 +58,7 @@ else
     for ((i=0; i<${#aliasList[@]}; ++i)); do
 	MYALIAS=${aliasList[i]}
 	MYUSER=${userList[i]}
-	printf "\ngit remote add $MYALIAS ssh://${USER}@lxplus.cern.ch:/afs/cern.ch/user/${MYUSER:0:1}/$MYUSER/$PUBLICREPO"
+	printf "\ngit remote add $MYALIAS ssh://${USER}@lxplus.cern.ch:/afs/cern.ch/user/${MYUSER:0:1}/$MYUSER/$PUBLICREPO\n"
 	git remote add $MYALIAS ssh://${USER}@lxplus.cern.ch:/afs/cern.ch/user/${MYUSER:0:1}/$MYUSER/$PUBLICREPO
     done
 fi
@@ -77,7 +77,7 @@ done
 # Define list of branches to NOT be tracked
 ignoreList=("master" "2011" "2011Inv_dev" "2012" "2012_LimitHp2cs 2012_TTEffDev" "44replicaOfHIG11019" "InvertedTau" "btagDB" "cmssw428_pattuplev18_Approved21022012" "pattuplev18_2" "pattuplev18_3"  "pattuplev44_5" "pattuplev44_5_taulegdev" "->")
 
-printf "\n=== Tracking most relevant remote branches"
+printf "\n\n=== Tracking most relevant remote branches:"
 # Loop over all remove branches
 for branch in `git branch -r`; do
 
@@ -98,8 +98,8 @@ for branch in `git branch -r`; do
 	continue
     fi	
 
-    printf "\ngit branch --track $AFTERSLASH $branch"
-    git branch --track $AFTERSLASH $branch;
+    #printf "\ngit branch --track $AFTERSLASH $branch"
+    git branch --track $AFTERSLASH $branch
 
 done
 
@@ -116,21 +116,23 @@ fi
 
 
 printf "\n=== Checking out repository branch $BRANCH"
-printf "\ngit checkout ${BRANCH}"
+printf "\ngit checkout ${BRANCH}\n"
 git checkout ${BRANCH}
-printf "\ngit branch -a"
-git branch -a
+#printf "\ngit branch -a"
+#git branch -a
 
 
 printf "\n=== The following git aliases have been set up (check that the path for public is correct!):"
-printf "\ngit remote -v"
+printf "\ngit remote -v\n"
 git remote -v
+
+
+printf "\n=== The following git branches are available:"
+printf "\ngit branch\n"
+git branch
+printf "\n"
 
 
 printf "\n=== Leaving HiggsAnalysis directory"
 cd ..
-
-printf "\n=== The following git branches are available:"
-printf "\ngit branch"
-git branch
-printf "\n"
+pwd
