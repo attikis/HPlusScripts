@@ -25,7 +25,7 @@ fi
 
 
 printf "\n=== Cloning git repository $REPOSITORY\n"
-echo "git clone ${REPOSITORY}"
+printf "git clone ${REPOSITORY}"
 git clone ${REPOSITORY}
 
 
@@ -40,26 +40,26 @@ userList=( "attikis"    "cferro"   "epekkari" "jhavukai" "wendland" "mkortela" "
 
 if [[ $HOST == lxplus* ]]; then
     printf "\n=== Adding public repo (lxplus)"
-    echo "git remote add public $HOME/$PUBLICREPO"
+    printf "git remote add public $HOME/$PUBLICREPO"
     git remote add public $HOME/$PUBLICREPO
 
     printf "\n=== Adding git aliases for other users (lxplus)"
     for ((i=0; i<${#aliasList[@]}; ++i)); do
 	MYALIAS=${aliasList[i]}
 	MYUSER=${userList[i]}
-	echo "git remote add $MYALIAS ${DIRPREFIX}~$MYUSER/$PUBLICREPO"
+	printf "git remote add $MYALIAS ${DIRPREFIX}~$MYUSER/$PUBLICREPO"
 	git remote add $MYALIAS ${DIRPREFIX}~$MYUSER/$PUBLICREPO
     done
 else
     printf "\n=== Adding public repo (jade)"
-    echo "git remote add public ssh://${USER}@lxplus.cern.ch/afs/cern.ch/user/${USER:0:1}/$USER/$PUBLICREPO"
+    printf "git remote add public ssh://${USER}@lxplus.cern.ch/afs/cern.ch/user/${USER:0:1}/$USER/$PUBLICREPO"
     git remote add public ssh://${USER}@lxplus.cern.ch/afs/cern.ch/user/${USER:0:1}/$USER/$PUBLICREPO
 
     printf "\n=== Adding git aliases for other users (jade)"
     for ((i=0; i<${#aliasList[@]}; ++i)); do
 	MYALIAS=${aliasList[i]}
 	MYUSER=${userList[i]}
-	echo "git remote add $MYALIAS ssh://${USER}@lxplus.cern.ch:/afs/cern.ch/user/${MYUSER:0:1}/$MYUSER/$PUBLICREPO"
+	printf "git remote add $MYALIAS ssh://${USER}@lxplus.cern.ch:/afs/cern.ch/user/${MYUSER:0:1}/$MYUSER/$PUBLICREPO"
 	git remote add $MYALIAS ssh://${USER}@lxplus.cern.ch:/afs/cern.ch/user/${MYUSER:0:1}/$MYUSER/$PUBLICREPO
     done
 fi
@@ -70,13 +70,13 @@ userList2=( "attikis"  "heitorPB" "sorda")
 for ((i=0; i<${#aliasList2[@]}; ++i)); do
     MYALIAS=${aliasList2[i]}
     MYUSER=${userList2[i]}
-    echo "git remote add $MYALIAS $GITHUB/$MYUSER/HiggsAnalysis.git"
+    printf "git remote add $MYALIAS $GITHUB/$MYUSER/HiggsAnalysis.git"
     git remote add $MYALIAS $GITHUB/$MYUSER/HiggsAnalysis.git
 done
 
 
 # Define list of branches to NOT be tracked
-ignoreList=("master" "2011" "2011Inv_dev" "2012" "2012_LimitHp2cs 2012_TTEffDev" "44replicaOfHIG11019" "InvertedTau" "btagDB" "cmssw428_pattuplev18_Approved21022012" "pattuplev18_2" "pattuplev18_3"  "pattuplev44_5" "pattuplev44_5_taulegdev")
+ignoreList=("master" "2011" "2011Inv_dev" "2012" "2012_LimitHp2cs 2012_TTEffDev" "44replicaOfHIG11019" "InvertedTau" "btagDB" "cmssw428_pattuplev18_Approved21022012" "pattuplev18_2" "pattuplev18_3"  "pattuplev44_5" "pattuplev44_5_taulegdev" "->")
 
 printf "\n=== Tracking most relevant remote branches"
 # Loop over all remove branches
@@ -95,11 +95,11 @@ for branch in `git branch -r`; do
 	    
     # If branch in ignore-list skip it
     if [ "$skip" == true ]; then
-	printf "\n=== Skipping branch $branch\n"
+	#printf "\nSkipping branch $branch"
 	continue
     fi	
 
-    printf "\n=== Tracking branch $branch\n"
+    echo "git branch --track $AFTERSLASH $branch"
     git branch --track $AFTERSLASH $branch;
 
 done
@@ -116,17 +116,20 @@ if [ ${BRANCH} == "2011" ]; then
 fi
 
 printf "\n=== Checking out repository branch $BRANCH"
+echo "git checkout ${BRANCH}"
 git checkout ${BRANCH}
+echo "git branch -a"
 git branch -a
 
 
 printf "\n=== The following git aliases have been set up (check that the path for public is correct!):"
+echo "git remote -v"
 git remote -v
 
 
-printf "\nLeaving HiggsAnalysis directory"
+printf "\n=== Leaving HiggsAnalysis directory"
 cd ..
 
-printf "\The following git branches are available:"
+printf "\n=== The following git branches are available:"
 git branch
 printf "\n"
