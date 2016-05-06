@@ -144,7 +144,8 @@ else
 	# echo "DIR=$DIR"
 
 	# NOTE: Remove last "/" from directory name. The "/" at the end causes the linking to FAIL for some shells
-	set DIR=`echo $DIR | sed 's/\(.*\)\//\1 /'`
+	set DIR=`echo $DIR | sed 's/\(.*\)\//\1 /'` #
+	#set DIR=`basename ${DIR}`  #also works!
 	set LINK_NAME=$PATHPREFIX/HiggsAnalysis/$DIR
 	set TARGET=$HIGGSANALYSIS_BASE/NtupleAnalysis/src/$DIR/python
 	set PYINIT=$LINK_NAME/__init__.py

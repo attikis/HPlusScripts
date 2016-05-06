@@ -41,7 +41,7 @@ if [[ $HOST == lxplus* ]]; then
     printf "\ngit remote add public $HOME/$PUBLICREPO"
     git remote add public $HOME/$PUBLICREPO
 
-    printf "\n=== Adding git aliases for other users (lxplus):\n"
+    printf "\n\n=== Adding git aliases for other users (lxplus):"
     for ((i=0; i<${#aliasList[@]}; ++i)); do
 	MYALIAS=${aliasList[i]}
 	MYUSER=${userList[i]}
@@ -49,11 +49,11 @@ if [[ $HOST == lxplus* ]]; then
 	git remote add $MYALIAS ${DIRPREFIX}~$MYUSER/$PUBLICREPO
     done
 else
-    printf "\n=== Adding public repo (jade):"
+    printf "\n\n=== Adding public repo (jade):"
     printf "\ngit remote add public ssh://${USER}@lxplus.cern.ch/afs/cern.ch/user/${USER:0:1}/$USER/$PUBLICREPO"
     git remote add public ssh://${USER}@lxplus.cern.ch/afs/cern.ch/user/${USER:0:1}/$USER/$PUBLICREPO
 
-    printf "\n=== Adding git aliases for other users (jade):"
+    printf "\n\n=== Adding git aliases for other users (jade):"
     for ((i=0; i<${#aliasList[@]}; ++i)); do
 	MYALIAS=${aliasList[i]}
 	MYUSER=${userList[i]}
