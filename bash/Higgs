@@ -74,7 +74,7 @@ done
 
 
 # Define list of branches to NOT be tracked
-ignoreList=("master" "2011" "2011Inv_dev" "2012" "2012_LimitHp2cs 2012_TTEffDev" "44replicaOfHIG11019" "InvertedTau" "btagDB" "cmssw428_pattuplev18_Approved21022012" "pattuplev18_2" "pattuplev18_3"  "pattuplev44_5" "pattuplev44_5_taulegdev" "->")
+ignoreList=("HEAD" "master" "2011" "2011Inv_dev" "2012" "2012_LimitHp2cs 2012_TTEffDev" "44replicaOfHIG11019" "InvertedTau" "btagDB" "cmssw428_pattuplev18_Approved21022012" "pattuplev18_2" "pattuplev18_3"  "pattuplev44_5" "pattuplev44_5_taulegdev" "->")
 
 printf "\n\n=== Tracking most relevant remote branches:\n"
 # Loop over all remove branches
