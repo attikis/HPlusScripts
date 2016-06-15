@@ -29,24 +29,27 @@ set CRAB="/afs/cern.ch/cms/ccs/wm/scripts/Crab/crab.csh"
 #================================================================================================
 echo "\n=== Setting environment for CMSSW=$CMSSW for USER=$USER at DESTINATION=$DESTINATION"#; pwd
 cd ~
+pwd
 
 
-echo "\n=== Setting CMS Runtime Environment"#; pwd
-cd $DESTINATION/$CMSSW/src/
-cmsenv #alias for `scramv1 runtime -sh\
+echo "\n=== Setting Standalone environment"
+cd $DESTINATION/$CMSSW/src/$ENDPATH 
+pwd
+source setup.csh
 
 
-#echo "\n=== Setting CRAB3 Environment"#; pwd
-#source $CRAB
+echo "\n=== Setting CMS Runtime Environment"
+cd ../
+pwd
+cmsenv #alias for `scramv1 runtime -csh`
+
+
+echo "\n=== Setting CRAB3 Environment"
+source $CRAB
 
 
 set myROOTSYS = `echo $ROOTSYS`
-echo "\n=== ROOT version is $myROOTSYS" 
-
-
-cd $ENDPATH
-echo "\n=== Setting Standalone environment"
-source setup.csh
+echo "\t Working with ROOT version $myROOTSYS"
 
 
 echo "\n=== Done"
