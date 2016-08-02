@@ -19,7 +19,7 @@ endif
 set DESTINATION=${1}
 set CMSSW="CMSSW_"${2}
 set SETUPCRAB=${3}
-set CRAB="/cvmfs/cms.cern.ch/crab3/crab.csh"
+set CRAB="/cvmfs/cms.cern.ch/crab3/crab_light.csh"
 set CRABVERSION='crab --version'
 # set SCRAM_ARCHITECTURE="slc6_amd64_gcc472"
 # set CRAB="/afs/cern.ch/cms/ccs/wm/scripts/Crab/crab.csh"
