@@ -27,14 +27,12 @@ set GIT_REPO="http://cmsdoc.cern.ch/~slehti/HiggsAnalysis.git"
 set SCRIPTS_REPO="$USER@lxplus.cern.ch:/afs/cern.ch/user/a/attikis/public/html/HPlusScripts.git/"
 set SCRIPTS_PATH=bash/
 set SCRIPTS_FILE=Higgs
-#set SCRAM_ARCHITECTURE="slc6_amd64_gcc493"
-set SCRAM_ARCHITECTURE="slc6_amd64_gcc530" #19 July 2016
+set SCRAM_ARCHITECTURE="slc6_amd64_gcc530" #slc6_amd64_gcc493
 
 #================================================================================================
 # Execute commands
 #================================================================================================
-echo "\n=== Will install $CMSSW_RELEASE (branch=$GIT_BRANCH) under $INSTALLATION_PATH for USER=$USER with SCRAM ARCHITECTURE=$SCRAM_ARCHITECTURE (CMSSW-compatible?)"
-echo "=== Continue ? (Y/N)"
+echo "\n=== Will install $CMSSW_RELEASE (branch=$GIT_BRANCH) under $INSTALLATION_PATH for USER=$USER. Continue ? (Y/N)"
 set proceed=$<
 
 if ($proceed == y || $proceed == Y) then
@@ -49,11 +47,9 @@ endif
 
 
 echo "\n=== Setting SCRAM ARCHITECTURE"
-#echo "setenv SCRAM_ARCH 'slc6_amd64_gcc493'"
-#setenv SCRAM_ARCH 'slc6_amd64_gcc493' #works
-#
-echo "setenv SCRAM_ARCH $SCRAM_ARCHITECTURE" 
-setenv SCRAM_ARCH $SCRAM_ARCHITECTURE #19 July 2016
+echo "setenv SCRAM_ARCH $SCRAM_ARCHITECTURE"
+setenv SCRAM_ARCH $SCRAM_ARCHITECTURE
+
 
 
 echo "\n=== Changing directory to $INSTALLATION_PATH"#; pwd
