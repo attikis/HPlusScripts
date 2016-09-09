@@ -44,19 +44,26 @@ set CMSSW_DIR=$HOME_DIR/scratch0/CMSSW_$CMSSW
 set HIGGS_DIR=$CMSSW_DIR/src/HiggsAnalysis
 set HIGGS=`basename $HIGGS_DIR`
 set WORK_DIR=$HIGGS/NtupleAnalysis/src/$ANALYSIS/work
-set NEVENTS=10
+set NEVENTS=-1
+
 
 ################################################################
-# Copy HiggsAnalysis to $POOL_DIR
+# Place first timestamp on log file
+################################################################
+date >> $LOG_FILE
+
+
+################################################################
+# Copy HiggsAnalysis to $POOL_DIR (takes some time!)
 ################################################################
 echo "=== lxbatch.csh: Copying {$HIGGS_DIR} to {$POOL_DIR}"
-date
-#cp -r $HIGGS_DIR .
-rsync --partial --progress -r $HIGGS_DIR $POOL_DIR/$HIGGS
+cp -r $HIGGS_DIR . 
+#rsync --partial --progress -r $HIGGS_DIR .
 date
 echo "=== lxbatch.csh: Copied {$HIGGS_DIR} to {$POOL_DIR}"
 ls -lt
 echo
+
 
 ################################################################
 # Setup the environment
@@ -71,6 +78,7 @@ echo "=== lxbatch.csh: Setting up the environment by sourcing the script {$ENV_F
 source $ENV_FILE
 echo
 
+
 ################################################################
 # Gather info (debugging purposed)
 ################################################################
@@ -82,9 +90,14 @@ echo "=== lxbatch.csh: ROOTSYS is"
 echo $ROOTSYS
 
 echo
+echo "=== lxbatch.csh: python is"
+python --version
+
+echo
 echo "=== lxbatch.csh: HOSTNAME is"
 hostname
 echo
+
 
 ################################################################
 # Run the code
@@ -100,7 +113,14 @@ cp $POOL_DIR/$HIGGS/NtupleAnalysis/obj/Framework/src/FrameworkDict_rdict.pcm .
 ls -lt
 
 echo "=== lxbatch.csh: Running the python file {$PY_FILE}"
-./$PY_FILE -m $MCRAB_DIR -n $NEVENTS -v >> $LOG_FILE
+./$PY_FILE -m $MCRAB_DIR -n $NEVENTS  >> $LOG_FILE
+
+
+################################################################
+# Place final timestamp on log file
+################################################################
+date >> $LOG_FILE
+
 
 ################################################################
 # Copy output dir (and log.txt) to save dir
@@ -111,9 +131,3 @@ echo "=== lxbatch.csh: Copying output to {$SAVE_DIR}"
 mkdir $SAVE_DIR
 cp $LOG_FILE $SAVE_DIR/.
 cp -r {$ANALYSIS}_* $SAVE_DIR/.
-
-
-################################################################
-# Place timestamp on log file
-################################################################
-date >> $LOG_FILE

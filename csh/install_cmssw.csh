@@ -75,6 +75,13 @@ echo "\n=== Changing directory to $CMSSW_RELEASE/src/"
 cd $CMSSW_RELEASE/src/
 #pwd
 
+# Instructions for 2016 analysis: Stop program execution, print out a message, and wait for user to  press <RETURN>
+set text = "\n=== WARNING! Changes are required for 2016 Analysis (8X) that are not yet automated. See https://twiki.cern.ch/twiki/bin/view/CMS/HiggsChFullyHadronic#MiniAOD2TTree_Producer for more info. Exiting.."
+printf "\n$text"
+set junk = ($<)
+echo 
+exit 1
+
 
 echo "\n=== Getting installation script $SCRIPTS_FILE from remote repository"
 echo "git archive --remote=$SCRIPTS_REPO  HEAD:$SCRIPTS_PATH $SCRIPTS_FILE | tar -x"

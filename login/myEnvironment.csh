@@ -7,7 +7,7 @@
 #############################################################################      
 echo "\n=== myEnvironment.csh"
 set USER_INITIAL=`echo $USER | cut -c1`
-
+set SCRAM_ARCHITECTURE=slc6_amd64_gcc530
 
 ############################################################################# 
 # Enable tab completion to show a menu of options (tcsh)
@@ -39,7 +39,6 @@ setenv WORKSPACE /afs/cern.ch/work/$USER_INITIAL/$USER
 # set prompt = "%m > "
 set prompt = '[%n@%m:%c]%#'
 
-
 #############################################################################
 # Set aliases
 #############################################################################
@@ -61,8 +60,8 @@ alias ssh           'ssh -Y'
 alias glogin        'source $HOME/bin/grid_environment'
 alias grid          'source $HOME/bin/grid_environment'
 alias scram5        'setenv SCRAM_ARCH slc5_amd64_gcc462'
-alias scram6        'setenv SCRAM_ARCH slc6_amd64_gcc481'
-
+#alias scram6        'setenv SCRAM_ARCH slc6_amd64_gcc481'
+alias scram6        'setenv SCRAM_ARCH $SCRAM_ARCHITECTURE' #19 July 2016
 
 #############################################################################
 # Setup "screen"
@@ -91,15 +90,15 @@ endif
 # setenv ROOTSYS /afs/cern.ch/sw/lcg/app/releases/ROOT/5.28.00/slc4_ia32_gcc34/root
 # setenv ROOTSYS /afs/cern.ch/sw/lcg/app/releases/ROOT/5.28.00/x86_64-slc5-gcc43-dbg/root
 # setenv ROOTSYS /afs/cern.ch/sw/lcg/app/releases/ROOT/5.32.03/x86_64-slc5-gcc43-dbg/root
-setenv ROOTSYS /afs/cern.ch/sw/lcg/app/releases/ROOT/5.34.00/x86_64-slc5-gcc43-dbg/root #slehti
-# setenv ROOTSYS /afs/cern.ch/sw/lcg/app/releases/ROOT/6.03.02/x86_64-slc6-gcc48-opt/root
-# setenv ROOTSYS /afs/cern.ch/sw/lcg/app/releases/ROOT/6.04.00/x86_64-slc6-gcc48-opt/root 
+# setenv ROOTSYS /afs/cern.ch/sw/lcg/app/releases/ROOT/5.34.00/x86_64-slc5-gcc43-dbg/root #slehti
+setenv ROOTSYS /afs/cern.ch/sw/lcg/app/releases/ROOT/5.34.00/x86_64-slc6-gcc48-opt/root/
+# setenv ROOTSYS /afs/cern.ch/sw/lcg/app/releases/ROOT/5.34.00/x86_64-slc6-gcc46-dbg/root #test
 
 setenv LD_LIBRARY_PATH $ROOTSYS/lib
 setenv PATH ${PATH}:$ROOTSYS/bin
 
-setenv SCRAM_ARCH slc6_amd64_gcc491 #slehti
-#setenv SCRAM_ARCH slc6_amd64_gcc493 #test
+#setenv SCRAM_ARCH slc6_amd64_gcc491 #slehti
+setenv SCRAM_ARCH $SCRAM_ARCHITECTURE #19 July 2016
 
 setenv STAGE_HOST castorcms
 
