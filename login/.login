@@ -24,9 +24,9 @@ if ( $LOCATION == "" ) then
         set LOCATION="lxplus"
     else if (`hostname` =~ "Mac"* ) then
         set LOCATION="mac"
-     else if (`hostname` =~ *".cern.ch" ) then #Example: p06109780e53561.cern.ch
+    else if (`hostname` =~ *".cern.ch" ) then #Example: p06109780e53561.cern.ch
         set LOCATION="lxbatch"
-     else if (`hostname` =~ *".fnal.gov" ) then #Example: cmslpc35.fnal.gov
+    else if (`hostname` =~ *".fnal.gov" ) then #Example: cmslpc35.fnal.gov
         set LOCATION="lpc"
     endif
 endif
@@ -42,14 +42,14 @@ echo
 #############################################################################
 set envScript=myEnvironment.csh
 echo "Sourcing custom environment script:\n$envScript"
-source myEnvironment.csh
+source $envScript
 
 # http://www.uscms.org/uscms_at_work/computing/setup/setup_software.shtml
 if ( $LOCATION == "lpc" ) then
-    echo "\n=== Setting The CMS software environment using an environment setup script (csh/tcsh)"
+    echo "\n=== Setting The CMS software environment using a setup script (csh/tcsh)"
     source /cvmfs/cms.cern.ch/cmsset_default.csh
     #source /cvmfs/cms.cern.ch/cmsset_default.sh     
-
+endif
 
 #############################################################################
 #echo ".login *** Launching screen:"
