@@ -22,6 +22,21 @@ set SETUPCRAB=true #${3}
 set CRAB="/cvmfs/cms.cern.ch/crab3/crab.csh"
 set CRABVERSION='crab --version'
 set ENDPATH="/afs/cern.ch/user/a/attikis/scratch0/CMSSW_6_2_0_SLHC12_patch1/src/SLHCUpgradeSimulations/L1TrackTrigger/test"
+set SCRAM_ARCHITECTURE="slc5_amd64_gcc472" #"slc5_amd64_gcc472"
+
+#================================================================================================
+# SCRAM ARCHITECTURE
+#================================================================================================
+echo "\n=== Setting SCRAM ARCHITECTURE"
+echo "setenv SCRAM_ARCH $SCRAM_ARCHITECTURE"
+setenv SCRAM_ARCH $SCRAM_ARCHITECTURE
+# According to Stefano (CRAB Support)
+# the Production architecture for the "CMSSW_6_2_0_SLHC12_patch1" release  is slc5_amd64_gcc472
+# and NOT slc6_amd64_gcc472. If not changed it will cause  errors when delegating My-proxy in CRAB
+# submission time. "That error is not there when using the production architecture for this
+# release, at least not in  a quick test I did. If you use a CMSSW release which breaks the SSL
+#  library needed by myproxy, it is very hard for CRAB (or any possible trick) to fix it.
+
 
 #================================================================================================
 # CMSSW
@@ -35,6 +50,7 @@ cd $DESTINATION/$CMSSW/src/
 cmsenv  
 
 #================================================================================================
+setenv SCRAM_ARCH $SCRAM_ARCHITECTURE
 # CRAB
 #================================================================================================
 if ($SETUPCRAB == true) then

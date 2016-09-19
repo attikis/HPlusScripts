@@ -9,6 +9,7 @@ echo "\n=== myEnvironment.csh"
 set USER_INITIAL=`echo $USER | cut -c1`
 set SCRAM_ARCHITECTURE=slc6_amd64_gcc530
 
+
 ############################################################################# 
 # Enable tab completion to show a menu of options (tcsh)
 ############################################################################# 
@@ -59,7 +60,7 @@ alias ssh           'ssh -Y'
 #alias root          'root -l'
 alias glogin        'source $HOME/bin/grid_environment'
 alias grid          'source $HOME/bin/grid_environment'
-alias scram5        'setenv SCRAM_ARCH slc5_amd64_gcc462'
+alias scram5        'setenv SCRAM_ARCH slc5_amd64_gcc472' #slc5_amd64_gcc462 #11 Sep 2016
 #alias scram6        'setenv SCRAM_ARCH slc6_amd64_gcc481'
 alias scram6        'setenv SCRAM_ARCH $SCRAM_ARCHITECTURE' #19 July 2016
 
@@ -98,7 +99,9 @@ setenv LD_LIBRARY_PATH $ROOTSYS/lib
 setenv PATH ${PATH}:$ROOTSYS/bin
 
 #setenv SCRAM_ARCH slc6_amd64_gcc491 #slehti
-setenv SCRAM_ARCH $SCRAM_ARCHITECTURE #19 July 2016
+echo "Disabled setting of SCRAM_ARCHITECTURE variable to fix CRAB3 in MSSW_6_2_0_SLHC12_patch1 (11 Sep 2016)"
+echo
+#setenv SCRAM_ARCH $SCRAM_ARCHITECTURE #19 July 2016
 
 setenv STAGE_HOST castorcms
 
