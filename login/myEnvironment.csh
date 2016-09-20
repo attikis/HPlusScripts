@@ -86,13 +86,10 @@ endif
 #############################################################################
 ### Configure environment variables
 #############################################################################
-# setenv ROOTSYS /afs/cern.ch/sw/lcg/app/releases/ROOT/5.26.00/slc4_amd64_gcc34/root
-# setenv ROOTSYS /afs/cern.ch/sw/lcg/app/releases/ROOT/5.28.00/slc4_ia32_gcc34/root
-# setenv ROOTSYS /afs/cern.ch/sw/lcg/app/releases/ROOT/5.28.00/x86_64-slc5-gcc43-dbg/root
-# setenv ROOTSYS /afs/cern.ch/sw/lcg/app/releases/ROOT/5.32.03/x86_64-slc5-gcc43-dbg/root
-# setenv ROOTSYS /afs/cern.ch/sw/lcg/app/releases/ROOT/5.34.00/x86_64-slc5-gcc43-dbg/root #slehti
-setenv ROOTSYS /afs/cern.ch/sw/lcg/app/releases/ROOT/5.34.00/x86_64-slc6-gcc48-opt/root/
-# setenv ROOTSYS /afs/cern.ch/sw/lcg/app/releases/ROOT/5.34.00/x86_64-slc6-gcc46-dbg/root #test
+# setenv ROOTSYS /afs/cern.ch/sw/lcg/app/releases/ROOT/5.34.00/x86_64-slc5-gcc43-dbg/root  # slehti (~Summer 2016)
+# setenv ROOTSYS /afs/cern.ch/sw/lcg/app/releases/ROOT/5.34.00/x86_64-slc6-gcc48-opt/root/ # does not exist!
+#setenv ROOTSYS /afs/cern.ch/sw/lcg/app/releases/ROOT/5.34.00/x86_64-slc6-gcc46-opt/root/  # HiggsAnalysis works also on LPC
+setenv ROOTSYS /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.02.12-kpegke4 # 20 Sep 2016
 
 setenv LD_LIBRARY_PATH $ROOTSYS/lib
 setenv PATH ${PATH}:$ROOTSYS/bin
