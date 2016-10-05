@@ -63,6 +63,10 @@ alias grid          'source $HOME/bin/grid_environment'
 alias scram5        'setenv SCRAM_ARCH slc5_amd64_gcc472' #slc5_amd64_gcc462 #11 Sep 2016
 #alias scram6        'setenv SCRAM_ARCH slc6_amd64_gcc481'
 alias scram6        'setenv SCRAM_ARCH $SCRAM_ARCHITECTURE' #19 July 2016
+alias cmssw         'source ~/HPlusScripts/csh/setenv_cmssw.csh ~/scratch0/ 8_0_19 false'
+alias cmssw-crab    'source ~/HPlusScripts/csh/setenv_cmssw.csh ~/scratch0/ 8_0_19 true'
+alias hltaus        'source HPlusScripts/csh/hltaus.csh'
+alias cmsenvUnset   'eval `scram unsetenv -sh`'
 
 #############################################################################
 # Setup "screen"
@@ -87,10 +91,9 @@ endif
 #############################################################################
 ### Configure environment variables
 #############################################################################
-# setenv ROOTSYS /afs/cern.ch/sw/lcg/app/releases/ROOT/5.34.00/x86_64-slc5-gcc43-dbg/root  # slehti (~Summer 2016)
-# setenv ROOTSYS /afs/cern.ch/sw/lcg/app/releases/ROOT/5.34.00/x86_64-slc6-gcc48-opt/root/ # does not exist!
-# setenv ROOTSYS /afs/cern.ch/sw/lcg/app/releases/ROOT/5.34.00/x86_64-slc6-gcc46-opt/root/  # HiggsAnalysis works also on LPC
-setenv ROOTSYS /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.02.12-kpegke4 # 20 Sep 2016   
+# setenv ROOTSYS /afs/cern.ch/sw/lcg/app/releases/ROOT/5.34.00/x86_64-slc5-gcc43-dbg/root #slehti                                                                            
+# setenv ROOTSYS /afs/cern.ch/sw/lcg/app/releases/ROOT/5.34.00/x86_64-slc6-gcc48-opt/root/  #does not exist!                                                                 
+setenv ROOTSYS /afs/cern.ch/sw/lcg/app/releases/ROOT/5.34.00/x86_64-slc6-gcc46-opt/root/
 
 setenv LD_LIBRARY_PATH $ROOTSYS/lib
 setenv PATH ${PATH}:$ROOTSYS/bin

@@ -5,14 +5,22 @@
 Permissions: 
 chmod +x checkoutSvnNote.py
 
+
 Install python package:
 sudo easy_install package_name
 
+
 Description:
-Checkout a CMS Note from SVN.
+Checkout a CMS Note/PAS from SVN.
+
 
 Usage: 
 checkoutSvnNote.py [options]
+
+
+Example:
+./checkoutSvnNote.py -n HIG-16-031 -d HIG-16-031
+
 
 Options:
   -h, --help            show this help message and exit

@@ -40,6 +40,7 @@ cd $DESTINATION/$CMSSW/src/
 pwd
 cmsenv #alias for `scramv1 runtime -sh\
 
+
 set myROOTSYS = `echo $ROOTSYS`
 echo "\n=== Using ROOT Version $myROOTSYS"
 
