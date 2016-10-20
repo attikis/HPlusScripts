@@ -7,7 +7,8 @@
 #############################################################################      
 echo "\n=== myEnvironment.csh"
 set USER_INITIAL=`echo $USER | cut -c1`
-set SCRAM_ARCHITECTURE=slc6_amd64_gcc530
+#set SCRAM_ARCHITECTURE=slc6_amd64_gcc530
+set SCRAM_ARCHITECTURE=slc6_amd64_gcc493 #07 Oct 2016
 
 
 ############################################################################# 
@@ -27,7 +28,7 @@ setenv W0 $HOME/w0
 setenv PUBLIC $HOME/public
 setenv TMP /tmp/${USER}
 setenv WORKSPACE /afs/cern.ch/work/$USER_INITIAL/$USER
-
+setenv EOS /store/user/$USER/CRAB3_TransferData
 
 #############################################################################
 # Set your prompt
@@ -57,18 +58,19 @@ alias rm            'rm -i'                            # ask confirmation before
 alias ls            'ls -pt --color=auto'              # enable automatic list-highlight
 alias lsd           'ls -lpt --color=force | grep ^d'  # list only the directories 
 alias ssh           'ssh -Y'
-#alias root          'root -l'
+alias root          'root -l'
 alias glogin        'source $HOME/bin/grid_environment'
 alias grid          'source $HOME/bin/grid_environment'
-alias scram5        'setenv SCRAM_ARCH slc5_amd64_gcc472' #slc5_amd64_gcc462 #11 Sep 2016
-#alias scram6        'setenv SCRAM_ARCH slc6_amd64_gcc481'
-alias scram6        'setenv SCRAM_ARCH $SCRAM_ARCHITECTURE' #19 July 2016
+alias scram5        'setenv SCRAM_ARCH slc5_amd64_gcc472'
+alias scram6        'setenv SCRAM_ARCH $SCRAM_ARCHITECTURE'
 alias cmssw         'source ~/HPlusScripts/csh/setenv_cmssw.csh ~/scratch0/ 8_0_19 false'
 alias cmssw-crab    'source ~/HPlusScripts/csh/setenv_cmssw.csh ~/scratch0/ 8_0_19 true'
-alias d3            'cd /uscms_data/d3/aattikis'
-alias higgs         'source HPlusScripts/csh/setenv_higgs.csh ~/scratch0/ 8_0_19'
 alias hltaus        'source HPlusScripts/csh/hltaus.csh'
 alias cmsenvUnset   'eval `scram unsetenv -sh`'
+alias higgs         'source ~/HPlusScripts/csh/setenv_higgs.csh ~/scratch0/ 8_0_19'
+alias d3            'cd /uscms_data/d3/aattikis/workspace/'
+alias setbrilcalc   'setenv PATH ${PATH}:$HOME/.local/bin:/afs/cern.ch/cms/lumi/brilconda-1.0.3/bin:'
+
 
 #############################################################################
 # Setup "screen"
@@ -93,33 +95,24 @@ endif
 #############################################################################
 ### Configure environment variables
 #############################################################################
-<<<<<<< HEAD
-# setenv ROOTSYS /afs/cern.ch/sw/lcg/app/releases/ROOT/5.34.00/x86_64-slc5-gcc43-dbg/root  # slehti (~Summer 2016)
-# setenv ROOTSYS /afs/cern.ch/sw/lcg/app/releases/ROOT/5.34.00/x86_64-slc6-gcc48-opt/root/ # does not exist!
-#setenv ROOTSYS /afs/cern.ch/sw/lcg/app/releases/ROOT/5.34.00/x86_64-slc6-gcc46-opt/root/  # HiggsAnalysis works also on LPC
-setenv ROOTSYS /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.02.12-kpegke4 # 20 Sep 2016
-=======
-# setenv ROOTSYS /afs/cern.ch/sw/lcg/app/releases/ROOT/5.34.00/x86_64-slc5-gcc43-dbg/root #slehti                                                                            
-# setenv ROOTSYS /afs/cern.ch/sw/lcg/app/releases/ROOT/5.34.00/x86_64-slc6-gcc48-opt/root/  #does not exist!                                                                 
-setenv ROOTSYS /afs/cern.ch/sw/lcg/app/releases/ROOT/5.34.00/x86_64-slc6-gcc46-opt/root/
->>>>>>> origin/master
+#setenv ROOTSYS /afs/cern.ch/sw/lcg/app/releases/ROOT/6.02.12/x86_64-slc6-gcc49-opt/root/ # 07 Oct 2016
+setenv ROOTSYS /cvmfs/cms.cern.ch/$SCRAM_ARCHITECTURE/lcg/root/6.02.12-kpegke4
 
 setenv LD_LIBRARY_PATH $ROOTSYS/lib
 setenv PATH ${PATH}:$ROOTSYS/bin
 
 #setenv SCRAM_ARCH slc6_amd64_gcc491 #slehti
-echo "Disabled setting of SCRAM_ARCHITECTURE variable to fix CRAB3 in MSSW_6_2_0_SLHC12_patch1 (11 Sep 2016)"
+echo "NOTE! Disabled setting of SCRAM_ARCHITECTURE variable to fix CRAB3 in CMSSW_6_2_0_SLHC12_patch1"
 echo
-#setenv SCRAM_ARCH $SCRAM_ARCHITECTURE #19 July 2016
+setenv SCRAM_ARCH $SCRAM_ARCHITECTURE
 
 setenv STAGE_HOST castorcms
 
 #############################################################################
 # Setup Python and PyROOT (assuming root paths exist)
 #############################################################################
-#setenv PYTHONDIR /afs/cern.ch/sw/lcg/external/Python/2.5.4p2/slc4_amd64_gcc34
 setenv PYTHONDIR /afs/cern.ch/sw/lcg/external/Python/2.7.4/x86_64-slc6-gcc48-opt/
-#setenv PYTHONDIR /cvmfs/cms.cern.ch/$SCRAM_ARCH/external/2.7.6-kpegke/ #doesn't work
+
 #setenv PYTHONDIR /usr
 setenv PYTHONPATH $PYTHONDIR/bin
 setenv PATH $PYTHONDIR/bin:$PATH
