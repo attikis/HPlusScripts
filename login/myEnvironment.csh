@@ -44,6 +44,7 @@ set prompt = '[%n@%m:%c]%#'
 #############################################################################
 # Set aliases
 #############################################################################
+alias lxplus        'ssh -N -L 10121:itrac50012-v.cern.ch:10121 attikis@lxplus.cern.ch'
 alias l             'ls -lth'
 alias cd            'cd \!*;echo $cwd'
 alias pwd           'echo $cwd'
