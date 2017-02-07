@@ -1,12 +1,13 @@
 #############################################################################
 ### File ............: myEnvironment.csh
-### Description:.....: general purpose .tcshrc file
+### Description:.....: general purpose environment script file
 ### Author: .........: Alexandros Attikis
 ### Email ...........: attikis@cern.ch
 ### Comments ........: http://info.eps.surrey.ac.uk/FAQ/loginfiles.html
 #############################################################################      
-echo "\n=== myEnvironment.csh"
+echo "\n=== $HOME/myEnvironment.csh"
 set USER_INITIAL=`echo $USER | cut -c1`
+
 
 ############################################################################# 
 # Enable tab completion to show a menu of options (tcsh)
@@ -17,16 +18,16 @@ set autolist
 #############################################################################      
 # Set PATHS & Environment variables
 #############################################################################      
-setenv SCRATCH $HOME/scratch0
-setenv W0 $HOME/w0
-setenv PUBLIC $HOME/public
-setenv TMP /tmp/${USER}
-setenv WORKSPACE /afs/cern.ch/work/$USER_INITIAL/$USER
 setenv EOS /store/user/$USER/CRAB3_TransferData
+setenv PUBLIC $HOME/public
+setenv SCRATCH $HOME/scratch0
+setenv TMP /tmp/${USER}
+setenv W0 $HOME/w0
+setenv WORKSPACE /afs/cern.ch/work/$USER_INITIAL/$USER
 
 
 #############################################################################
-# Set your prompt
+# Setup my prompt
 #############################################################################
 set prompt = '[%n@%m:%c]%#'
 
@@ -34,31 +35,27 @@ set prompt = '[%n@%m:%c]%#'
 #############################################################################
 # Set aliases
 #############################################################################
-alias lxplus        'ssh -N -L 10121:itrac50012-v.cern.ch:10121 attikis@lxplus.cern.ch'
-alias l             'ls -lth'
-alias pwd           'echo $cwd'
-alias del           'rm -i'
-alias type          'cat'
-alias dir           'ls -la'
-alias lo            'exit'
-alias emacs         'emacs -nw'
-alias H             'history -r | fgrep "\!*"'         # just type H latex to get the 
-alias h             'history'                          # just type h for the history
-alias rm            'rm -i'                            # ask confirmation before deleting
-alias ls            'ls -pt --color=auto'              # enable automatic list-highlight
-alias lsd           'ls -lpt --color=force | grep ^d'  # list only the directories 
-alias ssh           'ssh -Y'
-alias root          'root -l'
-alias glogin        'source $HOME/bin/grid_environment'
-alias grid          'source $HOME/bin/grid_environment'
-alias scram6        'setenv SCRAM_ARCH $SCRAM_ARCHITECTURE'
+alias H             'history -r | fgrep "\!*"'
+alias cmsenvUnset   'eval `scram unsetenv -sh`'
 alias cmssw         'source ~/HPlusScripts/csh/setenv_cmssw.csh ~/scratch0/ 8_0_24 false'
 alias cmssw-crab    'source ~/HPlusScripts/csh/setenv_cmssw.csh ~/scratch0/ 8_0_24 true'
-alias hltaus        'source HPlusScripts/csh/hltaus.csh'
-alias cmsenvUnset   'eval `scram unsetenv -sh`'
-alias higgs         'source ~/HPlusScripts/csh/setenv_higgs.csh ~/scratch0/ 8_0_24'
 alias d3            'cd /uscms_data/d3/aattikis/workspace/'
+alias emacs         'emacs -nw'
+alias glogin        'source $HOME/bin/grid_environment'
+alias grid          'source $HOME/bin/grid_environment'
+alias h             'history'
+alias higgs         'source ~/HPlusScripts/csh/setenv_higgs.csh ~/scratch0/ 8_0_24'
+alias hltaus        'source HPlusScripts/csh/hltaus.csh'
+alias l             'ls -lth'
+alias ls            'ls -pt --color=auto'
+alias lsd           'ls -lpt --color=force | grep ^d'
+alias lxplus        'ssh -N -L 10121:itrac50012-v.cern.ch:10121 attikis@lxplus.cern.ch'
+alias pwd           'echo $cwd'
+alias rm            'rm -i'
+alias root          'root -l'
+alias scram6        'setenv SCRAM_ARCH $SCRAM_ARCHITECTURE'
 alias setbrilcalc   'setenv PATH ${PATH}:$HOME/.local/bin:/afs/cern.ch/cms/lumi/brilconda-1.0.3/bin:'
+alias ssh           'ssh -Y'
 
 
 #############################################################################
@@ -84,13 +81,16 @@ alias setbrilcalc   'setenv PATH ${PATH}:$HOME/.local/bin:/afs/cern.ch/cms/lumi/
 #############################################################################
 # Configure environment variables
 #############################################################################
+#setenv LD_LIBRARY_PATH '/uscms/home/${USER}/.local/lib:'
+#setenv LD_LIBRARY_PATH '/uscms/home/$USER/.local/lib:'$LD_LIBRARY_PATH
+
 # setenv ROOTSYS /cvmfs/cms.cern.ch/$SCRAM_ARCHITECTURE/lcg/root/6.02.12-kpegke4 # CMSSW_7_6_5
-# 
+
 # setenv LD_LIBRARY_PATH $ROOTSYS/lib
 # setenv PATH ${PATH}:$ROOTSYS/bin
-# 
+
 # setenv SCRAM_ARCH $SCRAM_ARCHITECTURE
-# 
+
 # setenv STAGE_HOST castorcms
 
 
@@ -99,7 +99,7 @@ alias setbrilcalc   'setenv PATH ${PATH}:$HOME/.local/bin:/afs/cern.ch/cms/lumi/
 #############################################################################
 # setenv PYTHONDIR /afs/cern.ch/sw/lcg/external/Python/2.7.4/x86_64-slc6-gcc48-opt/  # CMSSW_7_6_5
 # #setenv PYTHONDIR /cvmfs/cms.cern.ch/slc6_amd64_gcc530/external/python/2.7.11-giojec2 # CMSSW_8_0_24
-# 
+
 # #setenv PYTHONDIR /usr
 # setenv PYTHONPATH $PYTHONDIR/bin
 # setenv PATH $PYTHONDIR/bin:$PATH
@@ -108,7 +108,7 @@ alias setbrilcalc   'setenv PATH ${PATH}:$HOME/.local/bin:/afs/cern.ch/cms/lumi/
 
 
 #############################################################################
-# Additional PATHS
+# Set additional PATHS
 #############################################################################
 setenv PATH ${PATH}:$HOME/HPlusScripts/
 setenv PATH ${PATH}:$HOME/HPlusScripts/tcsh/
@@ -122,7 +122,11 @@ setenv PATH ${PATH}:$HOME/HPlusScripts/lxbatch/
 # Additional variables
 #############################################################################
 setenv EDITOR emacs
-# setenv PRINTER 40-4b-cor
+if ( "$LOCATION" == "lxplus" ) then
+    setenv PRINTER 40-4b-cor
+    echo "\n=== $HOME/myEnvironment.csh\n\tPRINTER=$PRINTER"
+endif
+
 
 
 #############################################################################
@@ -155,13 +159,22 @@ setenv LC_IDENTIFICATION "en_US.UTF-8"
 #############################################################################
 # Inform user
 #############################################################################
-echo "\tSCRATCH  = $SCRATCH"
-echo "\tW0       = $W0"
-echo "\tPUBLIC   = $PUBLIC"
-echo "\tTMP      = $TMP"
-echo "\tWORKSPACE= $WORKSPACE"
 echo "\tEDITOR   = $EDITOR"
-# echo "\tFORTRAN  = $FORTRAN"
-# echo "\tROOTSYS  = $ROOTSYS"
-# echo "PRINTER=$PRINTER"
+echo "\tLOCATION = $LOCATION"
+if ( "$LOCATION" == "lxplus" ) then
+    echo "\tPRINTER  = $PRINTER"
+endif 
+echo "\tPUBLIC   = $PUBLIC"
+echo "\tSCRATCH  = $SCRATCH"
+echo "\tTMP      = $TMP"
+echo "\tW0       = $W0"
+echo "\tWORKSPACE= $WORKSPACE"
+#echo "\tFORTRAN  = $FORTRAN"
+#echo "\tROOTSYS  = $ROOTSYS"
+
+
+#############################################################################
+# EOF
+#############################################################################
+echo "\n=== $HOME/myEnvironment.csh\n\tDONE!"
 echo
