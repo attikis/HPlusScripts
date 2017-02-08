@@ -8,6 +8,23 @@
 echo "\n=== $HOME/myEnvironment.csh"
 set USER_INITIAL=`echo $USER | cut -c1`
 
+############################################################################# 
+# Determine Location
+############################################################################# 
+if (! $?LOCATION) then 
+    if (`hostname` =~ "lxplus"* ) then
+        set LOCATION="lxplus"
+    else if (`hostname` =~ "Mac"* ) then
+        set LOCATION="mac"
+     else if (`hostname` =~ *".cern.ch" ) then  #Example: p06109780e53561.cern.ch
+        set LOCATION="lxbatch"
+     else if (`hostname` =~ *".fnal.gov" ) then #Example: cmslpc35.fnal.gov
+        set LOCATION="lpc"
+    endif
+endif
+
+    
+
 
 ############################################################################# 
 # Enable tab completion to show a menu of options (tcsh)
@@ -97,12 +114,12 @@ alias ssh           'ssh -Y'
 #############################################################################
 # Setup Python and PyROOT (assuming root paths exist)
 #############################################################################
-# setenv PYTHONDIR /afs/cern.ch/sw/lcg/external/Python/2.7.4/x86_64-slc6-gcc48-opt/  # CMSSW_7_6_5
+#setenv PYTHONDIR /afs/cern.ch/sw/lcg/external/Python/2.7.4/x86_64-slc6-gcc48-opt/  # CMSSW_7_6_5
 # #setenv PYTHONDIR /cvmfs/cms.cern.ch/slc6_amd64_gcc530/external/python/2.7.11-giojec2 # CMSSW_8_0_24
 
 # #setenv PYTHONDIR /usr
 # setenv PYTHONPATH $PYTHONDIR/bin
-# setenv PATH $PYTHONDIR/bin:$PATH
+#setenv PATH $PYTHONDIR/bin:$PATH
 # setenv LD_LIBRARY_PATH $PYTHONDIR/lib:$LD_LIBRARY_PATH
 # setenv PYTHONPATH $ROOTSYS/lib:$PYTHONPATH
 
