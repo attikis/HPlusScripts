@@ -1,13 +1,29 @@
 #############################################################################
 ### File ............: myEnvironment.csh
-### Description:.....: general purpose .tcshrc file
+### Description:.....: general purpose environment script file
 ### Author: .........: Alexandros Attikis
 ### Email ...........: attikis@cern.ch
 ### Comments ........: http://info.eps.surrey.ac.uk/FAQ/loginfiles.html
 #############################################################################      
-echo "\n=== myEnvironment.csh"
+echo "\n=== $HOME/myEnvironment.csh"
 set USER_INITIAL=`echo $USER | cut -c1`
-set SCRAM_ARCHITECTURE=slc6_amd64_gcc530
+
+############################################################################# 
+# Determine Location
+############################################################################# 
+if (! $?LOCATION) then 
+    if (`hostname` =~ "lxplus"* ) then
+        set LOCATION="lxplus"
+    else if (`hostname` =~ "Mac"* ) then
+        set LOCATION="mac"
+     else if (`hostname` =~ *".cern.ch" ) then  #Example: p06109780e53561.cern.ch
+        set LOCATION="lxbatch"
+     else if (`hostname` =~ *".fnal.gov" ) then #Example: cmslpc35.fnal.gov
+        set LOCATION="lpc"
+    endif
+endif
+
+    
 
 
 ############################################################################# 
@@ -19,130 +35,121 @@ set autolist
 #############################################################################      
 # Set PATHS & Environment variables
 #############################################################################      
-setenv FORTRAN $HOME/public/fortran/src
-setenv PATH "${PATH}:${HOME}/bin:."
-
-setenv SCRATCH $HOME/scratch0
-setenv W0 $HOME/w0
+setenv EOS /store/user/$USER/CRAB3_TransferData
 setenv PUBLIC $HOME/public
+setenv SCRATCH $HOME/scratch0
 setenv TMP /tmp/${USER}
+setenv W0 $HOME/w0
 setenv WORKSPACE /afs/cern.ch/work/$USER_INITIAL/$USER
 
 
 #############################################################################
-# Set your prompt
-# set prompt="$HOST "           # plus1         #
-# set prompt='\! > '            # 3 >           # 3 means the third
-# set prompt='\! %~ %# '        # 3 ~/public >  #
-# set prompt="[$HOST] > "       # [plus1] >     #
-# set prompt='R; '              # R;            # for VM hackers!
+# Setup my prompt
 #############################################################################
-# set prompt = "%m > "
 set prompt = '[%n@%m:%c]%#'
+
 
 #############################################################################
 # Set aliases
 #############################################################################
-alias l             'ls -lth'
-alias cd            'cd \!*;echo $cwd'
-alias pwd           'echo $cwd'
-alias del           'rm -i'
-alias type          'cat'
-alias dir           'ls -la'
-alias lo            'exit'
+alias H             'history -r | fgrep "\!*"'
+alias cmsenvUnset   'eval `scram unsetenv -sh`'
+alias cmssw         'source ~/HPlusScripts/csh/setenv_cmssw.csh ~/scratch0/ 8_0_24 false'
+alias cmssw-crab    'source ~/HPlusScripts/csh/setenv_cmssw.csh ~/scratch0/ 8_0_24 true'
+alias d3            'cd /uscms_data/d3/aattikis/workspace/'
 alias emacs         'emacs -nw'
-alias H             'history -r | fgrep "\!*"'         # just type H latex to get the 
-alias h             'history'                          # just type h for the history
-alias rm            'rm -i'                            # ask confirmation before deleting
-alias ls            'ls -pt --color=auto'              # enable automatic list-highlight
-alias lsd           'ls -lpt --color=force | grep ^d'  # list only the directories 
-alias ssh           'ssh -Y'
-#alias root          'root -l'
 alias glogin        'source $HOME/bin/grid_environment'
 alias grid          'source $HOME/bin/grid_environment'
-alias scram5        'setenv SCRAM_ARCH slc5_amd64_gcc472' #slc5_amd64_gcc462 #11 Sep 2016
-#alias scram6        'setenv SCRAM_ARCH slc6_amd64_gcc481'
-alias scram6        'setenv SCRAM_ARCH $SCRAM_ARCHITECTURE' #19 July 2016
-alias cmssw         'source ~/HPlusScripts/csh/setenv_cmssw.csh ~/scratch0/ 8_0_19 false'
-alias cmssw-crab    'source ~/HPlusScripts/csh/setenv_cmssw.csh ~/scratch0/ 8_0_19 true'
-alias d3            'cd /uscms_data/d3/aattikis'
-alias higgs         'source HPlusScripts/csh/setenv_higgs.csh ~/scratch0/ 8_0_19'
-alias hltaus        'source HPlusScripts/csh/hltaus.csh'
-alias cmsenvUnset   'eval `scram unsetenv -sh`'
+alias h             'history'
+alias higgs         'source ~/HPlusScripts/csh/setenv_higgs.csh ~/scratch0/ 8_0_24'
+alias hltaus910     'source ~/HPlusScripts/csh/hltaus.csh 9_1_0_pre2'
+alias hltaus620     'source ~/HPlusScripts/csh/hltaus.csh 6_2_0_SLHC12_patch1'
+alias combine       'source ~/HPlusScripts/csh/setenv_combine.csh ~/scratch0/ 7_4_7'
+alias l             'ls -lth'
+alias ls            'ls -pt --color=auto'
+alias lsd           'ls -lpt --color=force | grep ^d'
+alias lxplus        'ssh -N -L 10121:itrac50012-v.cern.ch:10121 attikis@lxplus.cern.ch'
+alias pwd           'echo $cwd'
+alias rm            'rm -i'
+alias root          'root -l'
+alias scram6        'setenv SCRAM_ARCH $SCRAM_ARCHITECTURE'
+alias setbrilcalc   'setenv PATH ${PATH}:$HOME/.local/bin:/afs/cern.ch/cms/lumi/brilconda-1.0.3/bin:'
+alias ssh           'ssh -Y'
+if ( "$LOCATION" == "lxplus" ) then
+    alias hltaus 'cd /afs/cern.ch/user/a/attikis/scratch0/CMSSW_9_1_0_pre2/src/L1Trigger/HLTausAnalysis/'
+else
+    alias hltaus 'echo Alias not set for LOCATION=$LOCATION'
+endif
 
 #############################################################################
 # Setup "screen"
 #############################################################################
-alias reattach "screen -r"
-if ( "$TERM" == "screen" ) then
-  if (!~ $?SHOWED_SCREEN_MESSAGE ) then
-    set detached_screens=`screen -list | grep Detached`
-    if ( "$detached_screens" != "" ) then
-      echo "+-------------------------------------+"
-      echo "| Detached screens are available:     |"
-      echo "$detached_screens"
-      echo "+-------------------------------------+"
-    else
-      echo "[ screen is activated ]"
-    endif
-    setenv SHOWED_SCREEN_MESSAGE true
-  endif
-endif
+# alias reattach "screen -r"
+# if ( "$TERM" == "screen" ) then
+#   if (!~ $?SHOWED_SCREEN_MESSAGE ) then
+#     set detached_screens=`screen -list | grep Detached`
+#     if ( "$detached_screens" != "" ) then
+#       echo "+-------------------------------------+"
+#       echo "| Detached screens are available:     |"
+#       echo "$detached_screens"
+#       echo "+-------------------------------------+"
+#     else
+#       echo "[ screen is activated ]"
+#     endif
+#     setenv SHOWED_SCREEN_MESSAGE true
+#   endif
+# endif
 
 
 #############################################################################
-### Configure environment variables
+# Configure environment variables
 #############################################################################
-<<<<<<< HEAD
-# setenv ROOTSYS /afs/cern.ch/sw/lcg/app/releases/ROOT/5.34.00/x86_64-slc5-gcc43-dbg/root  # slehti (~Summer 2016)
-# setenv ROOTSYS /afs/cern.ch/sw/lcg/app/releases/ROOT/5.34.00/x86_64-slc6-gcc48-opt/root/ # does not exist!
-#setenv ROOTSYS /afs/cern.ch/sw/lcg/app/releases/ROOT/5.34.00/x86_64-slc6-gcc46-opt/root/  # HiggsAnalysis works also on LPC
-setenv ROOTSYS /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.02.12-kpegke4 # 20 Sep 2016
-=======
-# setenv ROOTSYS /afs/cern.ch/sw/lcg/app/releases/ROOT/5.34.00/x86_64-slc5-gcc43-dbg/root #slehti                                                                            
-# setenv ROOTSYS /afs/cern.ch/sw/lcg/app/releases/ROOT/5.34.00/x86_64-slc6-gcc48-opt/root/  #does not exist!                                                                 
-setenv ROOTSYS /afs/cern.ch/sw/lcg/app/releases/ROOT/5.34.00/x86_64-slc6-gcc46-opt/root/
->>>>>>> origin/master
+#setenv LD_LIBRARY_PATH '/uscms/home/${USER}/.local/lib:'
+#setenv LD_LIBRARY_PATH '/uscms/home/$USER/.local/lib:'$LD_LIBRARY_PATH
 
-setenv LD_LIBRARY_PATH $ROOTSYS/lib
-setenv PATH ${PATH}:$ROOTSYS/bin
+# setenv ROOTSYS /cvmfs/cms.cern.ch/$SCRAM_ARCHITECTURE/lcg/root/6.02.12-kpegke4 # CMSSW_7_6_5
 
-#setenv SCRAM_ARCH slc6_amd64_gcc491 #slehti
-echo "Disabled setting of SCRAM_ARCHITECTURE variable to fix CRAB3 in MSSW_6_2_0_SLHC12_patch1 (11 Sep 2016)"
-echo
-#setenv SCRAM_ARCH $SCRAM_ARCHITECTURE #19 July 2016
+# setenv LD_LIBRARY_PATH $ROOTSYS/lib
+# setenv PATH ${PATH}:$ROOTSYS/bin
 
-setenv STAGE_HOST castorcms
+# setenv SCRAM_ARCH $SCRAM_ARCHITECTURE
+
+# setenv STAGE_HOST castorcms
+
 
 #############################################################################
 # Setup Python and PyROOT (assuming root paths exist)
 #############################################################################
-#setenv PYTHONDIR /afs/cern.ch/sw/lcg/external/Python/2.5.4p2/slc4_amd64_gcc34
-setenv PYTHONDIR /afs/cern.ch/sw/lcg/external/Python/2.7.4/x86_64-slc6-gcc48-opt/
-#setenv PYTHONDIR /cvmfs/cms.cern.ch/$SCRAM_ARCH/external/2.7.6-kpegke/ #doesn't work
-#setenv PYTHONDIR /usr
-setenv PYTHONPATH $PYTHONDIR/bin
-setenv PATH $PYTHONDIR/bin:$PATH
-setenv LD_LIBRARY_PATH $PYTHONDIR/lib:$LD_LIBRARY_PATH
-setenv PYTHONPATH $ROOTSYS/lib:$PYTHONPATH
+#setenv PYTHONDIR /afs/cern.ch/sw/lcg/external/Python/2.7.4/x86_64-slc6-gcc48-opt/  # CMSSW_7_6_5
+# #setenv PYTHONDIR /cvmfs/cms.cern.ch/slc6_amd64_gcc530/external/python/2.7.11-giojec2 # CMSSW_8_0_24
+
+# #setenv PYTHONDIR /usr
+# setenv PYTHONPATH $PYTHONDIR/bin
+#setenv PATH $PYTHONDIR/bin:$PATH
+# setenv LD_LIBRARY_PATH $PYTHONDIR/lib:$LD_LIBRARY_PATH
+# setenv PYTHONPATH $ROOTSYS/lib:$PYTHONPATH
 
 
 #############################################################################
-# Additional PATHS
+# Set additional PATHS
 #############################################################################
-setenv PATH $PATH\:$HOME/HPlusScripts/
-setenv PATH $PATH\:$HOME/HPlusScripts/tcsh/
-setenv PATH $PATH\:$HOME/HPlusScripts/bash/
-setenv PATH $PATH\:$HOME/HPlusScripts/python/
-setenv PATH $PATH\:$HOME/HPlusScripts/login/
-setenv PATH $PATH\:$HOME/HPlusScripts/lxbatch/
+setenv PATH ${PATH}:$HOME/HPlusScripts/
+setenv PATH ${PATH}:$HOME/HPlusScripts/tcsh/
+setenv PATH ${PATH}:$HOME/HPlusScripts/bash/
+setenv PATH ${PATH}:$HOME/HPlusScripts/python/
+setenv PATH ${PATH}:$HOME/HPlusScripts/login/
+setenv PATH ${PATH}:$HOME/HPlusScripts/lxbatch/
 
 
 #############################################################################
 # Additional variables
 #############################################################################
 setenv EDITOR emacs
-setenv PRINTER 40-4b-cor
+if ( "$LOCATION" == "lxplus" ) then
+    setenv PRINTER 40-4b-cor
+    echo "\n=== $HOME/myEnvironment.csh\n\tPRINTER=$PRINTER"
+endif
+
 
 
 #############################################################################
@@ -164,7 +171,10 @@ setenv LC_MEASUREMENT "en_US.UTF-8"
 setenv LC_IDENTIFICATION "en_US.UTF-8"
 #setenv LC_ALL 
 
+
+#############################################################################
 # To print All locale settings uncomment the command below
+#############################################################################
 # echo "\nLOCALE settings:"
 # locale 
 
@@ -172,13 +182,22 @@ setenv LC_IDENTIFICATION "en_US.UTF-8"
 #############################################################################
 # Inform user
 #############################################################################
-echo "FORTRAN=$FORTRAN"
-echo "SCRATCH=$SCRATCH"
-echo "W0=$W0"
-echo "PUBLIC=$PUBLIC"
-echo "TMP=$TMP"
-echo "WORKSPACE=$WORKSPACE"
-echo "EDITOR=$EDITOR"
-echo "PRINTER=$PRINTER"
-echo "ROOTSYS=$ROOTSYS"
+echo "\tEDITOR   = $EDITOR"
+echo "\tLOCATION = $LOCATION"
+if ( "$LOCATION" == "lxplus" ) then
+    echo "\tPRINTER  = $PRINTER"
+endif 
+echo "\tPUBLIC   = $PUBLIC"
+echo "\tSCRATCH  = $SCRATCH"
+echo "\tTMP      = $TMP"
+echo "\tW0       = $W0"
+echo "\tWORKSPACE= $WORKSPACE"
+#echo "\tFORTRAN  = $FORTRAN"
+#echo "\tROOTSYS  = $ROOTSYS"
+
+
+#############################################################################
+# EOF
+#############################################################################
+echo "\n=== $HOME/myEnvironment.csh\n\tDONE!"
 echo
