@@ -76,7 +76,7 @@ alias scram6        'setenv SCRAM_ARCH $SCRAM_ARCHITECTURE'
 alias setbrilcalc   'setenv PATH ${PATH}:$HOME/.local/bin:/afs/cern.ch/cms/lumi/brilconda-1.0.3/bin:'
 alias ssh           'ssh -Y'
 if ( "$LOCATION" == "lxplus" ) then
-    alias hltaus 'cd /afs/cern.ch/user/a/attikis/scratch0/CMSSW_9_1_0_pre2/src/L1Trigger/HLTausAnalysis/'
+    alias hltaus 'cd /afs/cern.ch/user/a/attikis/scratch0/CMSSW_9_1_0_pre2/src/HLTausAnalysis/'
 else
     alias hltaus 'echo Alias not set for LOCATION=$LOCATION'
 endif
