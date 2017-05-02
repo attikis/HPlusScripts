@@ -1,0 +1,157 @@
+#!/bin/sh
+#
+# Usage: ./HLTaus
+#
+
+
+#=========================================================================================
+# Definitions
+#=========================================================================================
+CMSSW_ENV=/cvmfs/cms.cern.ch/cmsset_default.sh
+CMSSW_REL=CMSSW_9_1_0_pre2
+CMSSW_MERGETOPIC=skinnari:Tracklet_91X
+CMSSW_BRANCH=P2L1T_HLTaus_91X
+CMSSW_ATTIKIS=https://github.com/attikis/cmssw.git
+CMSSW_LOUISE=https://github.com/skinnari/cmssw.git
+#CMSSWGIT=https://github.com/cms-sw/cmssw.git
+
+REPO_NAME=HLTausAnalysis
+REPO_URL="https://github.com/attikis/${REPO_NAME}.git"
+
+MYUSER_NAME=$USER
+MYUSER_INITIAL=${MYUSER:0:1}
+
+REPO_ALEXANDROS=~attikis/public/html/${REPO_NAME}.git
+REPO_ATTIKIS=https://github.com/attikis/${REPO_NAME}.git
+REPO_SANTERI=~slaurila/public/html/${REPO_NAME}.git
+
+ENDPATH=${CMSSW_REL}/src/
+
+
+#=========================================================================================
+# Recipe for CMSSW_9_1_0_pre2 
+# [https://twiki.cern.ch/twiki/bin/viewauth/CMS/L1Tracklet90X#Recipe_for_CMSSW_9_1_0_pre2]
+#=========================================================================================
+echo "=== Default CMSSW settings:"
+echo ". ${CMSSW_ENV}"
+. ${CMSSW_ENV}
+echo
+
+
+echo "=== Installing CMSSW:"
+echo "cmsrel ${CMSSW_REL}"
+cmsrel ${CMSSW_REL}
+echo
+
+echo "=== Entering src directory:"
+echo "cd ${CMSSW_REL}/src"
+cd ${CMSSW_REL}/src
+echo
+
+echo "=== Setting-up the runtime environment:"
+echo "cmsenv"
+cmsenv
+echo
+
+echo "=== Initializing CMSSW as repository:"
+echo "git cms-init"
+git cms-init
+echo
+
+echo "=== Adding own usercode repository from github:"
+echo "git remote add -f usercode https://github.com/${MYUSER_NAME}/cmssw.git"
+git remote add -f my-cmssw https://github.com/${MYUSER_NAME}/cmssw.git
+echo
+
+echo "=== Git checkout new branch with name ${CMSSW_BRANCH}"
+git checkout -b ${CMSSW_BRANCH}
+echo
+
+echo "=== Merging with cms-merge-topic:"
+echo "git cms-merge-topic attikis:${CMSSW_BRANCH}"
+git cms-merge-topic attikis:${CMSSW_BRANCH}
+echo 
+
+# echo "=== Merging with cms-merge-topic:"
+# echo "git cms-merge-topic ${CMSSW_MERGETOPIC}"
+# git cms-merge-topic ${CMSSW_MERGETOPIC}
+# echo
+
+echo "=== Building the code:"
+echo "scram b -j 16"
+scram b -j 16
+echo
+
+echo "=== CMSSW successfully installed"
+ls -lt
+echo
+
+#=========================================================================================
+# Checkout master branch unless another branch name is passed as script asgument
+#=========================================================================================
+if [ $1 ]; then
+    REPO_BRANCH=$1
+else
+    REPO_BRANCH="master"
+fi
+
+echo "=== Cloning git repo:"
+echo "git clone ${REPO_URL}"
+git clone ${REPO_URL}
+echo
+
+echo "=== Entering directory ${REPO_NAME}:"
+echo 'cd ${REPO_NAME}'
+cd ${REPO_NAME}
+echo
+
+#echo "=== Determining git remote \"public\":" 
+if [[ $HOST == lxplus* ]]; then
+    REPO_PUBLIC=$HOME/public/html/${REPO_NAME}.git
+else
+    DIRPREFIX="http://cmsdoc.cern.ch/"
+    REPO_PUBLIC=ssh://${USER}@lxplus.cern.ch/afs/cern.ch/user/$MYUSER_INITIAL/$MYUSER_NAME/public/html/${REPO_NAME}.git
+fi
+#echo "PUBLIC=$PUBLIC"
+#echo
+
+echo "=== Adding git remote public:" 
+echo 'git remote add public ${REPO_PUBLIC}'
+git remote add public ${REPO_PUBLIC}
+echo 
+
+echo "=== Adding other git remote repositories"
+git remote add alexandros ${REPO_ALEXANDROS}
+git remote add attikis ${REPO_ATTIKIS}
+git remote add santeri ${REPO_SANTERI}
+git remote add skinnari-cmssw ${CMSSW_LOUISE}
+git remote add attikis-cmssw ${CMSSW_ATTIKIS}
+echo
+
+# Get and track a remote branch (if not master). 
+#if [ ${REO_BRANCH} != "master" ]; then
+#    git branch --track ${REPO_BRANCH} origin/${REPO_BRANCH}
+#fi
+
+#if [ ${REPO_BRANCH} == "TDR2019" ]; then
+#    git branch --track TDR2019 origin/TDR2019
+#fi
+
+echo "=== Checking out branch ${REPO_BRANCH}"
+echo 'git checkout ${REPO_BRANCH}'
+git checkout ${REPO_BRANCH}
+echo
+
+echo "=== Listing available branches:"
+git branch -a
+echo
+
+echo "=== The following Git aliases have been set up:"
+git remote -v
+cd ..
+echo
+
+echo "=== Done"
+echo "cd $ENDPATH"
+#ls -lt
+echo
