@@ -61,6 +61,7 @@ alias glogin        'source $HOME/bin/grid_environment'
 alias grid          'source $HOME/bin/grid_environment'
 alias h             'history'
 alias higgs         'source ~/HPlusScripts/csh/setenv_higgs.csh ~/scratch0/ 8_0_24'
+alias cmssw920      'source ~/HPlusScripts/csh/hltaus.csh 9_2_0'
 alias cmssw910      'source ~/HPlusScripts/csh/hltaus.csh 9_1_0_pre2'
 alias cmssw620      'source ~/HPlusScripts/csh/hltaus.csh 6_2_0_SLHC12_patch1'
 alias limits        'source ~/HPlusScripts/csh/setenv_limits.csh ~/scratch0/ 8_1_0' #do NOT name alias "combine"
@@ -78,7 +79,8 @@ alias ssh           'ssh -Y'
 
 
 if ( "$LOCATION" == "lxplus" ) then
-    alias hltaus 'cd /afs/cern.ch/user/a/attikis/scratch0/CMSSW_9_1_0_pre2/src/HLTausAnalysis/'
+    alias hltaus 'cd /afs/cern.ch/user/a/attikis/scratch0/CMSSW_9_2_0/src/HLTausAnalysis/'
+    # alias hltaus 'cd /afs/cern.ch/user/a/attikis/scratch0/CMSSW_9_1_0_pre2/src/HLTausAnalysis/'
 else
     alias hltaus 'echo Alias not set for LOCATION=$LOCATION'
 endif

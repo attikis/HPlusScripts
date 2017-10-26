@@ -25,7 +25,9 @@ set CRABVERSION='crab --version'
 if ($CMSSW == "CMSSW_6_2_0_SLHC12_patch1") then
     set ENDPATH="$DESTINATION/$CMSSW/src/SLHCUpgradeSimulations/L1TrackTrigger/test"
     else
-    set ENDPATH="$DESTINATION/$CMSSW/src/L1Trigger/TrackFindingTracklet/test/"
+    #set ENDPATH="$DESTINATION/$CMSSW/src/L1Trigger/TrackFindingTracklet/test/"
+    #set ENDPATH="$DESTINATION/$CMSSW/src/L1Trigger/L1TCommon/test"
+    set ENDPATH="$DESTINATION/$CMSSW/src/L1Trigger/L1TNtuples/plugins"
 endif
 #set SCRAM_ARCHITECTURE="slc5_amd64_gcc472" #"slc5_amd64_gcc472"
 
