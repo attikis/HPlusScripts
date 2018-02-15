@@ -31,6 +31,12 @@ endif
 ############################################################################# 
 set autolist
 
+############################################################################# 
+# Setup command history (type "history -c" to clean-up history
+############################################################################# 
+set histfile = ~/.history   # file to store the list of commands to remember
+set history = 100            # max number of commands to remember 
+#set histignore=ls:cd:exit:rm
 
 #############################################################################      
 # Set PATHS & Environment variables
@@ -48,20 +54,25 @@ setenv WORKSPACE /afs/cern.ch/work/$USER_INITIAL/$USER
 #############################################################################
 set prompt = '[%n@%m:%c]%#'
 
-
 #############################################################################
 # Set aliases
 #############################################################################
 alias H             'history -r | fgrep "\!*"'
 alias cmsenvUnset   'eval `scram unsetenv -sh`'
-alias cmssw         'source ~/HPlusScripts/csh/setenv_cmssw.csh ~/scratch0/ 8_0_24 false'
-alias cmssw-crab    'source ~/HPlusScripts/csh/setenv_cmssw.csh ~/scratch0/ 8_0_24 true'
+alias cmssw         'source ~/HPlusScripts/csh/setenv_cmssw.csh /uscms_data/d3/aattikis/workspace/cmssw/ 8_0_30 false'
+alias cmssw-crab    'source ~/HPlusScripts/csh/setenv_cmssw.csh /uscms_data/d3/aattikis/workspace/cmssw/ 8_0_30 true'
+#alias cmssw         'source ~/HPlusScripts/csh/setenv_cmssw.csh ~/scratch0/ 8_0_27 false'
+#alias cmssw-crab    'source ~/HPlusScripts/csh/setenv_cmssw.csh ~/scratch0/ 8_0_27 true'
 alias d3            'cd /uscms_data/d3/aattikis/workspace/'
 alias emacs         'emacs -nw'
 alias glogin        'source $HOME/bin/grid_environment'
 alias grid          'source $HOME/bin/grid_environment'
 alias h             'history'
-alias higgs         'source ~/HPlusScripts/csh/setenv_higgs.csh ~/scratch0/ 8_0_24'
+alias higgs         'higgs8030'
+alias higgs8030     'source ~/HPlusScripts/csh/setenv_higgs.csh /uscms_data/d3/aattikis/workspace/cmssw/ 8_0_30'
+alias higgs8027     'source ~/HPlusScripts/csh/setenv_higgs.csh ~/scratch0/ 8_0_27'
+alias higgs8024     'source ~/HPlusScripts/csh/setenv_higgs.csh /uscms_data/d3/aattikis/workspace/scratch0 8_0_24'
+alias higgs8019     'source ~/HPlusScripts/csh/setenv_higgs.csh /uscms_data/d3/aattikis/workspace/scratch0 8_0_19'
 alias hltaus        'source HPlusScripts/csh/hltaus.csh'
 alias l             'ls -lth'
 alias ls            'ls -pt --color=auto'
@@ -133,7 +144,7 @@ setenv PATH ${PATH}:$HOME/HPlusScripts/bash/
 setenv PATH ${PATH}:$HOME/HPlusScripts/python/
 setenv PATH ${PATH}:$HOME/HPlusScripts/login/
 setenv PATH ${PATH}:$HOME/HPlusScripts/lxbatch/
-
+setenv PATH ${PATH}:$HOME/HPlusScripts/lhchiggsstyle-v4/
 
 #############################################################################
 # Additional variables
