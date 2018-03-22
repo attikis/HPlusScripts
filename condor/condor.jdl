@@ -7,5 +7,5 @@ Output = output_$(Cluster)_$(Process).out
 Error  = error_$(Cluster)_$(Process).error
 Log    = log_$(Cluster)_$(Process).log
 x509userproxy = /tmp/x509up_u52142
-Arguments = Hplus2tbAnalysis
+Arguments = Hplus2tbAnalysis PreSel_3CSVv2M_b3Pt40_SigSel_MVA0p50_NoFatjetVeto_test
 Queue 1
