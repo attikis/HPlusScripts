@@ -42,7 +42,7 @@ cd $WORKDIR
 
 # Run the analyser
 echo "\n=== Running the analysis by executing run.py"
-./run.py -m ${_CONDOR_SCRATCH_DIR}/multicrab_Hplus2tbAnalysis_v8030_20180223T0905/
+./run.py -m ${_CONDOR_SCRATCH_DIR}/multicrab_Hplus2tbAnalysis_v8030_20180223T0905/ --doSystematics
 
 echo "\n=== Listing all directories"
 echo = `ls -alt | grep ^d` #| grep $ANALYSISDIR`
