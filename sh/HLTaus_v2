@@ -1,0 +1,205 @@
+#!/bin/sh
+#
+# Usage: ./HLTaus
+#
+
+
+#=========================================================================================
+# Definitions
+#=========================================================================================
+CMSSW_ENV=/cvmfs/cms.cern.ch/cmsset_default.sh
+CMSSW_REL=CMSSW_9_2_0
+CMSSW_MERGETOPIC=cms-l1t-offline:l1t-phase2-v1.14.1
+CMSSW_BRANCH=P2L1T_HLTaus_91X
+CMSSW_ATTIKIS=https://github.com/attikis/cmssw.git
+CMSSW_LOUISE=https://github.com/skinnari/cmssw.git
+
+P2L1T_REPO_ALIAS=cms-l1t-offline
+P2L1T_REPO_HTML=git://github.com/cms-l1t-offline/cmssw.git
+
+L1EG_REPO_ALIAS=truggles
+L1EG_REPO_HTML=git://github.com/truggles/cmssw.git
+L1EG_REPO_MERGE=truggles:l1eg_phase2_18sept2017
+
+REPO_NAME=HLTausAnalysis
+REPO_URL="https://github.com/attikis/${REPO_NAME}.git"
+
+MYUSER_NAME=$USER
+MYUSER_INITIAL=${MYUSER:0:1}
+
+REPO_ALEXANDROS=~attikis/public/html/${REPO_NAME}.git
+REPO_ATTIKIS=https://github.com/attikis/${REPO_NAME}.git
+REPO_SANTERI=~slaurila/public/html/${REPO_NAME}.git
+
+#ENDPATH=${CMSSW_REL}/src/L1Trigger/
+
+#=========================================================================================
+# Recipe for CMSSW_X_Y_Z
+# [https://twiki.cern.ch/twiki/bin/viewauth/CMS/L1Tracklet90X#Recipe_for_CMSSW_9_1_0_pre2]
+#=========================================================================================
+echo "=== Default CMSSW settings:"
+echo ". ${CMSSW_ENV}"
+. ${CMSSW_ENV}
+echo
+
+echo "=== Installing CMSSW:"
+echo "cmsrel ${CMSSW_REL}"
+cmsrel ${CMSSW_REL}
+echo
+
+echo "=== Entering src directory:"
+echo "cd ${CMSSW_REL}/src"
+cd ${CMSSW_REL}/src
+echo
+
+echo "=== Setting-up the runtime environment:"
+echo "cmsenv"
+cmsenv
+echo
+
+echo "=== Initializing CMSSW as repository:"
+echo "git cms-init"
+git cms-init
+echo
+
+#echo "=== Current Working Directory"
+#pwd
+#echo
+
+echo "=== Git add P2L1T repository"
+echo "git remote add ${P2L1T_REPO_ALIAS} ${P2L1T_REPO_HTLM}"
+git remote add ${P2L1T_REPO_ALIAS} ${P2L1T_REPO_HTML}
+echo
+
+echo "=== Git fetch P2L1T repository"
+echo "git fetch ${P2L1T_REPO_ALIAS}"
+git fetch ${P2L1T_REPO_ALIAS}
+echo
+
+echo "=== Git merge the latest cms-merge-topic:"
+echo "git cms-merge-topic -u ${CMSSW_MERGETOPIC}"
+git cms-merge-topic -u ${CMSSW_MERGETOPIC}
+echo 
+
+echo "=== Git add L1EG repository"
+echo "git remote add ${L1EG_REPO_ALIAS} ${L1EG_REPO_HTML}"
+git remote add ${L1EG_REPO_ALIAS} ${L1EG_REPO_HTML}
+echo
+
+echo "=== Git fetch L1EG repository"
+echo "git fetch $L1EG_REPO_ALIAS"
+git fetch ${L1EG_REPO_ALIAS}
+echo
+
+echo "=== Git merge L1EG repository"
+echo "git cms-merge-topic -u ${L1EG_REPO_MERGE}"
+git cms-merge-topic -u ${L1EG_REPO_MERGE}
+echo
+
+echo "=== Get L1EG testing code"
+pushd L1Trigger/
+git clone -b 920_L1EGCrystals https://github.com/truggles/L1EGRateStudies.git L1EGRateStudies
+popd
+
+echo "=== Git checkout new branch (to merge with our remote REPO)"
+#cd ${CMSSW_REL}/src/L1Trigger/
+echo "git checkout -b ${CMSSW_BRANCH}"
+git checkout -b ${CMSSW_BRANCH}
+echo
+
+echo "=== Git remote add our remote REPO"
+echo "git remote add attikis ${CMSSW_ATTIKIS}"
+git remote add attikis ${CMSSW_ATTIKIS}
+echo
+
+echo "=== Git fetch our remote REPO"
+echo "git fetch attikis"
+git fetch attikis
+echo
+
+echo "=== Git merge our remote REPO"
+echo "git merge --no-edit attikis/${CMSSW_BRANCH}"
+#git merge --no-edit ${CMSSW_ATTIKIS}/${CMSSW_BRANCH}
+git merge --no-edit attikis/${CMSSW_BRANCH}
+echo
+
+echo "=== Building the code:"
+echo "scram b -j 16"
+scram b -j 16
+echo
+
+echo "=== CMSSW successfully installed"
+ls -lt
+echo
+
+#=========================================================================================
+# Checkout master branch unless another branch name is passed as script asgument
+#=========================================================================================
+if [ $1 ]; then
+    REPO_BRANCH=$1
+else
+    REPO_BRANCH="master"
+fi
+
+echo "=== Cloning git repo:"
+echo "git clone ${REPO_URL}"
+git clone ${REPO_URL}
+echo
+
+echo "=== Entering directory ${REPO_NAME}:"
+echo 'cd ${REPO_NAME}'
+cd ${REPO_NAME}
+echo
+
+#echo "=== Determining git remote \"public\":" 
+if [[ $HOST == lxplus* ]]; then
+    REPO_PUBLIC=$HOME/public/html/${REPO_NAME}.git
+else
+    DIRPREFIX="http://cmsdoc.cern.ch/"
+    REPO_PUBLIC=ssh://${USER}@lxplus.cern.ch/afs/cern.ch/user/$MYUSER_INITIAL/$MYUSER_NAME/public/html/${REPO_NAME}.git
+fi
+#echo "PUBLIC=$PUBLIC"
+#echo
+
+echo "=== Adding git remote public:" 
+echo 'git remote add public ${REPO_PUBLIC}'
+git remote add public ${REPO_PUBLIC}
+echo 
+
+echo "=== Adding other git remote repositories"
+git remote add alexandros ${REPO_ALEXANDROS}
+git remote add attikis ${REPO_ATTIKIS}
+git remote add santeri ${REPO_SANTERI}
+git remote add skinnari-cmssw ${CMSSW_LOUISE}
+git remote add attikis-cmssw ${CMSSW_ATTIKIS}
+echo
+
+# Get and track a remote branch (if not master). 
+#if [ ${REO_BRANCH} != "master" ]; then
+#    git branch --track ${REPO_BRANCH} origin/${REPO_BRANCH}
+#fi
+
+#if [ ${REPO_BRANCH} == "TDR2019" ]; then
+#    git branch --track TDR2019 origin/TDR2019
+#fi
+
+echo "=== Checking out branch ${REPO_BRANCH}"
+echo 'git checkout ${REPO_BRANCH}'
+git checkout ${REPO_BRANCH}
+echo
+
+echo "=== Listing available branches:"
+git branch -a
+echo
+
+echo "=== The following git aliases have been set up:"
+git remote -v
+cd ..
+echo
+
+echo "=== Done"
+pwd
+#echo "cd $ENDPATH"
+#cd $ENDPATH
+#ls -lt
+echo

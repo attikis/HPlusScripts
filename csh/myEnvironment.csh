@@ -22,9 +22,7 @@ if (! $?LOCATION) then
         set LOCATION="lpc"
     endif
 endif
-
-    
-
+   
 
 ############################################################################# 
 # Enable tab completion to show a menu of options (tcsh)
@@ -59,21 +57,30 @@ set prompt = '[%n@%m:%c]%#'
 #############################################################################
 alias H             'history -r | fgrep "\!*"'
 alias cmsenvUnset   'eval `scram unsetenv -sh`'
-alias cmssw         'source ~/HPlusScripts/csh/setenv_cmssw.csh /uscms_data/d3/aattikis/workspace/cmssw/ 8_0_30 false'
-alias cmssw-crab    'source ~/HPlusScripts/csh/setenv_cmssw.csh /uscms_data/d3/aattikis/workspace/cmssw/ 8_0_30 true'
-#alias cmssw         'source ~/HPlusScripts/csh/setenv_cmssw.csh ~/scratch0/ 8_0_27 false'
-#alias cmssw-crab    'source ~/HPlusScripts/csh/setenv_cmssw.csh ~/scratch0/ 8_0_27 true'
-alias d3            'cd /uscms_data/d3/aattikis/workspace/'
+
+if ( "$LOCATION" == "lpc" ) then
+    alias cmssw         'source ~/HPlusScripts/csh/setenv_cmssw.csh /uscms_data/d3/aattikis/workspace/cmssw/ 8_0_30 false'
+    alias cmssw-crab    'source ~/HPlusScripts/csh/setenv_cmssw.csh /uscms_data/d3/aattikis/workspace/cmssw/ 8_0_30 true'
+    alias d3            'cd /uscms_data/d3/aattikis/workspace/'
+    alias higgs         'higgs8030'
+    alias higgs8030     'source ~/HPlusScripts/csh/setenv_higgs.csh /uscms_data/d3/aattikis/workspace/cmssw/ 8_0_30'
+    alias higgs8027     'source ~/HPlusScripts/csh/setenv_higgs.csh ~/scratch0/ 8_0_27'
+    alias higgs8024     'source ~/HPlusScripts/csh/setenv_higgs.csh /uscms_data/d3/aattikis/workspace/scratch0 8_0_24'
+    alias higgs8019     'source ~/HPlusScripts/csh/setenv_higgs.csh /uscms_data/d3/aattikis/workspace/scratch0 8_0_19'
+else if ( "$LOCATION" == "lxplus" ) then
+    alias cmssw         'source ~/HPlusScripts/csh/setenv_cmssw.csh ~/scratch0/ 8_0_27 false'
+    alias cmssw-crab    'source ~/HPlusScripts/csh/setenv_cmssw.csh ~/scratch0/ 8_0_27 true'
+    alias work          'cd /afs/cern.ch/user/a/attikis/workspace/'
+    alias higgs         'source ~/HPlusScripts/csh/setenv_higgs.csh ~/scratch0/ 8_0_24'
+    alias cmssw920      'source ~/HPlusScripts/csh/hltaus.csh 9_2_0'
+    alias cmssw910      'source ~/HPlusScripts/csh/hltaus.csh 9_1_0_pre2'
+    alias cmssw620      'source ~/HPlusScripts/csh/hltaus.csh 6_2_0_SLHC12_patch1'
+    alias limits        'source ~/HPlusScripts/csh/setenv_limits.csh ~/scratch0/ 8_1_0' #do NOT name alias "combine"
+
 alias emacs         'emacs -nw'
 alias glogin        'source $HOME/bin/grid_environment'
 alias grid          'source $HOME/bin/grid_environment'
 alias h             'history'
-alias higgs         'higgs8030'
-alias higgs8030     'source ~/HPlusScripts/csh/setenv_higgs.csh /uscms_data/d3/aattikis/workspace/cmssw/ 8_0_30'
-alias higgs8027     'source ~/HPlusScripts/csh/setenv_higgs.csh ~/scratch0/ 8_0_27'
-alias higgs8024     'source ~/HPlusScripts/csh/setenv_higgs.csh /uscms_data/d3/aattikis/workspace/scratch0 8_0_24'
-alias higgs8019     'source ~/HPlusScripts/csh/setenv_higgs.csh /uscms_data/d3/aattikis/workspace/scratch0 8_0_19'
-alias hltaus        'source HPlusScripts/csh/hltaus.csh'
 alias l             'ls -lth'
 alias ls            'ls -pt --color=auto'
 alias lsd           'ls -lpt --color=force | grep ^d'
@@ -83,8 +90,16 @@ alias rm            'rm -i'
 alias root          'root -l'
 alias scram6        'setenv SCRAM_ARCH $SCRAM_ARCHITECTURE'
 alias setbrilcalc   'setenv PATH ${PATH}:$HOME/.local/bin:/afs/cern.ch/cms/lumi/brilconda-1.0.3/bin:'
+alias setcrab       'source /cvmfs/cms.cern.ch/crab3/crab.csh'
 alias ssh           'ssh -Y'
 
+if ( "$LOCATION" == "lxplus" ) then
+    alias hltaus        'source HPlusScripts/csh/hltaus.csh'
+    # alias hltaus 'cd /afs/cern.ch/user/a/attikis/scratch0/CMSSW_9_2_0/src/HLTausAnalysis/'
+    # alias hltaus 'cd /afs/cern.ch/user/a/attikis/scratch0/CMSSW_9_1_0_pre2/src/HLTausAnalysis/'
+else
+    alias hltaus 'echo Alias not set for LOCATION=$LOCATION'
+endif
 
 #############################################################################
 # Setup "screen"
