@@ -61,8 +61,10 @@ echo "\n=== Output dir determined to be $OUTPUTDIR"
 # head -1 returns the first item
 
 # Create the tarball name
-echo "\n=== Tarball name will be ${ANALYSISDIR}_${LABEL}.tgz"
-set TARBALL = "${ANALYSISDIR}_${LABEL}.tgz"
+set TIME = `date '+%d%h%Y'`
+# set TIME = `date +"%d%m%Y"`
+echo "\n=== Tarball name will be ${ANALYSISDIR}_${LABEL}_${TIME}.tgz"
+set TARBALL = "${ANALYSISDIR}_${LABEL}_${TIME}.tgz"
 
 # Make the output directory to a tarball
 echo "\n=== Compressing the output dir $OUTPUTDIR into tarball file $TARBALL"

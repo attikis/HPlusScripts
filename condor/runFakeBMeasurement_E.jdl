@@ -7,5 +7,5 @@ Output = output_$(Cluster)_$(Process).txt
 Error  = error_$(Cluster)_$(Process).txt
 Log    = log_$(Cluster)_$(Process).txt
 x509userproxy = /tmp/x509up_u52142
-Arguments = Hplus2tbAnalysis PreSel_3CSVv2M_b3Pt40_SigSel_MVA0p40_NoFatjetVeto_PartE E
+Arguments = FakeBMeasurement PreSel_3CSVv2M_b3Pt40_SigSel_MVAm1p0to0p40_NoFatjetVeto_PartE E
 Queue 1
