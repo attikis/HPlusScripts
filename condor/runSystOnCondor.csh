@@ -43,14 +43,15 @@ echo "\n=== Changing dir to $WORKDIR"
 cd $WORKDIR
 
 # Run the analyser
-echo "\n=== Running the analysis by executing runSystematics.py"
+echo "\n=== Running the analysis by executing runSystematics.py as follows:"
+echo "./runSystematics.py -m ${_CONDOR_SCRATCH_DIR}/multicrab_Hplus2tbAnalysis_v8030_20180223T0905/ --doSystematics --group $GROUP\n"
 ./runSystematics.py -m ${_CONDOR_SCRATCH_DIR}/multicrab_Hplus2tbAnalysis_v8030_20180223T0905/ --doSystematics --group $GROUP
 
 echo "\n=== Listing all directories"
-echo = `ls -alt | grep ^d` #| grep $ANALYSISDIR`
+echo`ls -alt | grep ^d` #| grep $ANALYSISDIR`
 
 echo "\n=== Listing the latest directory"
-echo = `ls -td */ | head -1`
+echo `ls -td */ | head -1`
 
 echo "\n=== Determining output dir using ls and grep commands"
 set OUTPUTDIR = `ls -td */ | head -1`
@@ -61,8 +62,9 @@ echo "\n=== Output dir determined to be $OUTPUTDIR"
 # head -1 returns the first item
 
 # Create the tarball name
-set TIME = `date '+%d%h%Y'`
-# set TIME = `date +"%d%m%Y"`
+set TIME = `date '+%Hh-%Mm-%Ss-%d%h%Y'`
+# set TIME = `date '+%d%h%Y'`
+### set TIME = `date +"%d%m%Y"`
 echo "\n=== Tarball name will be ${ANALYSISDIR}_${LABEL}_${TIME}.tgz"
 set TARBALL = "${ANALYSISDIR}_${LABEL}_${TIME}.tgz"
 
