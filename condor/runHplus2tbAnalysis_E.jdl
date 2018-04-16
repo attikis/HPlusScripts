@@ -7,5 +7,5 @@ Output = output_H2tb_GroupE_Cluster$(Cluster)_Process$(Process).txt
 Error  = error_H2tb_GroupE_Cluster$(Cluster)_Process$(Process).txt
 Log    = log_H2tb_GroupE_Cluster$(Cluster)_Process$(Process).txt
 x509userproxy = /tmp/x509up_u52142
-Arguments = Hplus2tbAnalysis PreSel_3CSVv2M_b3Pt40_SigSel_MVA0p40_NoFatjetVeto_PartE E
+Arguments = Hplus2tbAnalysis Preapproval_MVA0p40_Syst_PartE E
 Queue 1
