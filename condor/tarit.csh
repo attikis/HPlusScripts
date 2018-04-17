@@ -7,4 +7,8 @@ tar -czvf HiggsAnalysis.tgz HiggsAnalysis/.git/ \
                                 HiggsAnalysis/NtupleAnalysis/ \
                                 HiggsAnalysis/setup.csh \
                                 HiggsAnalysis/setup.sh \
-                                HiggsAnalysis/XSectionsAndBr/
+                                HiggsAnalysis/XSectionsAndBr/ \
+    --exclude "HiggsAnalysis/NtupleAnalysis/src/LimitCalc/work/*" \
+    --exclude "HiggsAnalysis/NtupleAnalysis/src/FakeBMeasurement/work/FakeBMeasurement_*" \
+    --exclude "HiggsAnalysis/NtupleAnalysis/src/Hplus2tbAnalysis/work/Hplus2tbAnalysis_*" \
+
