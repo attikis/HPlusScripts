@@ -7,5 +7,5 @@ Output = output_FakeB_GroupL_Cluster$(Cluster)_Process$(Process).txt
 Error  = error_FakeB_GroupL_Cluster$(Cluster)_Process$(Process).txt
 Log    = log_FakeB_GroupL_Cluster$(Cluster)_Process$(Process).txt
 x509userproxy = /tmp/x509up_u52142
-Arguments = FakeBMeasurement Preapproval_MVAm1p0to0p40_MVA0p40to0p70_3AbsEtaBins_3PtBins_Syst_PartL L
+Arguments = FakeBMeasurement Preapproval_MVA0p40_6AbsEtaBins_0PtBins_Syst_PartL L
 Queue 1
