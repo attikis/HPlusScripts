@@ -1,0 +1,100 @@
+
+=== Running on:
+cmswn1959.fnal.gov 
+/storage/local/data1/condor/execute/dir_4177755
+/storage/local/data1/condor/execute/dir_4177755
+
+=== Untarring the code tarball
+
+=== Untarring the multicrab dir tarball
+
+=== Changing dir to HiggsAnalysis and sourcing setup.csh
+
+=== Sourcing lpc environments (Hand-picked from CMSSW_8_0_24)
+To update:
+1) create a developer area (cmsrel):
+cmsrel CMSWW_X_Y_Z
+2) source the CMSSW environment (cmsenv):
+cd  CMSWW_X_Y_Z/src/
+cmssev
+3) Look the new paths with 'scram tool list' and 'scram tool info'
+[See setup.csh for more details]
+
+=== Loop over directories under NtupleAnalysis/src
+PYTHONPATH is /storage/local/data1/condor/execute/dir_4177755/HiggsAnalysis/.python:/cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib
+
+=== The environment variables set are:
+LOCATION is lpc
+HIGGSANALYSIS_BASE is /storage/local/data1/condor/execute/dir_4177755/HiggsAnalysis
+PATHPREFIX is .python
+ROOTSYS is /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00
+LD_LIBRARY_PATH is /storage/local/data1/condor/execute/dir_4177755/HiggsAnalysis/NtupleAnalysis/lib:/cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib:/cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/gcc/4.9.3/lib64:/cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/gcc/4.9.3/lib:/cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/xrootd/4.0.4-kpegke2/lib:/cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/xz/5.2.1/lib:/cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/python/2.7.6-kpegke/lib:/cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/libjpg/8b/lib:/cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/libpng/1.6.16/lib:/cvmfs/cms.cern.ch/slc6_amd64_gcc493/cms/cmssw/CMSSW_7_6_5/external/slc6_amd64_gcc493/lib/
+ROOT_INCLUDE_PATH is -I//cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/include:/storage/local/data1/condor/execute/dir_4177755/HiggsAnalysis/NtupleAnalysis/src:/storage/local/data1/condor/execute/dir_4177755/HiggsAnalysis/NtupleAnalysis/external:/storage/local/data1/condor/execute/dir_4177755/HiggsAnalysis/NtupleAnalysis/
+PYTHONPATH is /storage/local/data1/condor/execute/dir_4177755/HiggsAnalysis/.python:/cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib
+PATH is /storage/local/data1/condor/execute/dir_4177755/HiggsAnalysis/NtupleAnalysis/scripts:/cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/python/2.7.6-kpegke/bin://cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/bin:/cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/gcc/4.9.3/bin:/cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/xrootd/4.0.4-kpegke2/bin:/cvmfs/cms.cern.ch/common:/cvmfs/cms.cern.ch/bin:/usr/krb5/bin:/bin:/usr/bin:/usr/libexec/condor:/bin:/usr/bin:/usr/krb5/bin:/usr/lib64/qt-3.3/bin:/opt/puppetlabs/bin:/usr/kerberos/sbin:/usr/kerberos/bin:/cvmfs/cms.cern.ch/common:/cvmfs/cms.cern.ch/bin:/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin:/opt/puppetlabs/bin:/opt/puppetlabs/bin
+/storage/local/data1/condor/execute/dir_4177755/HiggsAnalysis
+
+=== Changing dir to NtupleAnalysis/src/Hplus2tbAnalysis/work/
+
+=== Running the analysis by executing runSystematics.py as follows:
+./runSystematics.py -m /storage/local/data1/condor/execute/dir_4177755/multicrab_Hplus2tbAnalysis_v8030_20180508T0644/ --doSystematics --group Q
+
+===  main.py
+	Pileup reweighting will be done according to the sum of:
+	[1;34mJetHT_Run2016B_03Feb2017_ver2_v2_273150_275376
+	JetHT_Run2016C_03Feb2017_v1_275656_276283
+	JetHT_Run2016D_03Feb2017_v1_276315_276811
+	JetHT_Run2016E_03Feb2017_v1_276831_277420
+	JetHT_Run2016F_03Feb2017_v1_277932_278800
+	JetHT_Run2016F_03Feb2017_v1_278801_278808
+	JetHT_Run2016G_03Feb2017_v1_278820_280385
+	JetHT_Run2016H_03Feb2017_ver2_v1_281613_284035
+	JetHT_Run2016H_03Feb2017_ver3_v1_284036_284044[0;0m
+===  AnalysisBuilder.py
+	Analysis type set to [1;34mHToTB[0;0m
+	Enabled 5 systematics ([1;34mJES, JER, BTagSF, TopPt, PUWeight[0;0m)
+===  AnalysisBuilder.py
+	Created nominal module [1;34mHplus2tbAnalysis_80to1000_Run2016[0;0m
+	Created variation module [1;34mHplus2tbAnalysis_80to1000_Run2016_SystVarJESPlus[0;0m
+	Created variation module [1;34mHplus2tbAnalysis_80to1000_Run2016_SystVarJESMinus[0;0m
+	Created variation module [1;34mHplus2tbAnalysis_80to1000_Run2016_SystVarJERPlus[0;0m
+	Created variation module [1;34mHplus2tbAnalysis_80to1000_Run2016_SystVarJERMinus[0;0m
+	Created variation module [1;34mHplus2tbAnalysis_80to1000_Run2016_SystVarBTagSFPlus[0;0m
+	Created variation module [1;34mHplus2tbAnalysis_80to1000_Run2016_SystVarBTagSFMinus[0;0m
+	Created variation module [1;34mHplus2tbAnalysis_80to1000_Run2016_SystVarTopPtPlus[0;0m
+	Created variation module [1;34mHplus2tbAnalysis_80to1000_Run2016_SystVarTopPtMinus[0;0m
+	Created variation module [1;34mHplus2tbAnalysis_80to1000_Run2016_SystVarPUWeightPlus[0;0m
+	Created variation module [1;34mHplus2tbAnalysis_80to1000_Run2016_SystVarPUWeightMinus[0;0m
+===  main.py
+	Created output directory [1;34mHplus2tbAnalysis_180530_092130[0;0m
+===  main.py
+	Will process 1 datasets in total:
+	1) [1;34mChargedHiggs_HplusTB_HplusToTB_M_1500_ext1[0;0m
+===  main.py
+	Processing dataset (1/1)
+	UsePUweights            : 1                                                           
+	UseTopPtCorrection      : 0                                                           
+	Dataset                 : ChargedHiggs_HplusTB_HplusToTB_M_1500_ext1                  
+	Estimated time          : 27:22:53  (0.7838 %) at 0 MB/s  
+=== Listing all directories
+
+=== Listing the latest directory
+Hplus2tbAnalysis_180530_092130/
+
+=== Determining output dir using ls and grep commands
+
+=== Output dir determined to be Hplus2tbAnalysis_180530_092130/
+
+=== Tarball name will be Hplus2tbAnalysis_AfterPreapproval_MVA0p40_Syst_PartQ_15h38m21s_30May2018.tgz
+
+=== Compressing the output dir Hplus2tbAnalysis_180530_092130/ into tarball file Hplus2tbAnalysis_AfterPreapproval_MVA0p40_Syst_PartQ_15h38m21s_30May2018.tgz
+Hplus2tbAnalysis_180530_092130/
+Hplus2tbAnalysis_180530_092130/ChargedHiggs_HplusTB_HplusToTB_M_1500_ext1/
+Hplus2tbAnalysis_180530_092130/ChargedHiggs_HplusTB_HplusToTB_M_1500_ext1/res/
+Hplus2tbAnalysis_180530_092130/ChargedHiggs_HplusTB_HplusToTB_M_1500_ext1/res/histograms-ChargedHiggs_HplusTB_HplusToTB_M_1500_ext1.root
+Hplus2tbAnalysis_180530_092130/multicrab.cfg
+Hplus2tbAnalysis_180530_092130/lumi.json
+
+=== Copying output tarball Hplus2tbAnalysis_AfterPreapproval_MVA0p40_Syst_PartQ_15h38m21s_30May2018.tgz to store/user/aattikis/CONDOR_TransferData
+
+=== Delete everything from /storage/local/data1/condor/execute/dir_4177755 before exiting

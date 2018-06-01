@@ -1,0 +1,11 @@
+universe = vanilla
+Executable = runSystOnCondor.csh
+Should_Transfer_Files = YES
+WhenToTransferOutput = ON_EXIT
+Transfer_Input_Files = runSystOnCondor.csh, /uscms_data/d3/aattikis/workspace/cmssw/CMSSW_8_0_30/src/HiggsAnalysis.tgz, /uscms_data/d3/aattikis/workspace/multicrab/multicrab_Hplus2tbAnalysis_v8030_20180223T0905.tgz 
+Output = output_FakeB_GroupK_Cluster$(Cluster)_Process$(Process).txt
+Error  = error_FakeB_GroupK_Cluster$(Cluster)_Process$(Process).txt
+Log    = log_FakeB_GroupK_Cluster$(Cluster)_Process$(Process).txt
+x509userproxy = /tmp/x509up_u52142
+Arguments = FakeBMeasurement Preapproval_MVA0p30_6AbsEtaBins_0PtBins_Syst_PartK K
+Queue 1
