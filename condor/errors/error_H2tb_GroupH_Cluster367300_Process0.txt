@@ -1,0 +1,377 @@
+Error in <TCling::RegisterModule>: cannot find dictionary module FrameworkDict_rdict.pcm
+
+ *** Break *** floating point exception
+
+
+
+===========================================================
+There was a crash.
+This is the entire stack trace of all threads:
+===========================================================
+
+Thread 6 (Thread 0x2b5bdec58700 (LWP 543704)):
+#0  0x0000003313ce91c3 in epoll_wait () from /lib64/libc.so.6
+#1  0x00002b5bde6813e2 in XrdSys::IOEvents::PollE::Begin(XrdSysSemaphore*, int&, char const**) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/xrootd/4.0.4-kpegke2/lib/libXrdUtils.so.2
+#2  0x00002b5bde67dc2d in XrdSys::IOEvents::BootStrap::Start(void*) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/xrootd/4.0.4-kpegke2/lib/libXrdUtils.so.2
+#3  0x00002b5bde67c447 in XrdSysThread_Xeq () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/xrootd/4.0.4-kpegke2/lib/libXrdUtils.so.2
+#4  0x0000003314007aa1 in start_thread () from /lib64/libpthread.so.0
+#5  0x0000003313ce8bcd in clone () from /lib64/libc.so.6
+
+Thread 5 (Thread 0x2b5bdee59700 (LWP 543705)):
+#0  0x000000331400f00d in nanosleep () from /lib64/libpthread.so.0
+#1  0x00002b5bde67cbdb in XrdSysTimer::Wait(int) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/xrootd/4.0.4-kpegke2/lib/libXrdUtils.so.2
+#2  0x00002b5bde7c3f11 in XrdCl::TaskManager::RunTasks() () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/xrootd/4.0.4-kpegke2/lib/libXrdCl.so.2
+#3  0x00002b5bde7c4079 in ?? () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/xrootd/4.0.4-kpegke2/lib/libXrdCl.so.2
+#4  0x0000003314007aa1 in start_thread () from /lib64/libpthread.so.0
+#5  0x0000003313ce8bcd in clone () from /lib64/libc.so.6
+
+Thread 4 (Thread 0x2b5bdf05a700 (LWP 543706)):
+#0  0x0000003313ce5419 in syscall () from /lib64/libc.so.6
+#1  0x00002b5bde81cc63 in XrdCl::JobManager::RunJobs() () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/xrootd/4.0.4-kpegke2/lib/libXrdCl.so.2
+#2  0x00002b5bde81cdf9 in ?? () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/xrootd/4.0.4-kpegke2/lib/libXrdCl.so.2
+#3  0x0000003314007aa1 in start_thread () from /lib64/libpthread.so.0
+#4  0x0000003313ce8bcd in clone () from /lib64/libc.so.6
+
+Thread 3 (Thread 0x2b5bdf25b700 (LWP 543707)):
+#0  0x0000003313ce5419 in syscall () from /lib64/libc.so.6
+#1  0x00002b5bde81cc63 in XrdCl::JobManager::RunJobs() () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/xrootd/4.0.4-kpegke2/lib/libXrdCl.so.2
+#2  0x00002b5bde81cdf9 in ?? () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/xrootd/4.0.4-kpegke2/lib/libXrdCl.so.2
+#3  0x0000003314007aa1 in start_thread () from /lib64/libpthread.so.0
+#4  0x0000003313ce8bcd in clone () from /lib64/libc.so.6
+
+Thread 2 (Thread 0x2b5bdf45c700 (LWP 543708)):
+#0  0x0000003313ce5419 in syscall () from /lib64/libc.so.6
+#1  0x00002b5bde81cc63 in XrdCl::JobManager::RunJobs() () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/xrootd/4.0.4-kpegke2/lib/libXrdCl.so.2
+#2  0x00002b5bde81cdf9 in ?? () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/xrootd/4.0.4-kpegke2/lib/libXrdCl.so.2
+#3  0x0000003314007aa1 in start_thread () from /lib64/libpthread.so.0
+#4  0x0000003313ce8bcd in clone () from /lib64/libc.so.6
+
+Thread 1 (Thread 0x2b5bd1cc8d80 (LWP 543660)):
+#0  0x0000003313cac86d in waitpid () from /lib64/libc.so.6
+#1  0x0000003313c3e479 in do_system () from /lib64/libc.so.6
+#2  0x0000003313c3e7b0 in system () from /lib64/libc.so.6
+#3  0x00002b5bd2b2bc2a in TUnixSystem::StackTrace() () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libCore.so
+#4  0x00002b5bd2b2dbfc in TUnixSystem::DispatchSignals(ESignals) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libCore.so
+#5  <signal handler called>
+#6  0x00002b5bdcee1ef2 in SelectorImpl::printStatus() () from /storage/local/data1/condor/execute/dir_542469/HiggsAnalysis/NtupleAnalysis/lib/libHPlusAnalysis.so
+#7  0x00002b5bdcee23f5 in SelectorImpl::Process(long long) () from /storage/local/data1/condor/execute/dir_542469/HiggsAnalysis/NtupleAnalysis/lib/libHPlusAnalysis.so
+#8  0x00002b5bddf15cb8 in TTreePlayer::Process(TSelector*, char const*, long long, long long) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libTreePlayer.so
+#9  0x00002b5bf802909f in __cf_44 ()
+#10 0x00002b5bd21822b1 in FastCall(long, void*, void*, void*) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libPyROOT.so
+#11 0x00002b5bd2182e90 in Cppyy::CallLL(long, void*, void*) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libPyROOT.so
+#12 0x00002b5bd216be7f in PyROOT::TLongLongExecutor::Execute(long, void*, PyROOT::TCallContext*) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libPyROOT.so
+#13 0x00002b5bd21790bd in PyROOT::TMethodHolder::CallSafe(void*, long, PyROOT::TCallContext*) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libPyROOT.so
+#14 0x00002b5bd2177df5 in PyROOT::TMethodHolder::Execute(void*, long, PyROOT::TCallContext*) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libPyROOT.so
+#15 0x00002b5bd2176dd3 in PyROOT::TMethodHolder::Call(PyROOT::ObjectProxy*&, _object*, _object*, PyROOT::TCallContext*) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libPyROOT.so
+#16 0x00002b5bd2173877 in PyROOT::(anonymous namespace)::mp_call(PyROOT::MethodProxy*, _object*, _object*) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libPyROOT.so
+#17 0x00002b5bd1b03133 in PyObject_Call () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/python/2.7.6-kpegke/lib/libpython2.7.so.1.0
+#18 0x00002b5bd1bb740e in PyEval_EvalFrameEx () at Python/ceval.c:4239
+#19 0x00002b5bd1bba6a0 in PyEval_EvalCodeEx () at Python/ceval.c:3253
+#20 0x00002b5bd1bb919b in PyEval_EvalFrameEx () at Python/ceval.c:4117
+#21 0x00002b5bd1bb92be in PyEval_EvalFrameEx () at Python/ceval.c:4107
+#22 0x00002b5bd1bba6a0 in PyEval_EvalCodeEx () at Python/ceval.c:3253
+#23 0x00002b5bd1bba7c9 in PyEval_EvalCode () at Python/ceval.c:667
+#24 0x00002b5bd1bde4da in PyRun_FileExFlags () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/python/2.7.6-kpegke/lib/libpython2.7.so.1.0
+#25 0x00002b5bd1bdfa57 in PyRun_SimpleFileExFlags () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/python/2.7.6-kpegke/lib/libpython2.7.so.1.0
+#26 0x00002b5bd1bf5ab5 in Py_Main () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/python/2.7.6-kpegke/lib/libpython2.7.so.1.0
+#27 0x0000003313c1ed1d in __libc_start_main () from /lib64/libc.so.6
+#28 0x00000000004006b1 in _start ()
+===========================================================
+
+
+The lines below might hint at the cause of the crash.
+If they do not help you then please submit a bug report at
+http://root.cern.ch/bugs. Please post the ENTIRE stack trace
+from above as an attachment in addition to anything else
+that might help us fixing this issue.
+===========================================================
+#6  0x00002b5bdcee1ef2 in SelectorImpl::printStatus() () from /storage/local/data1/condor/execute/dir_542469/HiggsAnalysis/NtupleAnalysis/lib/libHPlusAnalysis.so
+#7  0x00002b5bdcee23f5 in SelectorImpl::Process(long long) () from /storage/local/data1/condor/execute/dir_542469/HiggsAnalysis/NtupleAnalysis/lib/libHPlusAnalysis.so
+#8  0x00002b5bddf15cb8 in TTreePlayer::Process(TSelector*, char const*, long long, long long) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libTreePlayer.so
+#9  0x00002b5bf802909f in __cf_44 ()
+#10 0x00002b5bd21822b1 in FastCall(long, void*, void*, void*) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libPyROOT.so
+#11 0x00002b5bd2182e90 in Cppyy::CallLL(long, void*, void*) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libPyROOT.so
+#12 0x00002b5bd216be7f in PyROOT::TLongLongExecutor::Execute(long, void*, PyROOT::TCallContext*) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libPyROOT.so
+#13 0x00002b5bd21790bd in PyROOT::TMethodHolder::CallSafe(void*, long, PyROOT::TCallContext*) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libPyROOT.so
+#14 0x00002b5bd2177df5 in PyROOT::TMethodHolder::Execute(void*, long, PyROOT::TCallContext*) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libPyROOT.so
+#15 0x00002b5bd2176dd3 in PyROOT::TMethodHolder::Call(PyROOT::ObjectProxy*&, _object*, _object*, PyROOT::TCallContext*) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libPyROOT.so
+#16 0x00002b5bd2173877 in PyROOT::(anonymous namespace)::mp_call(PyROOT::MethodProxy*, _object*, _object*) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libPyROOT.so
+#17 0x00002b5bd1b03133 in PyObject_Call () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/python/2.7.6-kpegke/lib/libpython2.7.so.1.0
+#18 0x00002b5bd1bb740e in PyEval_EvalFrameEx () at Python/ceval.c:4239
+#19 0x00002b5bd1bba6a0 in PyEval_EvalCodeEx () at Python/ceval.c:3253
+#20 0x00002b5bd1bb919b in PyEval_EvalFrameEx () at Python/ceval.c:4117
+#21 0x00002b5bd1bb92be in PyEval_EvalFrameEx () at Python/ceval.c:4107
+#22 0x00002b5bd1bba6a0 in PyEval_EvalCodeEx () at Python/ceval.c:3253
+#23 0x00002b5bd1bba7c9 in PyEval_EvalCode () at Python/ceval.c:667
+#24 0x00002b5bd1bde4da in PyRun_FileExFlags () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/python/2.7.6-kpegke/lib/libpython2.7.so.1.0
+#25 0x00002b5bd1bdfa57 in PyRun_SimpleFileExFlags () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/python/2.7.6-kpegke/lib/libpython2.7.so.1.0
+#26 0x00002b5bd1bf5ab5 in Py_Main () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/python/2.7.6-kpegke/lib/libpython2.7.so.1.0
+#27 0x0000003313c1ed1d in __libc_start_main () from /lib64/libc.so.6
+#28 0x00000000004006b1 in _start ()
+===========================================================
+
+
+Traceback (most recent call last):
+  File "./runSystematics.py", line 577, in <module>
+    main()
+  File "./runSystematics.py", line 274, in main
+    process.run()
+  File "/storage/local/data1/condor/execute/dir_542469/HiggsAnalysis/.python/HiggsAnalysis/NtupleAnalysis/main.py", line 651, in run
+    tchain.Process(tselector)
+TypeError: none of the 2 overloaded methods succeeded. Full details:
+  Long64_t TChain::Process(const char* filename, const char* option = "", Long64_t nentries = kMaxEntries, Long64_t firstentry = 0) =>
+    could not convert argument 1 (expected string or Unicode object, SelectorImpl found)
+  Long64_t TChain::Process(TSelector* selector, const char* option = "", Long64_t nentries = kMaxEntries, Long64_t firstentry = 0) =>
+    problem in C++; program state has been reset
+
+ *** Break *** segmentation violation
+
+
+
+===========================================================
+There was a crash.
+This is the entire stack trace of all threads:
+===========================================================
+
+Thread 6 (Thread 0x2b5bdec58700 (LWP 543704)):
+#0  0x0000003313ce91c3 in epoll_wait () from /lib64/libc.so.6
+#1  0x00002b5bde6813e2 in XrdSys::IOEvents::PollE::Begin(XrdSysSemaphore*, int&, char const**) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/xrootd/4.0.4-kpegke2/lib/libXrdUtils.so.2
+#2  0x00002b5bde67dc2d in XrdSys::IOEvents::BootStrap::Start(void*) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/xrootd/4.0.4-kpegke2/lib/libXrdUtils.so.2
+#3  0x00002b5bde67c447 in XrdSysThread_Xeq () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/xrootd/4.0.4-kpegke2/lib/libXrdUtils.so.2
+#4  0x0000003314007aa1 in start_thread () from /lib64/libpthread.so.0
+#5  0x0000003313ce8bcd in clone () from /lib64/libc.so.6
+
+Thread 5 (Thread 0x2b5bdee59700 (LWP 543705)):
+#0  0x000000331400f00d in nanosleep () from /lib64/libpthread.so.0
+#1  0x00002b5bde67cbdb in XrdSysTimer::Wait(int) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/xrootd/4.0.4-kpegke2/lib/libXrdUtils.so.2
+#2  0x00002b5bde7c3f11 in XrdCl::TaskManager::RunTasks() () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/xrootd/4.0.4-kpegke2/lib/libXrdCl.so.2
+#3  0x00002b5bde7c4079 in ?? () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/xrootd/4.0.4-kpegke2/lib/libXrdCl.so.2
+#4  0x0000003314007aa1 in start_thread () from /lib64/libpthread.so.0
+#5  0x0000003313ce8bcd in clone () from /lib64/libc.so.6
+
+Thread 4 (Thread 0x2b5bdf05a700 (LWP 543706)):
+#0  0x0000003313ce5419 in syscall () from /lib64/libc.so.6
+#1  0x00002b5bde81cc63 in XrdCl::JobManager::RunJobs() () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/xrootd/4.0.4-kpegke2/lib/libXrdCl.so.2
+#2  0x00002b5bde81cdf9 in ?? () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/xrootd/4.0.4-kpegke2/lib/libXrdCl.so.2
+#3  0x0000003314007aa1 in start_thread () from /lib64/libpthread.so.0
+#4  0x0000003313ce8bcd in clone () from /lib64/libc.so.6
+
+Thread 3 (Thread 0x2b5bdf25b700 (LWP 543707)):
+#0  0x0000003313ce5419 in syscall () from /lib64/libc.so.6
+#1  0x00002b5bde81cc63 in XrdCl::JobManager::RunJobs() () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/xrootd/4.0.4-kpegke2/lib/libXrdCl.so.2
+#2  0x00002b5bde81cdf9 in ?? () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/xrootd/4.0.4-kpegke2/lib/libXrdCl.so.2
+#3  0x0000003314007aa1 in start_thread () from /lib64/libpthread.so.0
+#4  0x0000003313ce8bcd in clone () from /lib64/libc.so.6
+
+Thread 2 (Thread 0x2b5bdf45c700 (LWP 543708)):
+#0  0x0000003313ce5419 in syscall () from /lib64/libc.so.6
+#1  0x00002b5bde81cc63 in XrdCl::JobManager::RunJobs() () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/xrootd/4.0.4-kpegke2/lib/libXrdCl.so.2
+#2  0x00002b5bde81cdf9 in ?? () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/xrootd/4.0.4-kpegke2/lib/libXrdCl.so.2
+#3  0x0000003314007aa1 in start_thread () from /lib64/libpthread.so.0
+#4  0x0000003313ce8bcd in clone () from /lib64/libc.so.6
+
+Thread 1 (Thread 0x2b5bd1cc8d80 (LWP 543660)):
+#0  0x0000003313cac86d in waitpid () from /lib64/libc.so.6
+#1  0x0000003313c3e479 in do_system () from /lib64/libc.so.6
+#2  0x0000003313c3e7b0 in system () from /lib64/libc.so.6
+#3  0x00002b5bd2b2bc2a in TUnixSystem::StackTrace() () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libCore.so
+#4  0x00002b5bd2b2dbfc in TUnixSystem::DispatchSignals(ESignals) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libCore.so
+#5  <signal handler called>
+#6  0x00002b5bd2a51753 in TDirectory::RegisterContext(TDirectory::TContext*) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libCore.so
+#7  0x00002b5bd2782b1b in TDirectoryFile::Save() () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libRIO.so
+#8  0x00002b5bd2780ebc in TDirectoryFile::Close(char const*) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libRIO.so
+#9  0x00002b5bd27ce9e4 in TFile::Close(char const*) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libRIO.so
+#10 0x00002b5bde64dc77 in TNetXNGFile::Close(char const*) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libNetxNG.so
+#11 0x00002b5bd29ab3a0 in (anonymous namespace)::R__ListSlowClose(TList*) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libCore.so
+#12 0x00002b5bd29abede in TROOT::CloseFiles() () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libCore.so
+#13 0x00002b5bd29ac4c9 in TROOT::EndOfProcessCleanups() () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libCore.so
+#14 0x00002b5bf8158027 in __cf_346 ()
+#15 0x00002b5bd21822b1 in FastCall(long, void*, void*, void*) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libPyROOT.so
+#16 0x00002b5bd216ba3f in PyROOT::TVoidExecutor::Execute(long, void*, PyROOT::TCallContext*) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libPyROOT.so
+#17 0x00002b5bd21790bd in PyROOT::TMethodHolder::CallSafe(void*, long, PyROOT::TCallContext*) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libPyROOT.so
+#18 0x00002b5bd2177df5 in PyROOT::TMethodHolder::Execute(void*, long, PyROOT::TCallContext*) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libPyROOT.so
+#19 0x00002b5bd2176dd3 in PyROOT::TMethodHolder::Call(PyROOT::ObjectProxy*&, _object*, _object*, PyROOT::TCallContext*) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libPyROOT.so
+#20 0x00002b5bd2173fe1 in PyROOT::(anonymous namespace)::mp_call(PyROOT::MethodProxy*, _object*, _object*) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libPyROOT.so
+#21 0x00002b5bd1b03133 in PyObject_Call () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/python/2.7.6-kpegke/lib/libpython2.7.so.1.0
+#22 0x00002b5bd1bb740e in PyEval_EvalFrameEx () at Python/ceval.c:4239
+#23 0x00002b5bd1bba6a0 in PyEval_EvalCodeEx () at Python/ceval.c:3253
+#24 0x00002b5bd1b34985 in function_call () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/python/2.7.6-kpegke/lib/libpython2.7.so.1.0
+#25 0x00002b5bd1b03133 in PyObject_Call () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/python/2.7.6-kpegke/lib/libpython2.7.so.1.0
+#26 0x00002b5bd1bb4aa3 in PyEval_EvalFrameEx () at Python/ceval.c:4334
+#27 0x00002b5bd1bba6a0 in PyEval_EvalCodeEx () at Python/ceval.c:3253
+#28 0x00002b5bd1b348bc in function_call () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/python/2.7.6-kpegke/lib/libpython2.7.so.1.0
+#29 0x00002b5bd1b03133 in PyObject_Call () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/python/2.7.6-kpegke/lib/libpython2.7.so.1.0
+#30 0x00002b5bd1bb32e7 in PyEval_CallObjectWithKeywords () at Python/ceval.c:3890
+#31 0x00002b5bd1bdf257 in Py_Finalize () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/python/2.7.6-kpegke/lib/libpython2.7.so.1.0
+#32 0x00002b5bd1bf543f in Py_Main () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/python/2.7.6-kpegke/lib/libpython2.7.so.1.0
+#33 0x0000003313c1ed1d in __libc_start_main () from /lib64/libc.so.6
+#34 0x00000000004006b1 in _start ()
+===========================================================
+
+
+The lines below might hint at the cause of the crash.
+If they do not help you then please submit a bug report at
+http://root.cern.ch/bugs. Please post the ENTIRE stack trace
+from above as an attachment in addition to anything else
+that might help us fixing this issue.
+===========================================================
+#6  0x00002b5bd2a51753 in TDirectory::RegisterContext(TDirectory::TContext*) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libCore.so
+#7  0x00002b5bd2782b1b in TDirectoryFile::Save() () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libRIO.so
+#8  0x00002b5bd2780ebc in TDirectoryFile::Close(char const*) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libRIO.so
+#9  0x00002b5bd27ce9e4 in TFile::Close(char const*) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libRIO.so
+#10 0x00002b5bde64dc77 in TNetXNGFile::Close(char const*) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libNetxNG.so
+#11 0x00002b5bd29ab3a0 in (anonymous namespace)::R__ListSlowClose(TList*) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libCore.so
+#12 0x00002b5bd29abede in TROOT::CloseFiles() () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libCore.so
+#13 0x00002b5bd29ac4c9 in TROOT::EndOfProcessCleanups() () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libCore.so
+#14 0x00002b5bf8158027 in __cf_346 ()
+#15 0x00002b5bd21822b1 in FastCall(long, void*, void*, void*) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libPyROOT.so
+#16 0x00002b5bd216ba3f in PyROOT::TVoidExecutor::Execute(long, void*, PyROOT::TCallContext*) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libPyROOT.so
+#17 0x00002b5bd21790bd in PyROOT::TMethodHolder::CallSafe(void*, long, PyROOT::TCallContext*) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libPyROOT.so
+#18 0x00002b5bd2177df5 in PyROOT::TMethodHolder::Execute(void*, long, PyROOT::TCallContext*) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libPyROOT.so
+#19 0x00002b5bd2176dd3 in PyROOT::TMethodHolder::Call(PyROOT::ObjectProxy*&, _object*, _object*, PyROOT::TCallContext*) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libPyROOT.so
+#20 0x00002b5bd2173fe1 in PyROOT::(anonymous namespace)::mp_call(PyROOT::MethodProxy*, _object*, _object*) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libPyROOT.so
+#21 0x00002b5bd1b03133 in PyObject_Call () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/python/2.7.6-kpegke/lib/libpython2.7.so.1.0
+#22 0x00002b5bd1bb740e in PyEval_EvalFrameEx () at Python/ceval.c:4239
+#23 0x00002b5bd1bba6a0 in PyEval_EvalCodeEx () at Python/ceval.c:3253
+#24 0x00002b5bd1b34985 in function_call () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/python/2.7.6-kpegke/lib/libpython2.7.so.1.0
+#25 0x00002b5bd1b03133 in PyObject_Call () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/python/2.7.6-kpegke/lib/libpython2.7.so.1.0
+#26 0x00002b5bd1bb4aa3 in PyEval_EvalFrameEx () at Python/ceval.c:4334
+#27 0x00002b5bd1bba6a0 in PyEval_EvalCodeEx () at Python/ceval.c:3253
+#28 0x00002b5bd1b348bc in function_call () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/python/2.7.6-kpegke/lib/libpython2.7.so.1.0
+#29 0x00002b5bd1b03133 in PyObject_Call () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/python/2.7.6-kpegke/lib/libpython2.7.so.1.0
+#30 0x00002b5bd1bb32e7 in PyEval_CallObjectWithKeywords () at Python/ceval.c:3890
+#31 0x00002b5bd1bdf257 in Py_Finalize () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/python/2.7.6-kpegke/lib/libpython2.7.so.1.0
+#32 0x00002b5bd1bf543f in Py_Main () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/python/2.7.6-kpegke/lib/libpython2.7.so.1.0
+#33 0x0000003313c1ed1d in __libc_start_main () from /lib64/libc.so.6
+#34 0x00000000004006b1 in _start ()
+===========================================================
+
+
+Error in atexit._run_exitfuncs:
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/python/2.7.6-kpegke/lib/python2.7/atexit.py", line 24, in _run_exitfuncs
+    func(*targs, **kargs)
+  File "/cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/ROOT.py", line 623, in cleanup
+    gROOT.EndOfProcessCleanups()
+SystemError: void TROOT::EndOfProcessCleanups() =>
+    problem in C++; program state has been reset
+Error in sys.exitfunc:
+
+ *** Break *** segmentation violation
+
+
+
+===========================================================
+There was a crash.
+This is the entire stack trace of all threads:
+===========================================================
+
+Thread 6 (Thread 0x2b5bdec58700 (LWP 543704)):
+#0  0x0000003313ce91c3 in epoll_wait () from /lib64/libc.so.6
+#1  0x00002b5bde6813e2 in XrdSys::IOEvents::PollE::Begin(XrdSysSemaphore*, int&, char const**) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/xrootd/4.0.4-kpegke2/lib/libXrdUtils.so.2
+#2  0x00002b5bde67dc2d in XrdSys::IOEvents::BootStrap::Start(void*) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/xrootd/4.0.4-kpegke2/lib/libXrdUtils.so.2
+#3  0x00002b5bde67c447 in XrdSysThread_Xeq () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/xrootd/4.0.4-kpegke2/lib/libXrdUtils.so.2
+#4  0x0000003314007aa1 in start_thread () from /lib64/libpthread.so.0
+#5  0x0000003313ce8bcd in clone () from /lib64/libc.so.6
+
+Thread 5 (Thread 0x2b5bdee59700 (LWP 543705)):
+#0  0x000000331400f00d in nanosleep () from /lib64/libpthread.so.0
+#1  0x00002b5bde67cbdb in XrdSysTimer::Wait(int) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/xrootd/4.0.4-kpegke2/lib/libXrdUtils.so.2
+#2  0x00002b5bde7c3f11 in XrdCl::TaskManager::RunTasks() () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/xrootd/4.0.4-kpegke2/lib/libXrdCl.so.2
+#3  0x00002b5bde7c4079 in ?? () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/xrootd/4.0.4-kpegke2/lib/libXrdCl.so.2
+#4  0x0000003314007aa1 in start_thread () from /lib64/libpthread.so.0
+#5  0x0000003313ce8bcd in clone () from /lib64/libc.so.6
+
+Thread 4 (Thread 0x2b5bdf05a700 (LWP 543706)):
+#0  0x0000003313ce5419 in syscall () from /lib64/libc.so.6
+#1  0x00002b5bde81cc63 in XrdCl::JobManager::RunJobs() () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/xrootd/4.0.4-kpegke2/lib/libXrdCl.so.2
+#2  0x00002b5bde81cdf9 in ?? () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/xrootd/4.0.4-kpegke2/lib/libXrdCl.so.2
+#3  0x0000003314007aa1 in start_thread () from /lib64/libpthread.so.0
+#4  0x0000003313ce8bcd in clone () from /lib64/libc.so.6
+
+Thread 3 (Thread 0x2b5bdf25b700 (LWP 543707)):
+#0  0x0000003313ce5419 in syscall () from /lib64/libc.so.6
+#1  0x00002b5bde81cc63 in XrdCl::JobManager::RunJobs() () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/xrootd/4.0.4-kpegke2/lib/libXrdCl.so.2
+#2  0x00002b5bde81cdf9 in ?? () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/xrootd/4.0.4-kpegke2/lib/libXrdCl.so.2
+#3  0x0000003314007aa1 in start_thread () from /lib64/libpthread.so.0
+#4  0x0000003313ce8bcd in clone () from /lib64/libc.so.6
+
+Thread 2 (Thread 0x2b5bdf45c700 (LWP 543708)):
+#0  0x0000003313ce5419 in syscall () from /lib64/libc.so.6
+#1  0x00002b5bde81cc63 in XrdCl::JobManager::RunJobs() () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/xrootd/4.0.4-kpegke2/lib/libXrdCl.so.2
+#2  0x00002b5bde81cdf9 in ?? () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/xrootd/4.0.4-kpegke2/lib/libXrdCl.so.2
+#3  0x0000003314007aa1 in start_thread () from /lib64/libpthread.so.0
+#4  0x0000003313ce8bcd in clone () from /lib64/libc.so.6
+
+Thread 1 (Thread 0x2b5bd1cc8d80 (LWP 543660)):
+#0  0x0000003313cac86d in waitpid () from /lib64/libc.so.6
+#1  0x0000003313c3e479 in do_system () from /lib64/libc.so.6
+#2  0x0000003313c3e7b0 in system () from /lib64/libc.so.6
+#3  0x00002b5bd2b2bc2a in TUnixSystem::StackTrace() () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libCore.so
+#4  0x00002b5bd2b2dbfc in TUnixSystem::DispatchSignals(ESignals) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libCore.so
+#5  <signal handler called>
+#6  0x00002b5bd2a51753 in TDirectory::RegisterContext(TDirectory::TContext*) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libCore.so
+#7  0x00002b5bd2782b1b in TDirectoryFile::Save() () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libRIO.so
+#8  0x00002b5bd2780ebc in TDirectoryFile::Close(char const*) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libRIO.so
+#9  0x00002b5bd27ce9e4 in TFile::Close(char const*) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libRIO.so
+#10 0x00002b5bde64dc77 in TNetXNGFile::Close(char const*) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libNetxNG.so
+#11 0x00002b5bde64df0f in TNetXNGFile::~TNetXNGFile() () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libNetxNG.so
+#12 0x00002b5bde64e119 in TNetXNGFile::~TNetXNGFile() () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libNetxNG.so
+#13 0x00002b5bd227cd71 in TChain::~TChain() () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libTree.so
+#14 0x00002b5bd227cea9 in TChain::~TChain() () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libTree.so
+#15 0x00002b5bd2b02903 in TClass::Destructor(void*, bool) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libCore.so
+#16 0x00002b5bd21686cf in PyROOT::op_dealloc_nofree(PyROOT::ObjectProxy*) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libPyROOT.so
+#17 0x00002b5bd2168819 in PyROOT::(anonymous namespace)::op_dealloc(PyROOT::ObjectProxy*) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libPyROOT.so
+#18 0x00002b5bd1b68072 in subtype_dealloc () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/python/2.7.6-kpegke/lib/libpython2.7.so.1.0
+#19 0x00002b5bd1b33679 in frame_dealloc () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/python/2.7.6-kpegke/lib/libpython2.7.so.1.0
+#20 0x00002b5bd1be797b in tb_dealloc () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/python/2.7.6-kpegke/lib/libpython2.7.so.1.0
+#21 0x00002b5bd1be798b in tb_dealloc () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/python/2.7.6-kpegke/lib/libpython2.7.so.1.0
+#22 0x00002b5bd1be798b in tb_dealloc () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/python/2.7.6-kpegke/lib/libpython2.7.so.1.0
+#23 0x00002b5bd1b48c17 in insertdict () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/python/2.7.6-kpegke/lib/libpython2.7.so.1.0
+#24 0x00002b5bd1b4a157 in PyDict_SetItem () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/python/2.7.6-kpegke/lib/libpython2.7.so.1.0
+#25 0x00002b5bd1b4b7a8 in PyDict_SetItemString () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/python/2.7.6-kpegke/lib/libpython2.7.so.1.0
+#26 0x00002b5bd1bdefae in PyErr_PrintEx () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/python/2.7.6-kpegke/lib/libpython2.7.so.1.0
+#27 0x00002b5bd1bdf3ae in Py_Finalize () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/python/2.7.6-kpegke/lib/libpython2.7.so.1.0
+#28 0x00002b5bd1bf543f in Py_Main () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/python/2.7.6-kpegke/lib/libpython2.7.so.1.0
+#29 0x0000003313c1ed1d in __libc_start_main () from /lib64/libc.so.6
+#30 0x00000000004006b1 in _start ()
+===========================================================
+
+
+The lines below might hint at the cause of the crash.
+If they do not help you then please submit a bug report at
+http://root.cern.ch/bugs. Please post the ENTIRE stack trace
+from above as an attachment in addition to anything else
+that might help us fixing this issue.
+===========================================================
+#6  0x00002b5bd2a51753 in TDirectory::RegisterContext(TDirectory::TContext*) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libCore.so
+#7  0x00002b5bd2782b1b in TDirectoryFile::Save() () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libRIO.so
+#8  0x00002b5bd2780ebc in TDirectoryFile::Close(char const*) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libRIO.so
+#9  0x00002b5bd27ce9e4 in TFile::Close(char const*) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libRIO.so
+#10 0x00002b5bde64dc77 in TNetXNGFile::Close(char const*) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libNetxNG.so
+#11 0x00002b5bde64df0f in TNetXNGFile::~TNetXNGFile() () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libNetxNG.so
+#12 0x00002b5bde64e119 in TNetXNGFile::~TNetXNGFile() () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libNetxNG.so
+#13 0x00002b5bd227cd71 in TChain::~TChain() () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libTree.so
+#14 0x00002b5bd227cea9 in TChain::~TChain() () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libTree.so
+#15 0x00002b5bd2b02903 in TClass::Destructor(void*, bool) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libCore.so
+#16 0x00002b5bd21686cf in PyROOT::op_dealloc_nofree(PyROOT::ObjectProxy*) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libPyROOT.so
+#17 0x00002b5bd2168819 in PyROOT::(anonymous namespace)::op_dealloc(PyROOT::ObjectProxy*) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib/libPyROOT.so
+#18 0x00002b5bd1b68072 in subtype_dealloc () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/python/2.7.6-kpegke/lib/libpython2.7.so.1.0
+#19 0x00002b5bd1b33679 in frame_dealloc () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/python/2.7.6-kpegke/lib/libpython2.7.so.1.0
+#20 0x00002b5bd1be797b in tb_dealloc () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/python/2.7.6-kpegke/lib/libpython2.7.so.1.0
+#21 0x00002b5bd1be798b in tb_dealloc () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/python/2.7.6-kpegke/lib/libpython2.7.so.1.0
+#22 0x00002b5bd1be798b in tb_dealloc () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/python/2.7.6-kpegke/lib/libpython2.7.so.1.0
+#23 0x00002b5bd1b48c17 in insertdict () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/python/2.7.6-kpegke/lib/libpython2.7.so.1.0
+#24 0x00002b5bd1b4a157 in PyDict_SetItem () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/python/2.7.6-kpegke/lib/libpython2.7.so.1.0
+#25 0x00002b5bd1b4b7a8 in PyDict_SetItemString () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/python/2.7.6-kpegke/lib/libpython2.7.so.1.0
+#26 0x00002b5bd1bdefae in PyErr_PrintEx () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/python/2.7.6-kpegke/lib/libpython2.7.so.1.0
+#27 0x00002b5bd1bdf3ae in Py_Finalize () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/python/2.7.6-kpegke/lib/libpython2.7.so.1.0
+#28 0x00002b5bd1bf543f in Py_Main () from /cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/python/2.7.6-kpegke/lib/libpython2.7.so.1.0
+#29 0x0000003313c1ed1d in __libc_start_main () from /lib64/libc.so.6
+#30 0x00000000004006b1 in _start ()
+===========================================================
+
+
+Segmentation fault
+echodrwxr-xr-x: Command not found.
+[3.334kB/3.334kB][100%][==================================================][0B/s]  [3.334kB/3.334kB][100%][==================================================][0B/s]  
