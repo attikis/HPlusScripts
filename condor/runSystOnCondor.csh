@@ -44,6 +44,9 @@ set WORKDIR = NtupleAnalysis/src/$ANALYSISDIR/work/
 echo "\n=== Changing dir to $WORKDIR"
 cd $WORKDIR
 
+# Save the submit/start time for future use
+set STIME = `date '+%Hh-%Mm-%Ss-%d%h%Y'`
+
 # Run the analyser
 echo "\n=== Running the analysis by executing runSystematics.py as follows:"
 echo "./runSystematics.py -m ${_CONDOR_SCRATCH_DIR}/$TARBALL/ --doSystematics --group $GROUP\n"
@@ -64,12 +67,13 @@ echo "\n=== Output dir determined to be $OUTPUTDIR"
 # head -1 returns the first item
 
 # Create the tarball name
-set TIME = `date '+%Hh%Mm%Ss_%d%h%Y'`
+set FTIME = `date '+%Hh-%Mm-%Ss-%d%h%Y'`
+# set TIME = `date '+%Hh%Mm%Ss_%d%h%Y'`
 # set TIME = `date '+%Hh-%Mm-%Ss-%d%h%Y'`
 # set TIME = `date '+%d%h%Y'`
 # set TIME = `date +"%d%m%Y"`
-echo "\n=== Tarball name will be ${ANALYSISDIR}_${LABEL}_${TIME}.tgz"
-set TARBALL = "${ANALYSISDIR}_${LABEL}_${TIME}.tgz"
+echo "\n=== Tarball name will be ${ANALYSISDIR}_${LABEL}_${STIME}_${FTIME}.tgz"
+set TARBALL = "${ANALYSISDIR}_${LABEL}_${STIME}_${FTIME}.tgz"
 
 # Make the output directory to a tarball
 echo "\n=== Compressing the output dir $OUTPUTDIR into tarball file $TARBALL"
