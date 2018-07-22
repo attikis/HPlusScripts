@@ -125,7 +125,7 @@ def main(opts):
                 f.write("Error  = error_%s.txt\n"  % (fileName) )
                 f.write("Log    = log_%s.txt\n"    % (fileName) )
                 f.write("x509userproxy = /tmp/x509up_u52142\n")
-                f.write("Arguments = %s NewTopAndBugFixAndSF_TopMassLE400_BDT0p40_Group%s_Syst%s %s\n" % (analysis, group, syst, group) )
+                f.write("Arguments = %s NewTopAndBugFixAndSF_TopMassLE400_BDT0p40_Group%s_Syst%s %s %s\n" % (analysis, group, syst, group, syst) )
                 f.write("Queue 1\n")
                 f.close()
                 jdlList.append(jdl)
@@ -136,7 +136,6 @@ def main(opts):
         cmd = "condor_submit %s" %  (jdl)
         #PrintFlushed(hs + cmd + ns, i==1)
         os.system(cmd)
-    print
 
     Print("Total of %s%d jobs submitted%s" % (ss, len(jdlList), ns), True)
     return
@@ -162,7 +161,7 @@ if __name__ == "__main__":
     VERBOSE   = False
     SYSTVARS  = None
     CODEPATH  = "/uscms_data/d3/aattikis/workspace/cmssw/CMSSW_8_0_30/src"
-    MCRABPATH = "/uscms_data/d3/aattikis/workspace/cmssw/CMSSW_8_0_30/src"
+    MCRABPATH = "/uscms_data/d3/aattikis/workspace/multicrab"
     MCRAB     = "multicrab_Hplus2tbAnalysis_v8030_20180508T0644"
     DIRNAME   = None
 

@@ -2,11 +2,12 @@
 #================================================================================================ 
 # Get command line parameters
 #================================================================================================ 
-if ($#argv != 3) then
-    echo "=== You must give exactly 2 arguments:"
+if ($#argv < 3) then
+    echo "=== You must give at least 3 arguments:"
     echo "1=ANALYSISDIR"
-    echo "2=LABEL" #appended to output tarball 
-    echo "3=GROUP" #dataset group to run on (see runSystematics.py)
+    echo "2=LABEL"
+    echo "3=GROUP"
+    echo "4=SYSTEMATICS (optional)"
     echo
     exit 1
 endif
@@ -52,7 +53,7 @@ set STIME = `date '+%Hh-%Mm-%Ss-%d%h%Y'`
 # Run the analyser
 echo "\n=== Running the analysis by executing runSystematics.py as follows:"
 echo "./runSystematics.py -m ${_CONDOR_SCRATCH_DIR}/$TARBALL/ --doSystematics --group $GROUP\n"
-./runSystematics.py -m ${_CONDOR_SCRATCH_DIR}/$TARBALL/ --systVars $SYSTEMATICS --group $GROUP
+./runSystematics.py -m ${_CONDOR_SCRATCH_DIR}/$TARBALL/ --group $GROUP --systVars $SYSTEMATICS 
 
 echo "\n=== Listing all directories"
 echo`ls -alt | grep ^d` #| grep $ANALYSISDIR`
