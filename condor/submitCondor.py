@@ -19,6 +19,7 @@ LAST USED:
 # Modules here
 #================================================================================================ 
 import subprocess
+from subprocess import Popen, PIPE
 import os
 import sys
 import datetime
@@ -74,8 +75,13 @@ def PrintFlushed(msg, printHeader=True):
 
 def main(opts):
 
-    # check that proxy exists (voms-proxy-init)
-    Print("TODO: check that proxy exists (voms-proxy-init)", True)
+    Verbose("Check that a CMS VO proxy exists (voms-proxy-init)", True)
+    process = Popen(['voms-proxy-info', '--all'], stdin=PIPE, stdout=PIPE, stderr=PIPE)
+    output, err = process.communicate()
+    if len(err) > 0:
+        raise Exception(es + err + ns)
+    else:
+        Print("Valid CMS VO proxy found", True)
 
     # Create directory
     if os.path.isdir(opts.dirName):
@@ -107,7 +113,8 @@ def main(opts):
             # For-loop: All groups
             for k, group in enumerate(groups, 1):
                 baseName = "%s_Group%s_Syst%s" % (analysis, group, syst)
-                fileName = "%s_Cluster$(Cluster)_Process$(Process)" % (baseName)
+                # fileName = "%s_Cluster$(Cluster)_Process$(Process)" % (baseName) #original
+                fileName = baseName
                 jdl = "run_%s.jdl" % (baseName)
                 
                 msg = "Creating %s (%d/%d)" % (jdl, j*k, nGroups*nSyst)
