@@ -297,11 +297,10 @@ if __name__ == "__main__":
     pyVer = "%d.%d.%d" % (pyV1, pyV2, pyV3)
     
     if pyV2 < 7 or pyV3 < 6:
-        msg = "Requires %sPython 2.7.6%s or later (using %sPython %s)" % (hs, ns, es, pyVer + ns)
+        Print("Requires %sPython 2.7.6%s or later (using %sPython %s). EXIT!" % (hs, ns, es, pyVer + ns), True)
+        sys.exit()
     else:
-        msg = "Requires %sPython 2.7.6%s or later (using %sPython %s)" % (hs, ns, ss, pyVer + ns)
-
-    Print(msg, True)
+        Print("Requires %sPython 2.7.6%s or later (using %sPython %s)" % (hs, ns, ss, pyVer + ns), True)
 
 
     # Call the main function
