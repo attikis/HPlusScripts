@@ -348,7 +348,7 @@ def main(opts):
                 eosPath = os.path.join(opts.eosdir, f)
                 cmd  = "xrdcp root://cmseos.fnal.gov:/%s %s/." % (eosPath, newDir )
                 msg  = "Copying file %d/%d (%s)" % ( j, tot, hs + s + ns)
-                PrintFlushed(msg, i==1)
+                PrintFlushed(msg, sDir)
                 process = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=True)
                 output, err = process.communicate()
                 Verbose(cmd, True)
