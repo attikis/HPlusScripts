@@ -102,7 +102,9 @@ def GetNumberOfJobs(dirName, fileName="run*.jdl"):
     process = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=True)
     output, err = process.communicate()
     if len(err) > 0:
-        raise Exception(es + err + ns)
+        #raise Exception(es + err + ns)
+        Verbose(es + err + ns)
+        nJobs = 0
     else:
         nJobs = int(output.replace(" ", ""))
     return nJobs
@@ -188,20 +190,31 @@ def GetJobStatusDict(username, keyword="Total for query: "):
     if len(err) > 0:
         raise Exception(es + err + ns)
     else:
+        filledOnce = False
         for l in output.splitlines():
-            if keyword in l:
+            if keyword in l and "Total for all users" not in l:
                 infoList  = [int(s) for s in l.split() if s.isdigit()]
+
                 # Fill the dictionary
-                infoDict["jobs"]      = infoList[0]
-                infoDict["completed"] = infoList[1]
-                infoDict["removed"]   = infoList[2]
-                infoDict["idle"]      = infoList[3]
-                infoDict["running"]   = infoList[4]
-                infoDict["held"]      = infoList[5]
-                infoDict["suspended"] = infoList[6]
-                break
+                if filledOnce:
+                    infoDict["jobs"]      += infoList[0]
+                    infoDict["completed"] += infoList[1]
+                    infoDict["removed"]   += infoList[2]
+                    infoDict["idle"]      += infoList[3]
+                    infoDict["running"]   += infoList[4]
+                    infoDict["held"]      += infoList[5]
+                    infoDict["suspended"] += infoList[6]
+                else:
+                    infoDict["jobs"]      = infoList[0]
+                    infoDict["completed"] = infoList[1]
+                    infoDict["removed"]   = infoList[2]
+                    infoDict["idle"]      = infoList[3]
+                    infoDict["running"]   = infoList[4]
+                    infoDict["held"]      = infoList[5]
+                    infoDict["suspended"] = infoList[6]
+                filledOnce = True
         else:
-            Print("Found zero jobs", True)
+            Verbose("Found zero jobs", True)
 
     if len(infoDict.keys()) < 1:
         raise Exception("Something went wrong and could not determing the jobs running, idle, held, etc..")
@@ -350,15 +363,23 @@ def main(opts):
 
 
     Verbose("Determine total number of done jobs (using error files)")
-    nDoneH2tb  = GetNumberOfJobsWithKeyword(opts.dirName, "output_Hplus2tbAnalysis*.txt", "Results are in")
-    nDoneFakeB = GetNumberOfJobsWithKeyword(opts.dirName, "output_FakeBMeasurement*.txt", "Results are in")
+    nDoneH2tb  = 0
+    nDoneFakeB = 0
+    if nOutputH2tb > 0:
+        nDoneH2tb  = GetNumberOfJobsWithKeyword(opts.dirName, "output_Hplus2tbAnalysis*.txt", "Results are in")
+    if nOutputFakeB> 0:
+        nDoneFakeB = GetNumberOfJobsWithKeyword(opts.dirName, "output_FakeBMeasurement*.txt", "Results are in")
     nDoneTotal = nDoneH2tb + nDoneFakeB
     Verbose("Found %s%d%s jobs done (Hplus2tbAnalysis=%d, FakeBMeasurement=%d)" % (ts, nDoneTotal, ns, nDoneH2tb, nDoneFakeB), False) 
 
 
     Verbose("Determine total number of failed jobs (using error files)")
-    nFailH2tb  = GetNumberOfJobsWithKeyword(opts.dirName, "error_Hplus2tbAnalysis*.txt", "Results are in")
-    nFailFakeB = GetNumberOfJobsWithKeyword(opts.dirName, "error_FakeBMeasurement*.txt", "Results are in")
+    nFailH2tb  = 0
+    nFailFakeB = 0
+    if nErrorH2tb > 0:
+        nFailH2tb  = GetNumberOfJobsWithKeyword(opts.dirName, "error_Hplus2tbAnalysis*.txt", "Results are in")
+    if nErrorFakeB > 0:
+        nFailFakeB = GetNumberOfJobsWithKeyword(opts.dirName, "error_FakeBMeasurement*.txt", "Results are in")
     nFailTotal = nDoneH2tb + nDoneFakeB
     Verbose("Found %s%d%s jobs failed (Hplus2tbAnalysis=%d, FakeBMeasurement=%d)" % (ts, nFailTotal, ns, nFailH2tb, nFailFakeB), False) 
 
@@ -376,7 +397,7 @@ def main(opts):
         table.append(align.format(infoDict["jobs"], infoDict["completed"], infoDict["removed"], infoDict["idle"], infoDict["running"], infoDict["held"], infoDict["suspended"]) )
     table.append(hLine)
     for i, row in enumerate(table, 1):
-        Verbose(row, i==1)
+        Print(row, i==1)
         
 
     Verbose("Get the jobs dictionary and the summary table", True)
