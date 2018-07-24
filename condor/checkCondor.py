@@ -208,8 +208,104 @@ def GetJobStatusDict(username, keyword="Total for query: "):
     return infoDict
 
 
+def GetSystToOutputDict(filesList):
+    '''
+    The input file list (fList) contains all the
+    output files of a given analysis (e.g. Hplus2tbAnalysis or
+    FakeBMeasurement). But they are for all systematics considered
+
+    This functions returns them in a dictionary so that:
+    dict["Systematic"] = list-of-files-for-Systematic
+    '''
+    # Definitions
+    filesDict  = {}
+    systematic = None
+
+    # For-loop: All files
+    for i, f in enumerate(filesList, 1):
+
+        m = re.search('_Syst(.+?)_', f)
+        if m:
+            systematic = m.group(1)
+        else:
+            raise Exception("Could not determine systematics type for file %s" % (f))
+
+        # if key does not exist add it
+        if systematic in filesDict.keys():
+            filesDict[systematic].append(f)
+        else:
+            filesDict[systematic] = [f]
+    return filesDict
+
+
+def RetrieveUnpackCleanupFiles(filesSyst, analysis):
+
+    # For-loop: All output files for given systematic
+    for i, s in enumerate(filesSyst.keys(), 1):
+
+        # Definitions
+        nSyst = len(filesSyst.keys())
+        sDir  = False            
+
+        # For-loop: All output files for given systematic
+        for j,  f in enumerate(filesSyst[s], 1):
+                
+            # Define stuff
+            m = re.search('_Group(.+?)_', f)
+            if m:
+                datasetGroup = m.group(1)
+            else:
+                raise Exception("Could not determine datasets group for file %s" % (f))
+
+            nFiles = len(filesSyst[s])
+            if not sDir:
+                date   = f.split("-")[-1].replace(".tgz", "")
+                time   = f.split("Syst%s" % s)[-1].replace(".tgz", "")#.replace("-" + date, "")
+                newDir = f.replace(time, "").replace(".tgz", "") + "_" + date
+                newDir = newDir.replace("_Group%s" % datasetGroup, "")
+                
+            Verbose("Make new dir %s? Or does it already exist?"  % (newDir), True)
+            if not os.path.isdir(newDir) and not sDir:
+                os.mkdir(newDir)
+                # Some jobs might finish at a different day. This causes 2 dirs for a given syst. this fixes it
+                sDir = True
+            else:
+                Verbose(hs + "Dir %s already exists!" % (newDir) + ns, True)
+
+            Verbose("Copy all tarballs under new dir", True)
+            eosPath = os.path.join(opts.eosdir, f)
+            cmd  = "xrdcp root://cmseos.fnal.gov:/%s %s/." % (eosPath, newDir )
+            #msg  = "Copying file %d/%d, systematic %s %d/%d)" % ( j, nFiles, hs + s + ns, i, nSyst)
+            msg  = "%s: Systematic %d/%d , File %d/%d" % (hs + analysis + ns, i, nSyst, j, nFiles)
+            PrintFlushed(msg, j*i==1)
+            process = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=True)
+            output, err = process.communicate()
+            Verbose(cmd, True)
+ 
+            Verbose("Unpack and subsequently remove the tarball", True)
+            filePath = os.path.join(newDir, f)
+            cmd = "tar xvzf %s --strip-components=1 -C %s && rm -f %s" % (filePath, newDir, filePath)
+            process = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=True)
+            output, err = process.communicate()
+            if len(err) > 0:
+                raise Exception(es + err + ns)
+            else:
+                Verbose(cmd, True)
+
+        Verbose("Now create the \"multicrab.cfg\" file", True)
+        os.chdir(newDir)
+        cmd = "find * -maxdepth 0 -type d | awk '{print \"[\"$1\"]\"}' > multicrab.cfg"
+        process = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=True)
+        output, err = process.communicate()
+        if len(err) > 0:
+            raise Exception(es + err + ns)
+        else:
+            Verbose(cmd, True)                
+            os.chdir("../")
+    print
+    return
+
 def main(opts):
-    
     
     Verbose("Check that a CMS VO proxy exists (voms-proxy-init)", True)
     process = Popen(['voms-proxy-info', '--all'], stdin=PIPE, stdout=PIPE, stderr=PIPE)
@@ -295,87 +391,14 @@ def main(opts):
         files, filesH2tb, filesFakeB = GetOutputFiles(opts.eosdir)
         Print("Found %d files in %s (Hplus2tbAnalysis=%d, FakeBMeasurement=%d)" % (len(files), opts.eosdir, len(filesH2tb), len(filesFakeB)), True)
         
-        
-        # Definitions
-        filesSyst  = {}
-        systematic = None
 
-        # For-loop: Hplus2tbAnalysis files
-        for i, f in enumerate(filesH2tb, 1):
+        Verbose("Get mapping of systematic->fileList", True)
+        filesSystH2tb  = GetSystToOutputDict(filesH2tb)
+        filesSystFakeB = GetSystToOutputDict(filesFakeB)
 
-            m = re.search('_Syst(.+?)_', f)
-            if m:
-                systematic = m.group(1)
-            else:
-                raise Exception("Could not determine systematics type for file %s" % (f))
+        RetrieveUnpackCleanupFiles(filesSystH2tb, "Hplus2tbAnalysis")
+        RetrieveUnpackCleanupFiles(filesSystFakeB, "FakeBMeasurement")
 
-            # if key does not exist add it
-            if systematic in filesSyst.keys():
-                filesSyst[systematic].append(f)
-            else:
-                filesSyst[systematic] = [f]
-
-        # For-loop: All output files for given systematic
-        for i, s in enumerate(filesSyst.keys(), 1):
-
-            sDir = False
-            # For-loop: All output files for given systematic
-            for j,  f in enumerate(filesSyst[s], 1):
-                
-                # Fefine stuff
-                m = re.search('_Group(.+?)_', f)
-                if m:
-                    datasetGroup = m.group(1)
-                else:
-                    raise Exception("Could not determine datasets group for file %s" % (f))
-                tot    = len(filesSyst[s])
-                if not sDir:
-                    date   = f.split("-")[-1].replace(".tgz", "")
-                    time   = f.split("Syst%s" % s)[-1].replace(".tgz", "")#.replace("-" + date, "")
-                    newDir = f.replace(time, "").replace(".tgz", "") + "_" + date
-                    newDir = newDir.replace("_Group%s" % datasetGroup, "")
-
-                Verbose("Make new dir %s? Or does it already exist?"  % (newDir), True)
-                if not os.path.isdir(newDir) and not sDir:
-                    os.mkdir(newDir)
-                    # Some jobs might finish at a different day. This causes 2 dirs for a given syst. this fixes it
-                    sDir = True
-                else:
-                    Verbose(hs + "Dir %s already exists!" % (newDir) + ns, True)
-
-
-                Verbose("Copy all tarballs under new dir", True)
-                eosPath = os.path.join(opts.eosdir, f)
-                cmd  = "xrdcp root://cmseos.fnal.gov:/%s %s/." % (eosPath, newDir )
-                msg  = "Copying file %d/%d (%s)" % ( j, tot, hs + s + ns)
-                PrintFlushed(msg, sDir)
-                process = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=True)
-                output, err = process.communicate()
-                Verbose(cmd, True)
- 
-
-                Verbose("Unpack and subsequently remove the tarball", True)
-                filePath = os.path.join(newDir, f)
-                cmd = "tar xvzf %s --strip-components=1 -C %s && rm -f %s" % (filePath, newDir, filePath)
-                #cmd = "tar xvzf %s --strip-components=1 -C %s" % (filePath, newDir)
-                process = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=True)
-                output, err = process.communicate()
-                if len(err) > 0:
-                    raise Exception(es + err + ns)
-                else:
-                    Verbose(cmd, True)
-
-            Verbose("Now create the \"multicrab.cfg\" file", True)
-            os.chdir(newDir)
-            cmd = "find * -maxdepth 0 -type d | awk '{print \"[\"$1\"]\"}' > multicrab.cfg"
-            process = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=True)
-            output, err = process.communicate()
-            if len(err) > 0:
-                raise Exception(es + err + ns)
-            else:
-                Verbose(cmd, True)                
-                os.chdir("../")
-            print
     return
 
 
