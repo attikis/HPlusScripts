@@ -339,7 +339,7 @@ def main(opts):
                     newDir = f.replace(time, "").replace(".tgz", "") + "_" + date
                     newDir = newDir.replace("_Group%s" % datasetGroup, "")
 
-                # Makew new dir 
+                Verbose("Make new dir %s? Or does it already exist?"  % (newDir), True)
                 if not os.path.isdir(newDir) and not sDir:
                     os.mkdir(newDir)
                     # Some jobs might finish at a different day. This causes 2 dirs for a given syst. this fixes it
@@ -360,8 +360,8 @@ def main(opts):
 
                 Verbose("Unpack and subsequently remove the tarball", True)
                 filePath = os.path.join(newDir, f)
-                #cmd = "tar xvzf %s --strip-components=1 -C %s && rm -f %s" % (filePath, newDir, filePath)
-                cmd = "tar xvzf %s --strip-components=1 -C %s" % (filePath, newDir)
+                cmd = "tar xvzf %s --strip-components=1 -C %s && rm -f %s" % (filePath, newDir, filePath)
+                #cmd = "tar xvzf %s --strip-components=1 -C %s" % (filePath, newDir)
                 process = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=True)
                 output, err = process.communicate()
                 if len(err) > 0:
