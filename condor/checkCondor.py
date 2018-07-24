@@ -49,7 +49,7 @@ es = ShellStyles.ErrorStyle()
 # Function Definitions
 #================================================================================================ 
 def Verbose(msg, printHeader=False):
-    if not VERBOSE:
+    if not opts.verbose:
         return
     if printHeader:
         print "=== checkCondor.py:"
@@ -322,6 +322,7 @@ def main(opts):
         # For-loop: All output files for given systematic
         for i, s in enumerate(filesSyst.keys(), 1):
 
+            sDir = False
             # For-loop: All output files for given systematic
             for j,  f in enumerate(filesSyst[s], 1):
                 
@@ -332,28 +333,35 @@ def main(opts):
                 else:
                     raise Exception("Could not determine datasets group for file %s" % (f))
                 tot    = len(filesSyst[s])
-                date   = f.split("-")[-1].replace(".tgz", "")
-                time   = f.split("Syst%s" % s)[-1].replace(".tgz", "")#.replace("-" + date, "")
-                newDir = f.replace(time, "").replace(".tgz", "") + "_" + date
-                newDir = newDir.replace("_Group%s" % datasetGroup, "")
+                if not sDir:
+                    date   = f.split("-")[-1].replace(".tgz", "")
+                    time   = f.split("Syst%s" % s)[-1].replace(".tgz", "")#.replace("-" + date, "")
+                    newDir = f.replace(time, "").replace(".tgz", "") + "_" + date
+                    newDir = newDir.replace("_Group%s" % datasetGroup, "")
 
                 # Makew new dir 
-                if not os.path.isdir(newDir):
+                if not os.path.isdir(newDir) and not sDir:
                     os.mkdir(newDir)
+                    # Some jobs might finish at a different day. This causes 2 dirs for a given syst. this fixes it
+                    sDir = True
                 else:
                     Verbose(hs + "Dir %s already exists!" % (newDir) + ns, True)
 
-                # Copy all tarballs under new dir
+
+                Verbose("Copy all tarballs under new dir", True)
                 eosPath = os.path.join(opts.eosdir, f)
                 cmd  = "xrdcp root://cmseos.fnal.gov:/%s %s/." % (eosPath, newDir )
                 msg  = "Copying file %d/%d (%s)" % ( j, tot, hs + s + ns)
                 PrintFlushed(msg, j==1)
                 process = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=True)
                 output, err = process.communicate()
-            
-                Print("Unpack and subsequently remove the tarball", True)
+                Verbose(cmd, True)
+ 
+
+                Verbose("Unpack and subsequently remove the tarball", True)
                 filePath = os.path.join(newDir, f)
-                cmd = "tar xvzf %s --strip-components=1 && rm -f %s" % (filePath, filePath)
+                #cmd = "tar xvzf %s --strip-components=1 -C %s && rm -f %s" % (filePath, newDir, filePath)
+                cmd = "tar xvzf %s --strip-components=1 -C %s" % (filePath, newDir)
                 process = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=True)
                 output, err = process.communicate()
                 if len(err) > 0:
@@ -361,8 +369,16 @@ def main(opts):
                 else:
                     Verbose(cmd, True)
 
-            print                
-            break#find * -maxdepth 0 -type d | awk '{print "["$1"]"}' > multicrab.cfg
+            Verbose("Now create the \"multicrab.cfg\" file", True)
+            os.chdir(newDir)
+            cmd = "find * -maxdepth 0 -type d | awk '{print \"[\"$1\"]\"}' > multicrab.cfg"
+            process = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=True)
+            output, err = process.communicate()
+            if len(err) > 0:
+                raise Exception(es + err + ns)
+            else:
+                Verbose(cmd, True)                
+                os.chdir("../")
             print
     return
 
