@@ -315,10 +315,6 @@ def main(opts):
             else:
                 filesSyst[systematic] = [f]
 
-            #cmd = "xrdcp root://cmseos.fnal.gov:/%s ." % ( os.path.join(opts.eosdir, f))
-            #process = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=True)
-            #output, err = process.communicate()
-
         # For-loop: All output files for given systematic
         for i, s in enumerate(filesSyst.keys(), 1):
 
@@ -352,7 +348,7 @@ def main(opts):
                 eosPath = os.path.join(opts.eosdir, f)
                 cmd  = "xrdcp root://cmseos.fnal.gov:/%s %s/." % (eosPath, newDir )
                 msg  = "Copying file %d/%d (%s)" % ( j, tot, hs + s + ns)
-                PrintFlushed(msg, j==1)
+                PrintFlushed(msg, i==1)
                 process = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=True)
                 output, err = process.communicate()
                 Verbose(cmd, True)
