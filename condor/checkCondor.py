@@ -345,7 +345,7 @@ def main(opts):
 
 
                 Verbose("Copy all tarballs under new dir", True)
-                eosPath = os.path.join(opts.eosdir, f)
+                eosPath = os.path.joins(opts.eosdir, f)
                 cmd  = "xrdcp root://cmseos.fnal.gov:/%s %s/." % (eosPath, newDir )
                 msg  = "Copying file %d/%d (%s)" % ( j, tot, hs + s + ns)
                 PrintFlushed(msg, sDir)
