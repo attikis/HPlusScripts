@@ -14,7 +14,7 @@ EXAMPLE:
 
 
 LAST USED:
-./checkCondor.py -d TopMassLE400_BDT0p40_AbsEta0p8_1p4_2p0_Pt_60_90_160_300_Stat_22Jul2018
+./checkCondor.py -d TopMassLE400_BDT0p40_AbsEta0p8_1p4_2p0_Pt_60_90_160_300_Stat_22Jul2018 --getoutput
 
 
 USEFUL LINKS:
@@ -58,10 +58,12 @@ def Verbose(msg, printHeader=False):
         print "\t", msg
     return
 
+
 def GetFName():
     fName = __file__.split("/")[-1]
     fName = fName.replace(".pyc", ".py")
     return fName
+
 
 def Print(msg, printHeader=True):
     fName = GetFName()
@@ -70,6 +72,7 @@ def Print(msg, printHeader=True):
     if msg !="":
         print "\t", msg
     return
+
 
 def PrintFlushed(msg, printHeader=True):
     '''
@@ -104,6 +107,64 @@ def GetNumberOfJobs(dirName, fileName="run*.jdl"):
         nJobs = int(output.replace(" ", ""))
     return nJobs
 
+
+def GetSummary(nRunTotal, nDoneTotal, infoDict, printSummary=True):
+    Verbose("Fill the dictionaries with all the information retrieved", True)
+    jobsDict = {}
+    jobsDict["total"] = str( nRunTotal )
+    jobsDict["done"]  = str( nDoneTotal )
+    jobsDict["run"]   = str( infoDict["running"] )
+    jobsDict["fail"]  = str( nRunTotal-nDoneTotal-infoDict["running"] )
+    
+    # Create table
+    table   = []
+    align  = "{:>20} {:>20} {:>20} {:>20}"
+    header = align.format(ns + "TOTAL" + ns, ss+ "DONE" + ns, ts + "RUN" + ns, es + "FAIL" + ns)
+    hLine  = "="*40
+    # table.append("{:^80}".format(opts.dirName))
+    table.append(hLine)
+    table.append(header)
+    table.append(hLine)
+    for k in jobsDict:
+        table.append( align.format(ns + jobsDict["total"] + ns, ss + jobsDict["done"] + ns, ts + jobsDict["run"] + ns, es + jobsDict["fail"] + ns) )
+    table.append(hLine)
+    for i, row in enumerate(table, 1):
+        Print(row, i==1)
+
+    return jobsDict, table
+
+
+def GetOutputFiles(eosdir):
+    cmd = "eos root://cmseos.fnal.gov ls %s" % (eosdir)
+    process = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=True)
+    output, err = process.communicate()
+
+    # Get list of contents 
+    output = output.splitlines()
+
+    # Remove anything not ending in ".tgz"
+    for o in output:
+        if o.endswith(".tgz") == False:
+            output.remove(o)
+    
+    # Separate into "Hplus2tbAnalysis" and "FakeBMeasurement"
+    outputH2tb  = []
+    outputFakeB = []
+    for i, o in enumerate(output, 1):
+
+        if "Hplus2tbAnalysis" in o:
+            Verbose(hs + o + ns, i ==1)
+            outputH2tb.append(o)
+
+        if "FakeBMeasurement" in o:
+            Verbose(ts + o + ns, i==1)
+            outputFakeB.append(o)
+
+    # If no results found
+    if len(output) < 1:
+        return [], [], []
+    return output, outputH2tb, outputFakeB
+    
 
 def GetJobStatusDict(username, keyword="Total for query: "):
     '''
@@ -222,29 +283,89 @@ def main(opts):
         Verbose(row, i==1)
         
 
-    Verbose("Fill the dictionaries with all the information retrieved", True)
-    jobs  = {}
-    jobs["total"] = str( nRunTotal )
-    jobs["done"]  = str( nDoneTotal )
-    jobs["run"]   = str( infoDict["running"] )
-    jobs["fail"]  = str( nRunTotal-nDoneTotal-infoDict["running"] )
-    
-    # Create table
-    table   = []
-    align  = "{:>20} {:>20} {:>20} {:>20}"
-    header = align.format(ns + "TOTAL" + ns, ss+ "DONE" + ns, ts + "RUN" + ns, es + "FAIL" + ns)
-    hLine  = "="*40
-    # table.append("{:^80}".format(opts.dirName))
-    table.append(hLine)
-    table.append(header)
-    table.append(hLine)
-    for k in jobs:
-        table.append( align.format(ns + jobs["total"] + ns, ss + jobs["done"] + ns, ts + jobs["run"] + ns, es + jobs["fail"] + ns) )
-    table.append(hLine)
-    for i, row in enumerate(table, 1):
-        Print(row, i==1)
+    Verbose("Get the jobs dictionary and the summary table", True)
+    jobsDict, table = GetSummary(nRunTotal, nDoneTotal, infoDict, printSummary=True)
 
+    if opts.getoutput:
+        if len(jobsDict["done"]) < 1:
+            Print("No jobs in \"done\" mode found.", True)
+        else:
+            Verbose("Found %s jobs in %s state!" % (jobsDict["done"], ss + "DONE" + ns), True)
+            
+        files, filesH2tb, filesFakeB = GetOutputFiles(opts.eosdir)
+        Print("Found %d files in %s (Hplus2tbAnalysis=%d, FakeBMeasurement=%d)" % (len(files), opts.eosdir, len(filesH2tb), len(filesFakeB)), True)
+        
+        
+        # Definitions
+        filesSyst  = {}
+        systematic = None
+
+        # For-loop: Hplus2tbAnalysis files
+        for i, f in enumerate(filesH2tb, 1):
+
+            m = re.search('_Syst(.+?)_', f)
+            if m:
+                systematic = m.group(1)
+            else:
+                raise Exception("Could not determine systematics type for file %s" % (f))
+
+            # if key does not exist add it
+            if systematic in filesSyst.keys():
+                filesSyst[systematic].append(f)
+            else:
+                filesSyst[systematic] = [f]
+
+            #cmd = "xrdcp root://cmseos.fnal.gov:/%s ." % ( os.path.join(opts.eosdir, f))
+            #process = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=True)
+            #output, err = process.communicate()
+
+        # For-loop: All output files for given systematic
+        for i, s in enumerate(filesSyst.keys(), 1):
+
+            # For-loop: All output files for given systematic
+            for j,  f in enumerate(filesSyst[s], 1):
+                
+                # Fefine stuff
+                m = re.search('_Group(.+?)_', f)
+                if m:
+                    datasetGroup = m.group(1)
+                else:
+                    raise Exception("Could not determine datasets group for file %s" % (f))
+                tot    = len(filesSyst[s])
+                date   = f.split("-")[-1].replace(".tgz", "")
+                time   = f.split("Syst%s" % s)[-1].replace(".tgz", "")#.replace("-" + date, "")
+                newDir = f.replace(time, "").replace(".tgz", "") + "_" + date
+                newDir = newDir.replace("_Group%s" % datasetGroup, "")
+
+                # Makew new dir 
+                if not os.path.isdir(newDir):
+                    os.mkdir(newDir)
+                else:
+                    Verbose(hs + "Dir %s already exists!" % (newDir) + ns, True)
+
+                # Copy all tarballs under new dir
+                eosPath = os.path.join(opts.eosdir, f)
+                cmd  = "xrdcp root://cmseos.fnal.gov:/%s %s/." % (eosPath, newDir )
+                msg  = "Copying file %d/%d (%s)" % ( j, tot, hs + s + ns)
+                PrintFlushed(msg, j==1)
+                process = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=True)
+                output, err = process.communicate()
+            
+                Print("Unpack and subsequently remove the tarball", True)
+                filePath = os.path.join(newDir, f)
+                cmd = "tar xvzf %s --strip-components=1 && rm -f %s" % (filePath, filePath)
+                process = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=True)
+                output, err = process.communicate()
+                if len(err) > 0:
+                    raise Exception(es + err + ns)
+                else:
+                    Verbose(cmd, True)
+
+            print                
+            break#find * -maxdepth 0 -type d | awk '{print "["$1"]"}' > multicrab.cfg
+            print
     return
+
 
 if __name__ == "__main__":
     '''
@@ -267,6 +388,8 @@ if __name__ == "__main__":
     VERBOSE   = False
     DIRNAME   = None
     USERNAME  = None
+    GETOUTPUT = False
+    EOSDIR    = "$CONDOR"
 
     # Define the available script options
     parser = OptionParser(usage="Usage: %prog [options]", add_help_option=True, conflict_handler="resolve")
@@ -280,11 +403,17 @@ if __name__ == "__main__":
     parser.add_option("-u", "--userName", dest="userName", action="store", default = USERNAME,
                       help="User name (FNAL account) to be used for condor commands [default: %s]" % (USERNAME) )
 
+    parser.add_option("-g", "--getoutput", dest="getoutput", action="store_true", default = GETOUTPUT,
+                      help="Retrieve output from EOS? [default: %s]" % (GETOUTPUT) )
+
+    parser.add_option("--eosdir", dest="eosdir", action="store", default = EOSDIR,
+                      help="Location of CONDOR output files in EOS? [default: %s]" % (EOSDIR) )
+
     (opts, parseArgs) = parser.parse_args()
 
     # Sanity checks
     if opts.dirName == None:
-        Print("Please provide a directory as argument (--dirName option). EXIT!", True)
+        Print("Please provide a directory as argument (-d or --dirName option). EXIT!", True)
         sys.exit()
 
     if opts.userName == None:
@@ -301,7 +430,6 @@ if __name__ == "__main__":
         sys.exit()
     else:
         Print("Requires %sPython 2.7.6%s or later (using %sPython %s)" % (hs, ns, ss, pyVer + ns), True)
-
 
     # Call the main function
     main(opts)
