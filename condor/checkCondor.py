@@ -15,6 +15,7 @@ EXAMPLE:
 
 LAST USED:
 ./checkCondor.py -d TopMassLE400_BDT0p40_AbsEta0p8_1p4_2p0_Pt_60_90_160_300_Stat_22Jul2018 --getoutput
+./checkCondor.py -d TopMassLE500_BDT0p40_AbsEta0p8_1p4_2p0_Pt_60_90_160_300_Stat_24Jul2018 --resubmit
 
 
 USEFUL LINKS:
@@ -42,8 +43,9 @@ import ShellStyles as ShellStyles
 ss = ShellStyles.SuccessStyle()
 ns = ShellStyles.NormalStyle()
 ts = ShellStyles.NoteStyle()
-hs = ShellStyles.HighlightAltStyle()
+hs = ""#ShellStyles.HighlightAltStyle()
 es = ShellStyles.ErrorStyle()
+cs = ShellStyles.CaptionStyle()
 
 #================================================================================================ 
 # Function Definitions
@@ -86,6 +88,24 @@ def PrintFlushed(msg, printHeader=True):
     return     
 
 
+def AskUser(msg, printHeader=False):
+    '''
+    Prompts user for keyboard feedback to a certain question.
+    Returns true if keystroke is \"y\", false otherwise.
+    '''
+    if printHeader:
+                keystroke = raw_input("=== " + GetFName() + "\n\t" +  msg + " (y/n): ")
+    else:
+        keystroke = raw_input("\t" +  msg + " (y/n): ")
+
+    if (keystroke.lower()) == "y":
+        return True
+    elif (keystroke.lower()) == "n":
+        return False
+    else:
+        AskUser(msg)
+
+
 def GetNumberOfJobsWithKeyword(dirName, fileName="output_FakeBMeasurement_Group*.txt", keyword="Results are in"):
     cmd = "cat %s/%s | grep -c '%s' " % (dirName, fileName, keyword)
     process = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=True)
@@ -97,7 +117,142 @@ def GetNumberOfJobsWithKeyword(dirName, fileName="output_FakeBMeasurement_Group*
     return nJobs
 
 
+def GetJobsWithKeyword(dirName, analysis= "FakeBMeasurement", keyword="Results are in"):
+
+    # Return items
+    jdlList = []
+    outList = []
+    errList = []
+    logList = []
+    eosList = []
+
+    # Get EOS files (if job fails corresponding file must be removed!)
+    files, filesH2tb, filesFakeB = GetOutputFiles(opts.eosdir)
+    if analysis == "FakeBMeasurement":
+        filesInEOS = filesFakeB
+    elif analysis == "Hplus2tbAnalysis":
+        filesInEOS = filesH2tb
+    else:
+        raise Exception("Invalid analysis type \"%s\" selected!" % (analysis))
+
+    # Define files to search
+    fileName = "error_%s_Group*.txt" % (analysis)
+    cmd      = "grep -i -n -m1 --files-with-matches '%s' %s/%s" % (keyword, dirName, fileName)
+    process  = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=True)
+    output, err = process.communicate()
+    if len(err) > 0:
+        raise Exception(es + err + ns)
+    else:
+        jobs = output.splitlines()
+
+    # For-loop: All failed jobs
+    for j in jobs:
+        
+        f = os.path.basename(j)
+        m = re.search('_Group(.+?)_', f)
+        if m:
+            jobGroup = m.group(1)
+        else:
+            raise Exception("Could not determine datasets group for file %s" % (f))
+
+        n = re.search('_Syst(.+).txt', f)
+        if n:
+            jobSyst = n.group(1)
+        else:
+            raise Exception("Could not determine datasets group for file %s" % (f))
+        
+        # Get all job-related files
+        jdl = "run_%s_Group%s_Syst%s.jdl"   % (analysis, jobGroup, jobSyst)
+        err = "error_%s_Group%s_Syst%s.txt" % (analysis, jobGroup, jobSyst)
+        out = "out_%s_Group%s_Syst%s.txt"   % (analysis, jobGroup, jobSyst)
+        log = "log_%s_Group%s_Syst%s.txt"   % (analysis, jobGroup, jobSyst)
+        jdlList.append(os.path.join(opts.dirName, jdl) )
+        errList.append(os.path.join(opts.dirName, err) ) 
+        outList.append(os.path.join(opts.dirName, out) ) 
+        logList.append(os.path.join(opts.dirName, out) ) 
+        
+        # Definitions
+        fGroup = "_Group%s_" % jobGroup
+        fSyst  = "_Syst%s_"  % jobSyst
+        iFile  = 0
+
+        # For-loop: All EOS files
+        for i, f in enumerate(filesInEOS, 1):
+            
+            match = fGroup in f and fSyst in f
+            if not match:
+                continue
+
+            # Save output file of failed job in EOS
+            eosList.append(os.path.join(opts.eosdir, f) )
+
+    return jdlList, errList, outList, logList, eosList
+
+
+def ResubmitFailedJobs(jdlList, errList, outList, logList, eosList):
+    
+    if len(jdlList) + len(errList) + len(outList) + len(eosList) < 1:
+        return
+
+    if opts.resubmit:
+        msg = "Automatically resubmitting all failed jobs"
+    else:
+        msg = "Copy/paste the commands below to resubmit & clean all failed jobs"
+    Print(ts + msg + ns, True)
+    
+    # For-loop: All job resubmits
+    for i, jdl in enumerate(jdlList, 1):
+        cmd = "condor_submit %s" % (jdl)
+        Print(ss + cmd + ns, i==0)
+        if opts.resubmit:
+            process = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=True)
+            output, err = process.communicate()
+
+    #print
+    # For-loop: All EOS files to be removed
+    for i,f in enumerate(eosList, 1):
+        cmd = "eosrm %s" % (f)
+        Print(es + cmd + ns, i==0)
+        if opts.resubmit:
+            if AskUser(cmd):
+                process = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=True)
+                output, err = process.communicate()
+    
+    #print 
+    # For-loop: All error txt files to be removed
+    for i,f in enumerate(errList, 1):
+        cmd = "rm -f %s" % (f)
+        Print(es + cmd + ns, i==0)
+        if opts.resubmit:
+            if AskUser(cmd):
+                process = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=True)
+                output, err = process.communicate()
+
+    #print
+    # For-loop: All output txt files to be removed
+    for i, f in enumerate(outList, 1):
+        cmd = "rm -f %s" % (f)
+        Print(es + cmd + ns, i==0)
+        if opts.resubmit:
+            if AskUser(cmd):
+                process = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=True)
+                output, err = process.communicate()
+
+    #print
+    # For-loop: All log txt files to be removed
+    for i, f in enumerate(logList, 1):
+        cmd = "rm -f %s" % (f)
+        Print(es + cmd + ns, i==0)
+        if opts.resubmit:
+            if AskUser(cmd):
+                process = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=True)
+                output, err = process.communicate()
+    return
+
+
 def GetNumberOfJobs(dirName, fileName="run*.jdl"):
+
+    # Define the command to be executed
     cmd     = "ls %s | wc -w" % ( os.path.join(os.getcwd(), dirName, fileName) )
     process = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=True)
     output, err = process.communicate()
@@ -113,22 +268,27 @@ def GetNumberOfJobs(dirName, fileName="run*.jdl"):
 def GetSummary(nRunTotal, nDoneTotal, infoDict, printSummary=True):
     Verbose("Fill the dictionaries with all the information retrieved", True)
     jobsDict = {}
-    jobsDict["total"] = str( nRunTotal )
-    jobsDict["done"]  = str( nDoneTotal )
-    jobsDict["run"]   = str( infoDict["running"] )
-    jobsDict["fail"]  = str( nRunTotal-nDoneTotal-infoDict["running"] )
-    
+    jobsDict["total"]     = str( nRunTotal )
+    jobsDict["done"]      = str( nDoneTotal )
+    jobsDict["run"]       = str( infoDict["running"] )
+    jobsDict["fail"]      = str( nRunTotal-nDoneTotal-infoDict["running"] )
+    jobsDict["removed"]   = str( infoDict["removed"] )
+    jobsDict["idle"]      = str( infoDict["idle"] ) 
+    jobsDict["held"]      = str( infoDict["held"] )
+    jobsDict["suspended"] = str( infoDict["suspended"] )
+
+
     # Create table
     table   = []
-    align  = "{:>20} {:>20} {:>20} {:>20}"
-    header = align.format(ns + "TOTAL" + ns, ss+ "DONE" + ns, ts + "RUN" + ns, es + "FAIL" + ns)
-    hLine  = "="*40
+    align  = "{:>20} {:>20} {:>20} {:>20} {:>20} {:>20} {:>20}"
+    header = align.format(ns + "TOTAL" + ns, ss + "DONE" + ns, ts + "RUN" + ns, es + "FAIL" + ns, ns + "REMOVE" + ns, ns + "SUSPEND" + ns, ns + "IDLE" + ns )
+    hLine  = "="*80
     # table.append("{:^80}".format(opts.dirName))
     table.append(hLine)
     table.append(header)
     table.append(hLine)
     for k in jobsDict:
-        table.append( align.format(ns + jobsDict["total"] + ns, ss + jobsDict["done"] + ns, ts + jobsDict["run"] + ns, es + jobsDict["fail"] + ns) )
+        table.append( align.format(ns + jobsDict["total"] + ns, ss + jobsDict["done"] + ns, ts + jobsDict["run"] + ns, es + jobsDict["fail"] + ns, ns + jobsDict["removed"] + ns, ns + jobsDict["suspended"] + ns, ns + jobsDict["idle"] + ns ) )
     table.append(hLine)
     for i, row in enumerate(table, 1):
         Print(row, i==1)
@@ -251,6 +411,34 @@ def GetSystToOutputDict(filesList):
     return filesDict
 
 
+def CheckForValidProxy():
+    process = Popen(['voms-proxy-info'], stdin=PIPE, stdout=PIPE, stderr=PIPE)
+    output, err = process.communicate()
+    if len(err) > 0:
+        raise Exception(es + err + ns)
+        # err  = err.replace("\n", "")
+        # err += " Continuing anyway (not needed)" 
+        # Print(es + err + ns, True)
+    else:
+        lines = output.splitlines()
+        for l in lines:
+            if "timeleft" not in l:
+                continue
+            time  = l.split(": ")[-1]
+            hours = int(time.split(":")[0])
+            mins  = int(time.split(":")[1])
+            secs  = int(time.split(":")[2])
+            
+            # Determine the time remaining in seconds
+            dt = hours*60*60 + mins*60 + secs 
+            
+            # Require at least 60 seconds of valid proxy
+            if dt < 60:
+                raise Exception(es + "No valid CMS VO proxy found!" + ns)
+            else:
+                Print(ss + "Valid CMS VO proxy found!" + ns, True)
+    return
+
 def RetrieveUnpackCleanupFiles(filesSyst, analysis):
 
     # For-loop: All output files for given systematic
@@ -321,16 +509,8 @@ def RetrieveUnpackCleanupFiles(filesSyst, analysis):
 def main(opts):
     
     Verbose("Check that a CMS VO proxy exists (voms-proxy-init)", True)
-    process = Popen(['voms-proxy-info', '--all'], stdin=PIPE, stdout=PIPE, stderr=PIPE)
-    output, err = process.communicate()
-    if len(err) > 0:
-        #raise Exception(es + err + ns)
-        err  = err.replace("\n", "")
-        err += " Continuing anyway (not needed)" 
-        Print(es + err + ns, True)
-    else:
-        Verbose("Valid CMS VO proxy found!", True)
-        
+    CheckForValidProxy()
+
 
     Verbose("Check that directory %s exists" % (opts.dirName), True)
     if os.path.isdir(opts.dirName):
@@ -341,28 +521,28 @@ def main(opts):
         sys.exit()
 
 
-    Verbose("Determine total number of jobs (using jdl files)", True)
+    # Determine total number of jobs (using jdl files)
     nRunH2tb  = GetNumberOfJobs(opts.dirName, "run_Hplus2tbAnalysis*.jdl")
     nRunFakeB = GetNumberOfJobs(opts.dirName, "run_FakeBMeasurement*.jdl")
     nRunTotal = GetNumberOfJobs(opts.dirName, "run*.jdl")
     Verbose("Found %s%d%s run files (Hplus2tbAnalysis=%d, FakeBMeasurement=%d)" % (ts, nRunTotal, ns, nRunH2tb, nRunFakeB), True) 
 
 
-    Verbose("Determine total number of jobs (using output files)")
+    # Determine total number of jobs (using output files)
     nOutputH2tb  = GetNumberOfJobs(opts.dirName, "output_Hplus2tbAnalysis*.txt")
     nOutputFakeB = GetNumberOfJobs(opts.dirName, "output_FakeBMeasurement*.txt")
     nOutputTotal = nOutputH2tb + nOutputFakeB
-    Verbose("Found %s%d%s output files (Hplus2tbAnalysis=%d, FakeBMeasurement=%d)" % (ts, nOutputTotal, ns, nOutputH2tb, nOutputFakeB), False) 
+    Verbose("Found %s%d%s output files (Hplus2tbAnalysis=%d, FakeBMeasurement=%d)" % (ts, nOutputTotal, ns, nOutputH2tb, nOutputFakeB), False)
 
 
-    Verbose("Determine total number of jobs (using error files)")
+    # Determine total number of jobs (using error files)
     nErrorH2tb  = GetNumberOfJobs(opts.dirName, "error_Hplus2tbAnalysis*.txt")
     nErrorFakeB = GetNumberOfJobs(opts.dirName, "error_FakeBMeasurement*.txt")
-    nErrorTotal = nOutputH2tb + nOutputFakeB
-    Verbose("Found %s%d%s error files (Hplus2tbAnalysis=%d, FakeBMeasurement=%d)" % (ts, nErrorTotal, ns, nErrorH2tb, nErrorFakeB), False) 
+    nErrorTotal = nErrorH2tb + nErrorFakeB
+    Verbose("Found %s%d%s error files (Hplus2tbAnalysis=%d, FakeBMeasurement=%d)" % (ts, nErrorTotal, ns, nErrorH2tb, nErrorFakeB), False)
+    
 
-
-    Verbose("Determine total number of done jobs (using error files)")
+    # Determine total number of done jobs (using error files)
     nDoneH2tb  = 0
     nDoneFakeB = 0
     if nOutputH2tb > 0:
@@ -370,21 +550,21 @@ def main(opts):
     if nOutputFakeB> 0:
         nDoneFakeB = GetNumberOfJobsWithKeyword(opts.dirName, "output_FakeBMeasurement*.txt", "Results are in")
     nDoneTotal = nDoneH2tb + nDoneFakeB
-    Verbose("Found %s%d%s jobs done (Hplus2tbAnalysis=%d, FakeBMeasurement=%d)" % (ts, nDoneTotal, ns, nDoneH2tb, nDoneFakeB), False) 
+    Verbose("Found %s%d%s jobs done (Hplus2tbAnalysis=%d, FakeBMeasurement=%d)" % (ts, nDoneTotal, ns, nDoneH2tb, nDoneFakeB), False)
 
 
-    Verbose("Determine total number of failed jobs (using error files)")
+    # Determine total number of failed jobs (using error files)
     nFailH2tb  = 0
     nFailFakeB = 0
     if nErrorH2tb > 0:
         nFailH2tb  = GetNumberOfJobsWithKeyword(opts.dirName, "error_Hplus2tbAnalysis*.txt", "Results are in")
     if nErrorFakeB > 0:
         nFailFakeB = GetNumberOfJobsWithKeyword(opts.dirName, "error_FakeBMeasurement*.txt", "Results are in")
-    nFailTotal = nDoneH2tb + nDoneFakeB
-    Verbose("Found %s%d%s jobs failed (Hplus2tbAnalysis=%d, FakeBMeasurement=%d)" % (ts, nFailTotal, ns, nFailH2tb, nFailFakeB), False) 
+    nFailTotal = nFailH2tb + nFailFakeB
+    Verbose("Found %s%d%s jobs failed (Hplus2tbAnalysis=%d, FakeBMeasurement=%d)" % (ts, nFailTotal, ns, nFailH2tb, nFailFakeB), False)
 
 
-    Verbose("Determine jobs still running")
+    Verbose("Create a job status summary table", True)
     infoDict  = GetJobStatusDict(opts.userName)
     table   = []
     align  = "{:>15} {:>15} {:>15} {:>15} {:>15} {:>15} {:>15}"
@@ -398,12 +578,25 @@ def main(opts):
     table.append(hLine)
     for i, row in enumerate(table, 1):
         Print(row, i==1)
-        
 
+        
     Verbose("Get the jobs dictionary and the summary table", True)
     jobsDict, table = GetSummary(nRunTotal, nDoneTotal, infoDict, printSummary=True)
 
+
+    Verbose("Get the failed jobs", True)
+    jdlList, errList, outList, logList, eosList = GetJobsWithKeyword(opts.dirName, analysis="Hplus2tbAnalysis", keyword="There was a crash.") 
+    ResubmitFailedJobs(jdlList, errList, outList, logList, eosList)
+
+    jdlList_, errList_, outList_, logList_, eosList_ = GetJobsWithKeyword(opts.dirName, analysis="FakeBMeasurement", keyword="There was a crash.") 
+    ResubmitFailedJobs(jdlList_, errList_, outList_, logList_, eosList_)
+
+
     if opts.getoutput:
+        if nErrorH2tb > 0 or nErrorFakeB > 0:
+            Print(es + "Not all jobs are in \"done\" mode. Aborting retrieval of output!" + ns, True)
+            return
+
         if len(jobsDict["done"]) < 1:
             Print("No jobs in \"done\" mode found.", True)
         else:
@@ -420,6 +613,7 @@ def main(opts):
         RetrieveUnpackCleanupFiles(filesSystH2tb, "Hplus2tbAnalysis")
         RetrieveUnpackCleanupFiles(filesSystFakeB, "FakeBMeasurement")
 
+    Print("Done", True)
     return
 
 
@@ -446,6 +640,7 @@ if __name__ == "__main__":
     USERNAME  = None
     GETOUTPUT = False
     EOSDIR    = "$CONDOR"
+    RESUBMIT  = False
 
     # Define the available script options
     parser = OptionParser(usage="Usage: %prog [options]", add_help_option=True, conflict_handler="resolve")
@@ -461,6 +656,9 @@ if __name__ == "__main__":
 
     parser.add_option("-g", "--getoutput", dest="getoutput", action="store_true", default = GETOUTPUT,
                       help="Retrieve output from EOS? [default: %s]" % (GETOUTPUT) )
+
+    parser.add_option("--resubmit", dest="resubmit", action="store_true", default=RESUBMIT, 
+                      help="Resubmit and clean-up all failed jobs automatically? [default: %s]" % RESUBMIT)
 
     parser.add_option("--eosdir", dest="eosdir", action="store", default = EOSDIR,
                       help="Location of CONDOR output files in EOS? [default: %s]" % (EOSDIR) )

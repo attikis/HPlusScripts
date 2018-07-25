@@ -9,10 +9,13 @@ USAGE:
 
 
 EXAMPLE:
-./submitCondor.py
+./submitCondor.py --topMass 400 --bdt 0p40
 
 
 LAST USED:
+./submitCondor.py --topMass 500 --bdt 0p40 
+
+
 '''
 
 #================================================================================================ 
@@ -73,17 +76,42 @@ def PrintFlushed(msg, printHeader=True):
     sys.stdout.flush()
     return     
 
-def main(opts):
-
-    Verbose("Check that a CMS VO proxy exists (voms-proxy-init)", True)
-    process = Popen(['voms-proxy-info', '--all'], stdin=PIPE, stdout=PIPE, stderr=PIPE)
+def CheckForValidProxy():
+    process = Popen(['voms-proxy-info'], stdin=PIPE, stdout=PIPE, stderr=PIPE)
     output, err = process.communicate()
     if len(err) > 0:
         raise Exception(es + err + ns)
+        # err  = err.replace("\n", "")
+        # err += " Continuing anyway (not needed)"
+        # Print(es + err + ns, True)
     else:
-        Print("Valid CMS VO proxy found", True)
+        lines = output.splitlines()
+        for l in lines:
+            if "timeleft" not in l:
+                continue
+            time  = l.split(": ")[-1]
+            hours = int(time.split(":")[0])
+            mins  = int(time.split(":")[1])
+            secs  = int(time.split(":")[2])
 
-    # Create directory
+            # Determine the time remaining in seconds
+            dt = hours*60*60 + mins*60 + secs
+
+            # Require at least 60 seconds of valid proxy
+            if dt < 60:
+                raise Exception(es + "No valid CMS VO proxy found!" + ns)
+            else:
+                Print(ss + "Valid CMS VO proxy found!" + ns, True)
+    return
+
+
+def main(opts):
+
+    Verbose("Check that a CMS VO proxy exists (voms-proxy-init)", True)
+    CheckForValidProxy()
+
+
+    Verbose("Create directory %s" % (opts.dirName), True)
     if os.path.isdir(opts.dirName):
         Print("Directory %s already exists! EXIT" % (es + opts.dirName + ns), True)
         sys.exit()
@@ -132,7 +160,7 @@ def main(opts):
                 f.write("Error  = error_%s.txt\n"  % (fileName) )
                 f.write("Log    = log_%s.txt\n"    % (fileName) )
                 f.write("x509userproxy = /tmp/x509up_u52142\n")
-                f.write("Arguments = %s NewTopAndBugFixAndSF_TopMassLE400_BDT0p40_Group%s_Syst%s %s %s\n" % (analysis, group, syst, group, syst) )
+                f.write("Arguments = %s NewTopAndBugFixAndSF_TopMassLE%s_BDT%s_Group%s_Syst%s %s %s\n" % (analysis, opts.topMass, opts.BDT, group, syst, group, syst) )
                 f.write("Queue 1\n")
                 f.close()
                 jdlList.append(jdl)
@@ -193,12 +221,24 @@ if __name__ == "__main__":
     parser.add_option("-d", "--dirName", dest="dirName", action="store",
                       help="Name of directory to be created where all the output will be stored [default: %s]" % (DIRNAME) )
 
+    parser.add_option("--topMass", dest="topMass", action="store", default=None,
+                      help="Top mass cut used in analuysis [default: %s]" % (None) )
+
+    parser.add_option("--bdt", dest="BDT", action="store", default=None,
+                      help="BDT cut used in analuysis [default: %s]" % (None) )
+
     (opts, parseArgs) = parser.parse_args()
+
+    if opts.topMass == None:
+        Print("Please provide a top mass cut value (--topMass 500)", True)
+
+    if opts.BDT == None:
+        Print("Please provide a BDT cut value (--bdt 0p40)", True)
 
     # Define output dir name
     date = datetime.date.today().strftime('%d%b%Y')    #date = datetime.date.today().strftime('%d-%b-%Y')
     if opts.dirName == None:
-        opts.dirName = "TopMassLE400_BDT0p40_AbsEta0p8_1p4_2p0_Pt_60_90_160_300_Stat_%s" % (date)
+        opts.dirName = "TopMassLE%s_BDT%s_AbsEta0p8_1p4_2p0_Pt_60_90_160_300_Stat_%s" % (opts.topMass, opts.BDT, date)
     else:
         opts.dirName += "_%s" % (date)
 
