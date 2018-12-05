@@ -51,7 +51,7 @@ parser = OptionParser()
 
 parser.add_option("-n", "--noteid"  , default = "HIG-18-015", dest = "noteid"  , help = "ID OF SV NOTE TO CHECKOUT", metavar = "ID OF SV NOTE TO CHECKOUT")
 parser.add_option("-t", "--noteType", default = "papers"    , dest = "noteType", help = "papers, notes, .."        , metavar = "papers, notes, ..")
-parser.add_option("-d", "--dirname" , default = "FromSvns" , dest = "dirname" , help = "DIR NAME TO CHECKOUT NOTE", metavar = "DIR NAME TO CHECKOUT NOTE")
+parser.add_option("-d", "--dirname" , default = "FromSVN"   , dest = "dirname" , help = "DIR NAME TO CHECKOUT NOTE", metavar = "DIR NAME TO CHECKOUT NOTE")
 parser.add_option("-s", "--shell"   , default = "csh"       , dest = "shell"   , help = "TYPE OF SHELL USED"       , metavar = "TYPE OF SHELL USED")
 parser.add_option("--tdr"  , default = "tdr2", dest = "tdr"   , help = "TDR VERSION", metavar = "TDR VERSION")
 parser.add_option("--style", default = "an"  , dest = "style" , help = "STYLE"      , metavar = "NOTE STYLE")
@@ -67,8 +67,9 @@ if not (options.noteid):
 allowedTypes = ["papers", "notes"]
 if options.noteType not in allowedTypes:
     print "=== checkoutFromSvn.py\n\tInvalid note type \"%s\". Please select one of the following: " % (options.noteType, ", ".join(allowedTypes))
-    print __doc__
-    parser.error("NOTEID and DIRNAME are mandatory")
+    #print __doc__
+    sys.exit()
+    #parser.error("NOTEID and DIRNAME are mandatory")
 
 # Main function
 if __name__ == "__main__":
