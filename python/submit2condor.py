@@ -11,9 +11,11 @@ submit2condor.py [options]
 EXAMPLE:
 cd /afs/cern.ch/user/a/attikis/workspace/MCProduction2017/genproductions/bin/MadGraph5_aMCatNLO
 ./submit2condor.py -d cards/production/2017/13TeV/ChargedHiggs_TB -i "M300"
+./submit2condor.py -d cards/production/2017/13TeV/ChargedHiggs_TB
+
 
 LAST USED:
-./submit2condor.py -d cards/production/2017/13TeV/ChargedHiggs_TB
+./submit2condor.py -d cards/production/2017/13TeV/ChargedHiggs_TB -i "400|500|1500|2000|7000"
 
 
 USEFUL LINKS:
@@ -146,11 +148,13 @@ def includeExcludeTasks(tasks, **kwargs):
 def main(cardName, cardDir, sopts):
     
     # Calling subprocess.Popen() works but truncates output
+    outFile        = cardName.split("_")[-1] # instead of default nohup.out
     submitScript   = "submit_condor_gridpack_generation.sh"
-    cmdList        = [submitScript, cardName, cardDir]
-    cmd            = "./" + " ".join(cmdList)
+    cmdList        = [submitScript, cardName, cardDir, "&> %s&" % (outFile)]
+    cmd            = "nohup ./" + " ".join(cmdList)
     Verbose(cmd, False)
     process        = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=True)
+    #os.system(cmd)
     output, err    = process.communicate()
 
     if len(err) > 0:

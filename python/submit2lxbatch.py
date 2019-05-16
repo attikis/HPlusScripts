@@ -11,14 +11,15 @@ submit2lxbatch.py [options]
 EXAMPLE:
 cd /afs/cern.ch/user/a/attikis/workspace/MCProduction2017/genproductions/bin/MadGraph5_aMCatNLO
 ./submit2lxbatch.py -d cards/production/2017/13TeV/ChargedHiggs_TB
-
+./submit2lxbatch.py -d cards/production/2017/13TeV/ChargedHiggs_TB --queue 2nw --queueMaster 2nw -i "M300"
 
 LAST USED:
-./submit2lxbatch.py -d cards/production/2017/13TeV/ChargedHiggs_TB
+ ./submit2lxbatch.py -d cards/production/2017/13TeV/ChargedHiggs_TB --queue 2nw --queueMaster 2nw 
 
 
 USEFUL LINKS:
 https://twiki.cern.ch/twiki/bin/view/Main/BatchJobs
+https://twiki.cern.ch/twiki/bin/viewauth/CMS/QuickGuideMadGraph5aMCatNLO
 '''
 
 #================================================================================================ 
@@ -30,6 +31,7 @@ import os
 import sys
 import re
 import datetime
+import time
 import getpass 
 from optparse import OptionParser 
 
@@ -146,8 +148,8 @@ def main(cardName, cardDir, sopts):
     
     # Calling subprocess.Popen() works but truncates output
     submitScript   = "submit_gridpack_generation.sh"
-    memoryInMBytes = "30000"
-    diskInMBytes   = "30000"
+    memoryInMBytes = opts.memMB
+    diskInMBytes   = opts.diskMB
     queueMaster    = opts.queueMaster
     queue          = opts.queue
     cmdList        = [submitScript, memoryInMBytes, diskInMBytes, queueMaster, cardName, cardDir, queue]
@@ -184,7 +186,9 @@ if __name__ == "__main__":
     USERNAME    = None
     QUEUEMASTER = "2nw"
     QUEUE       = "2nw"
-    
+    MEMMB       = "30000" # 30000MB when generating NLO (or LO with madspin)
+    DISKMB      = "30000" # 30000MB when generating NLO (or LO with madspin)
+
     # Define the available script options
     parser = OptionParser(usage="Usage: %prog [options]", add_help_option=True, conflict_handler="resolve")
 
@@ -202,6 +206,12 @@ if __name__ == "__main__":
 
     parser.add_option("--queueMaster", dest="queueMaster", action="store", default = QUEUEMASTER,
                       help="Queue for master job in LXBATCH [default: %s]" % (QUEUEMASTER) )
+
+    parser.add_option("--diskMB", dest="diskMB", action="store", default = DISKMB,
+                      help="Disk size to request in MB [default: %s]" % (MEMMB) )
+
+    parser.add_option("--memMB", dest="memMB", action="store", default = MEMMB,
+                      help="Memory size to request in MB [default: %s]" % (MEMMB) )
 
     parser.add_option("-i", "--includeOnlyTasks", dest="includeOnlyTasks", action="store",
                       help="List of cards to include, regex based")
@@ -255,18 +265,21 @@ if __name__ == "__main__":
 
     Print("Sumbitting LXBATCH jobs for the following tasks:", printHeader=True)
     for i, d in enumerate(dirs, 1):
-        Print(d, False)
+        Print(os.path.basename(d), False)
         
     if not AskUser("Proceed with submission?", printHeader=True):
         Print("Aborting!", True)
-    sys.exit()
+        sys.exit()
 
     # For-loop: All directories to be submitted
     for i, d in enumerate(dirs, 1):
-        Print("%d) %s" % (i, d), i==1)
+        Verbose("%d) %s" % (i, d), i==1)
         cardName = os.path.basename(d)
         cardDir = d
+        PrintFlushed("Submitting %d/%d (%s)" % (i, len(dirs), os.path.basename(d)), i==1)
         main(cardName, cardDir, opts)
+        time.sleep(0.2)
+    print
 
     # Check the status of your jobs (if any submitted)
     Print("", True)
