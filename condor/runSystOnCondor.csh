@@ -1,7 +1,7 @@
 #!/bin/tcsh
-#================================================================================================ 
+#================================================================================================
 # Get command line parameters
-#================================================================================================ 
+#================================================================================================
 if ($#argv < 3) then
     echo "=== You must give at least 3 arguments:"
     echo "1=ANALYSISDIR"
@@ -12,15 +12,14 @@ if ($#argv < 3) then
     exit 1
 endif
 
-#================================================================================================ 
+#================================================================================================
 # Define variables
-#================================================================================================ 
+#================================================================================================
 set ANALYSISDIR = ${1}
 set LABEL       = ${2}
 set GROUP       = ${3}
 set SYSTEMATICS = ${4}
 
-#set TARBALL = multicrab_Hplus2tbAnalysis_v8030_20180223T0905
 set TARBALL = multicrab_Hplus2tbAnalysis_v8030_20180508T0644
 
 echo "\n=== Running on:" 
@@ -71,10 +70,6 @@ echo "\n=== Output dir determined to be $OUTPUTDIR"
 
 # Create the tarball name
 set FTIME = `date '+%Hh-%Mm-%Ss-%d%h%Y'`
-# set TIME = `date '+%Hh%Mm%Ss_%d%h%Y'`
-# set TIME = `date '+%Hh-%Mm-%Ss-%d%h%Y'`
-# set TIME = `date '+%d%h%Y'`
-# set TIME = `date +"%d%m%Y"`
 echo "\n=== Tarball name will be ${ANALYSISDIR}_${LABEL}_${STIME}_${FTIME}.tgz"
 set TARBALL = "${ANALYSISDIR}_${LABEL}_${STIME}_${FTIME}.tgz"
 
