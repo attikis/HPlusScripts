@@ -6,11 +6,11 @@ a given sub-directory
 
 
 USAGE:
-checkCondor.py [options]
+checkCondor_gridpacks.py [options]
 
 
 LAST USED:
-./checkCondor.py -v
+./checkCondor_gridpacks.py -v
 
 
 USEFUL LINKS:
