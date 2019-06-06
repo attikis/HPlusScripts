@@ -310,8 +310,7 @@ def PrintSummaryTable(nSubmit, nDone, nFail, nActive, nRun, nHeld, nIdle, nIO, c
     # Create table
     table   = []
     colours = (fs, ns, ns, ns, ss, ns, es, ns, hs, ns, ts, ns, ls, ns, cys, ns, bs, ns)
-    align   = "%s{0:^12}%s %s{1:^12}%s %s{2:^12}%s %s{3:^12}%s %s{4:^12}%s %s{5:^12}%s %s{6:^12}%s %s{7:^12}%s %s{8:^12}%s"% (colours)
-    #header = align.format("SUBMITTED", "TOTAL", "DONE", "FAIL", "ACTIVE", "RUN", "HELD", "I/O", "IDLE")
+    align   = "%s{0:^12}%s %s{1:^12}%s %s{2:^12}%s %s{3:^12}%s %s{4:^12}%s | %s{5:^12}%s %s{6:^12}%s %s{7:^12}%s %s{8:^12}%s"% (colours)
     header = align.format("GRIDPACKS", "TOTAL", "DONE", "FAIL", "ACTIVE", "RUN", "HELD", "I/O", "IDLE")
     hLine  = "="*120
     table.append("{0:^120}".format(opts.dirName))
