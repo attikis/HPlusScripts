@@ -87,6 +87,15 @@ def PrintFlushed(msg, printHeader=True):
     return     
 
 
+def natural_sort(myList):
+    '''
+    Function for natural sorting of string list
+    '''
+    convert = lambda text: int(text) if text.isdigit() else text.lower()
+    alphanum_key = lambda key: [ convert(c) for c in re.split('([0-9]+)', key) ]
+    return sorted(myList, key = alphanum_key)
+
+
 def AskUser(msg, printHeader=False):
     '''
     Prompts user for keyboard feedback to a certain question.
@@ -105,7 +114,21 @@ def AskUser(msg, printHeader=False):
         AskUser(msg)
 
 
-def GetNumberOfJobsWithKeyword(dirName, fileName="output_FakeBMeasurement_Group*.txt", keyword="Results are in"):
+def GetNumberOfJobsWithKeyword(dirName, fileName, keyword):
+    fList = []
+    cmd   = "grep -l '%s' %s/%s" % (keyword, dirName, fileName)
+    Verbose("Popen(%s, stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=True)" % (cmd), True)
+    process = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=True)
+    output, err = process.communicate()
+    if len(err) > 0:
+        raise Exception(es + err + ns)
+    else:
+        fList = output.split()
+        fList = [os.path.basename(f) for f in fList]
+    return fList #xenios
+
+
+def GetNumberOfJobsWithKeywordOld(dirName, fileName="output_FakeBMeasurement_Group*.txt", keyword="Results are in"):
     cmd = "cat %s/%s | grep -c '%s' " % (dirName, fileName, keyword)
     Verbose("Popen(%s, stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=True)" % (cmd), True)
     process = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=True)
@@ -735,21 +758,34 @@ def main(opts):
 
     # Determine total number of jobs (using remap files)
     nRemap = GetNumberOfJobs(opts.dirName, remapFile)
-    msg = align.format("Found", nRemap, "remap")
+    msg    = align.format("Found", nRemap, "remap")
     Print(msg, False)
 
     # Determine total number of done jobs (using log files)
-    nDone = GetNumberOfJobs(opts.dirName, gpackFile)
-    msg = align.format("Found", nRemap, "gpack")
+    #nDone = GetNumberOfJobs(opts.dirName, gpackFile)
+    done  = GetNumberOfJobsWithKeyword(opts.dirName, gpackFile, "")
+    nDone = len(done)
+    msg   = align.format("Found", nDone, "gpack")
     Print(msg, False)
-    #nDone  = GetNumberOfJobsWithKeyword(opts.dirName, logFile, "job finished step CODEGEN, exiting now.") # FIXME
-    # msg = align.format("
-    # Verbose("Found %s%d%s jobs done" % (ts, nDone, ns), False)
 
     # Determine total number of failed jobs (using error files)
-    nFail = GetNumberOfJobsWithKeyword(opts.dirName, debugFile, "error") # FIXME: Which file to grep, and what string to grep
-    msg = align.format("Found", nFail, "failed")
+    fails = GetNumberOfJobsWithKeyword(opts.dirName, debugFile, "error")
+    nFail = len(fails)
+    msg   = align.format("Found", nFail, "failed")
     Print(msg, False)
+
+    # Determine total number of failed jobs (using error files)
+    allDirs  = os.listdir(os.getcwd())
+    myDirs   = [d for d in allDirs if "ChargedHiggs_TB_madspin_NLO_M" in d and os.path.isdir(d)]
+    failDirs = []
+    for d in myDirs:
+        for f in fails:
+            if d in f:
+                failDirs.append(d)
+                break
+    # Natural sorting of directory names 
+    failDirs = natural_sort(failDirs)
+
 
     Verbose("Create a job status summary table", True)
     condorQ  = GetCondorQDict(opts.userName)
@@ -760,11 +796,16 @@ def main(opts):
     Verbose("Get the jobs dictionary and the summary table", True)
     jobsDict, table = PrintSummaryTable(nSubmit, nDone, nFail, nActive, nRun, nHeld, nIdle, nIO, condorQ, printSummary=True)
 
+    Verbose("The list of failed jobs is listed below:", True)
+    for i, d in enumerate(failDirs, 1):
+        Print(es + d + ns, i==1 and not opts.verbose)
+        
     Verbose("Kill jobs", True)
     if opts.kill != None:
         KillJobs(condorQ, opts)
 
-    Print("Done", True)
+    Verbose("Done", True)
+    print
     return
 
 
