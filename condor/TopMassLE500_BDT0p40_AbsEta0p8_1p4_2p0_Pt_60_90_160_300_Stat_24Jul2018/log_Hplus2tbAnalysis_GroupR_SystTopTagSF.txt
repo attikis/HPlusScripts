@@ -1,0 +1,103 @@
+000 (404452.000.000) 07/24 14:54:59 Job submitted from host: <131.225.190.171:9618?addrs=131.225.190.171-9618&noUDP&sock=3361_424e_3>
+...
+001 (404452.000.000) 07/24 18:02:10 Job executing on host: <131.225.207.44:50236?addrs=131.225.207.44-50236>
+...
+006 (404452.000.000) 07/24 18:02:20 Image size of job updated: 44596
+	4  -  MemoryUsage of job (MB)
+	3736  -  ResidentSetSize of job (KB)
+...
+006 (404452.000.000) 07/24 18:03:33 Image size of job updated: 44596
+	4  -  MemoryUsage of job (MB)
+	3740  -  ResidentSetSize of job (KB)
+...
+006 (404452.000.000) 07/24 18:06:00 Image size of job updated: 44856
+	4  -  MemoryUsage of job (MB)
+	3952  -  ResidentSetSize of job (KB)
+...
+006 (404452.000.000) 07/24 18:07:03 Image size of job updated: 668896
+	140  -  MemoryUsage of job (MB)
+	142668  -  ResidentSetSize of job (KB)
+...
+006 (404452.000.000) 07/24 18:08:01 Image size of job updated: 788524
+	258  -  MemoryUsage of job (MB)
+	264112  -  ResidentSetSize of job (KB)
+...
+006 (404452.000.000) 07/24 18:10:02 Image size of job updated: 803516
+	273  -  MemoryUsage of job (MB)
+	279128  -  ResidentSetSize of job (KB)
+...
+006 (404452.000.000) 07/24 18:11:03 Image size of job updated: 803516
+	273  -  MemoryUsage of job (MB)
+	279132  -  ResidentSetSize of job (KB)
+...
+006 (404452.000.000) 07/24 18:12:03 Image size of job updated: 803516
+	273  -  MemoryUsage of job (MB)
+	279160  -  ResidentSetSize of job (KB)
+...
+006 (404452.000.000) 07/24 18:13:03 Image size of job updated: 803516
+	273  -  MemoryUsage of job (MB)
+	279176  -  ResidentSetSize of job (KB)
+...
+006 (404452.000.000) 07/24 18:15:04 Image size of job updated: 803516
+	273  -  MemoryUsage of job (MB)
+	279192  -  ResidentSetSize of job (KB)
+...
+006 (404452.000.000) 07/24 18:16:05 Image size of job updated: 803516
+	273  -  MemoryUsage of job (MB)
+	279196  -  ResidentSetSize of job (KB)
+...
+006 (404452.000.000) 07/24 18:19:06 Image size of job updated: 804264
+	274  -  MemoryUsage of job (MB)
+	279908  -  ResidentSetSize of job (KB)
+...
+006 (404452.000.000) 07/24 18:21:08 Image size of job updated: 804264
+	274  -  MemoryUsage of job (MB)
+	279920  -  ResidentSetSize of job (KB)
+...
+006 (404452.000.000) 07/24 18:22:09 Image size of job updated: 804264
+	274  -  MemoryUsage of job (MB)
+	279928  -  ResidentSetSize of job (KB)
+...
+006 (404452.000.000) 07/24 18:26:11 Image size of job updated: 804264
+	274  -  MemoryUsage of job (MB)
+	279940  -  ResidentSetSize of job (KB)
+...
+006 (404452.000.000) 07/24 18:30:11 Image size of job updated: 804264
+	274  -  MemoryUsage of job (MB)
+	280124  -  ResidentSetSize of job (KB)
+...
+006 (404452.000.000) 07/24 18:31:12 Image size of job updated: 804264
+	274  -  MemoryUsage of job (MB)
+	280348  -  ResidentSetSize of job (KB)
+...
+006 (404452.000.000) 07/24 18:32:13 Image size of job updated: 804264
+	274  -  MemoryUsage of job (MB)
+	280352  -  ResidentSetSize of job (KB)
+...
+006 (404452.000.000) 07/24 18:34:14 Image size of job updated: 804264
+	274  -  MemoryUsage of job (MB)
+	280368  -  ResidentSetSize of job (KB)
+...
+006 (404452.000.000) 07/24 18:40:17 Image size of job updated: 805336
+	274  -  MemoryUsage of job (MB)
+	280368  -  ResidentSetSize of job (KB)
+...
+006 (404452.000.000) 07/24 18:53:24 Image size of job updated: 805780
+	274  -  MemoryUsage of job (MB)
+	280368  -  ResidentSetSize of job (KB)
+...
+005 (404452.000.000) 07/25 06:03:08 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 11:38:57, Sys 0 00:01:19  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 11:38:57, Sys 0 00:01:19  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	1966396  -  Run Bytes Sent By Job
+	5915491840  -  Run Bytes Received By Job
+	1966396  -  Total Bytes Sent By Job
+	5915491840  -  Total Bytes Received By Job
+	Partitionable Resources :    Usage  Request Allocated
+	   Cpus                 :                 1         1
+	   Disk (KB)            : 14985218  7500000  10680471
+	   Memory (MB)          :      274     2100      2100
+...

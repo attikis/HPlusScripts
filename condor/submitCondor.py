@@ -13,7 +13,7 @@ EXAMPLE:
 
 
 LAST USED:
-./submitCondor.py --topMass 500 --bdt 0p40 
+submitCondor.py --topMass 500 --bdt 0p40 --codeTarball HiggsAnalsysis.tgz --binning 4EtaBins5PtBins --mcrabTarball multicrab_Hplus2tbAnalysis_v8030_20180508T0644.tgz 
 
 
 '''
@@ -105,6 +105,111 @@ def CheckForValidProxy():
     return
 
 
+def CreateRunningScript(scriptName="runSystOnCondor.csh", opts):
+    filePath = os.path.join(opts.dirName, scriptName)
+
+    Print("Creating newfile %s" % filePath, True)
+    f = open(filePath, "w")
+    
+    #'''
+    f.write('#!/bin/tcsh\n')
+    f.write('#================================================================================================\n')
+    f.write('# Get command line parameters\n')
+    f.write('#================================================================================================\n')
+    f.write('if ($#argv < 3) then\n')
+    f.write('echo "=== You must give at least 3 arguments:"\n')
+    f.write('echo "1=ANALYSISDIR"\n')
+    f.write('echo "2=LABEL"\n')
+    f.write('echo "3=GROUP"\n')
+    f.write('echo "4=SYSTEMATICS (optional)"\n')
+    f.write('echo\n')
+    f.write('exit 1\n')
+    f.write('endif\n')
+    f.write('\n')
+    f.write('#================================================================================================\n')
+    f.write('# Define variables\n')
+    f.write('#================================================================================================\n')
+    f.write('set ANALYSISDIR = ${1}\n')
+    f.write('set LABEL       = ${2}\n')
+    f.write('set GROUP       = ${3}\n')
+    f.write('set SYSTEMATICS = ${4}\n')
+    f.write('\n')
+    f.write('#set TARBALL = multicrab_Hplus2tbAnalysis_v8030_20180223T0905\n')
+    f.write('set TARBALL = multicrab_Hplus2tbAnalysis_v8030_20180508T0644\n')
+    f.write('\n')
+    f.write('echo "\n=== Running on:" \n')
+    f.write('hostname -A\n')
+    f.write('pwd\n')
+    f.write('echo ${_CONDOR_SCRATCH_DIR}\n')
+    f.write('source /cvmfs/cms.cern.ch/cmsset_default.csh\n')
+    f.write('\n')
+    f.write('echo "\n=== Untarring the code tarball"\n')
+    f.write('tar -xf HiggsAnalysis.tgz\n')
+    f.write('rm -rf HiggsAnalysis.tgz\n')
+    f.write('\n')
+    f.write('echo "\n=== Untarring the multicrab dir tarball"\n')
+    f.write('tar -xf $TARBALL.tgz\n')
+    f.write('\n')
+    f.write('# Source the environment settings script\n')
+    f.write('echo "\n=== Changing dir to HiggsAnalysis and sourcing setup.csh"\n')
+    f.write('cd HiggsAnalysis\n')
+    f.write('source setup.csh\n')
+    f.write('echo `pwd`\n')
+    f.write('\n')
+    f.write('# Go to work directory to run the analysis\n')
+    f.write('set WORKDIR = NtupleAnalysis/src/$ANALYSISDIR/work/\n')
+    f.write('echo "\n=== Changing dir to $WORKDIR"\n')
+    f.write('cd $WORKDIR\n')
+    f.write('\n')
+    f.write('# Save the submit/start time for future use\n')
+    f.write('set STIME = `date "+%Hh-%Mm-%Ss-%d%h%Y"`\n')
+    f.write('\n')
+    f.write('# Run the analyser\n')
+    f.write('echo "\n=== Running the analysis by executing runSystematics.py as follows:"\n')
+    f.write('echo "./runSystematics.py -m ${_CONDOR_SCRATCH_DIR}/$TARBALL/ --doSystematics --group $GROUP\n"\n')
+    f.write('./runSystematics.py -m ${_CONDOR_SCRATCH_DIR}/$TARBALL/ --group $GROUP --systVars $SYSTEMATICS \n')
+    f.write('\n')
+    f.write('echo "\n=== Listing all directories"\n')
+    f.write('echo`ls -alt | grep ^d` #| grep $ANALYSISDIR`\n')
+    f.write('\n')
+    f.write('echo "\n=== Listing the latest directory"\n')
+    f.write('echo `ls -td */ | head -1`\n')
+    f.write('\n')
+    f.write('echo "\n=== Determining output dir using ls and grep commands"\n')
+    f.write('set OUTPUTDIR = `ls -td */ | head -1`\n')
+    f.write('echo "\n=== Output dir determined to be $OUTPUTDIR"\n')
+    f.write('# -t orders by time (latest first)\n')
+    f.write('# -d only lists items from this folder\n')
+    f.write('# */ only lists directories\n')
+    f.write('# head -1 returns the first item\n')
+    f.write('\n')
+    f.write('# Create the tarball name\n')
+    f.write('set FTIME = `date "+%Hh-%Mm-%Ss-%d%h%Y""\n')
+    f.write('# set TIME = `date "+%Hh%Mm%Ss_%d%h%Y"`\n')
+    f.write('# set TIME = `date "+%Hh-%Mm-%Ss-%d%h%Y"`\n')
+    f.write('# set TIME = `date "+%d%h%Y"`\n')
+    f.write('# set TIME = `date +"%d%m%Y"`\n')
+    f.write('echo "\n=== Tarball name will be ${ANALYSISDIR}_${LABEL}_${STIME}_${FTIME}.tgz"\n')
+    f.write('set TARBALL = "${ANALYSISDIR}_${LABEL}_${STIME}_${FTIME}.tgz"\n')
+    f.write('\n')
+    f.write('# Make the output directory to a tarball\n')
+    f.write('echo "\n=== Compressing the output dir $OUTPUTDIR into tarball file $TARBALL"\n')
+    f.write('tar -cvzf $TARBALL $OUTPUTDIR\n')
+    f.write('\n')
+    f.write('#echo "\n=== Copying output directory $OUTPUTDIR to EOS"\n')
+    f.write('#xrdcp -rf $OUTPUTDIR  root://cmseos.fnal.gov//store/user/$USER/.\n')
+    f.write('set EOSDIR = store/user/$USER/CONDOR_TransferData\n')
+    f.write('echo "\n=== Copying output tarball $TARBALL to $EOSDIR"\n')
+    f.write('xrdcp $TARBALL  root://cmseos.fnal.gov//$EOSDIR/\n')
+    f.write('\n')
+    f.write('echo "\n=== Delete everything from ${_CONDOR_SCRATCH_DIR} before exiting"\n')
+    f.write('cd ${_CONDOR_SCRATCH_DIR}\n')
+    f.write('rm -rf HiggsAnalysis\n')
+    #'''
+    f.close()
+    return
+
+
 def main(opts):
 
     Verbose("Check that a CMS VO proxy exists (voms-proxy-init)", True)
@@ -128,6 +233,11 @@ def main(opts):
     jdlList   = []
     groupDict["Hplus2tbAnalysis"] = map(chr, range(65, 91))
     groupDict["FakeBMeasurement"] = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"]
+
+
+    Verbose("Create the runSystOnCondor.csh script that will create the job", True)
+    CreateRunningScript(scriptName="runSystOnCondor.csh", opts)
+    sys.exit()
 
     Verbose("Creating the jdl files", True)
     # For-loop: All analyses
@@ -248,7 +358,8 @@ if __name__ == "__main__":
         opts.doSystematics = True
         opts.systVarsList = opts.systVars.split(",")
     else:
-        opts.systVarsList = ["JES", "JER", "BTagSF", "TopPt", "PUWeight",  "TopTagSF"]
+        #opts.systVarsList = ["JES", "JER", "BTagSF", "TopPt", "PUWeight",  "TopTagSF"]
+        opts.systVarsList = ["JES", "JER", "BTagSF", "PUWeight",  "TopTagSF"]
 
     # Call the main function
     main(opts)

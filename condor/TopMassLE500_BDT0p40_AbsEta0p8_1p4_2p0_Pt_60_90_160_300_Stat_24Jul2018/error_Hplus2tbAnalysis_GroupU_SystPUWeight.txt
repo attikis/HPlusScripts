@@ -1,0 +1,5 @@
+Error in <TCling::RegisterModule>: cannot find dictionary module FrameworkDict_rdict.pcm
+echodrwxr-xr-x: Command not found.
+[0B/0B][100%][==================================================][0B/s]  
+Run: [ERROR] Server responded with an error: [3006] Unable to create file /eos/uscms/store/user/aattikis/CONDOR_TransferData/Hplus2tbAnalysis_NewTopAndBugFixAndSF_TopMassLE500_BDT0p40_GroupU_SystPUWeight_17h-42m-34s-24Jul2018_21h-02m-43s-24Jul2018.tgz; File exists
+

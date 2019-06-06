@@ -1,0 +1,107 @@
+000 (404517.000.000) 07/24 14:55:02 Job submitted from host: <131.225.190.171:9618?addrs=131.225.190.171-9618&noUDP&sock=3361_424e_3>
+...
+001 (404517.000.000) 07/24 18:58:03 Job executing on host: <131.225.206.199:58589?addrs=131.225.206.199-58589>
+...
+006 (404517.000.000) 07/24 18:58:15 Image size of job updated: 44596
+	4  -  MemoryUsage of job (MB)
+	3736  -  ResidentSetSize of job (KB)
+...
+006 (404517.000.000) 07/24 18:59:13 Image size of job updated: 44596
+	4  -  MemoryUsage of job (MB)
+	3740  -  ResidentSetSize of job (KB)
+...
+006 (404517.000.000) 07/24 19:04:16 Image size of job updated: 44856
+	4  -  MemoryUsage of job (MB)
+	3920  -  ResidentSetSize of job (KB)
+...
+006 (404517.000.000) 07/24 19:05:18 Image size of job updated: 670204
+	137  -  MemoryUsage of job (MB)
+	139472  -  ResidentSetSize of job (KB)
+...
+006 (404517.000.000) 07/24 19:06:18 Image size of job updated: 1010728
+	474  -  MemoryUsage of job (MB)
+	485216  -  ResidentSetSize of job (KB)
+...
+006 (404517.000.000) 07/24 19:07:20 Image size of job updated: 1020868
+	484  -  MemoryUsage of job (MB)
+	495364  -  ResidentSetSize of job (KB)
+...
+006 (404517.000.000) 07/24 19:08:18 Image size of job updated: 1020868
+	484  -  MemoryUsage of job (MB)
+	495372  -  ResidentSetSize of job (KB)
+...
+006 (404517.000.000) 07/24 19:09:19 Image size of job updated: 1020868
+	484  -  MemoryUsage of job (MB)
+	495424  -  ResidentSetSize of job (KB)
+...
+006 (404517.000.000) 07/24 19:10:20 Image size of job updated: 1020868
+	484  -  MemoryUsage of job (MB)
+	495480  -  ResidentSetSize of job (KB)
+...
+006 (404517.000.000) 07/24 19:11:20 Image size of job updated: 1020868
+	484  -  MemoryUsage of job (MB)
+	495496  -  ResidentSetSize of job (KB)
+...
+006 (404517.000.000) 07/24 19:12:20 Image size of job updated: 1039568
+	484  -  MemoryUsage of job (MB)
+	495496  -  ResidentSetSize of job (KB)
+...
+006 (404517.000.000) 07/24 19:16:23 Image size of job updated: 1039568
+	485  -  MemoryUsage of job (MB)
+	496276  -  ResidentSetSize of job (KB)
+...
+006 (404517.000.000) 07/24 19:18:24 Image size of job updated: 1039568
+	485  -  MemoryUsage of job (MB)
+	496396  -  ResidentSetSize of job (KB)
+...
+006 (404517.000.000) 07/24 19:25:26 Image size of job updated: 1039568
+	485  -  MemoryUsage of job (MB)
+	496400  -  ResidentSetSize of job (KB)
+...
+006 (404517.000.000) 07/24 19:29:29 Image size of job updated: 1039568
+	485  -  MemoryUsage of job (MB)
+	496432  -  ResidentSetSize of job (KB)
+...
+006 (404517.000.000) 07/24 19:30:29 Image size of job updated: 1039568
+	486  -  MemoryUsage of job (MB)
+	497400  -  ResidentSetSize of job (KB)
+...
+006 (404517.000.000) 07/24 19:33:31 Image size of job updated: 1039568
+	486  -  MemoryUsage of job (MB)
+	497512  -  ResidentSetSize of job (KB)
+...
+006 (404517.000.000) 07/24 19:34:32 Image size of job updated: 1039568
+	487  -  MemoryUsage of job (MB)
+	497668  -  ResidentSetSize of job (KB)
+...
+006 (404517.000.000) 07/24 19:37:34 Image size of job updated: 1039568
+	487  -  MemoryUsage of job (MB)
+	497756  -  ResidentSetSize of job (KB)
+...
+006 (404517.000.000) 07/24 19:51:40 Image size of job updated: 1039568
+	487  -  MemoryUsage of job (MB)
+	497992  -  ResidentSetSize of job (KB)
+...
+006 (404517.000.000) 07/24 20:29:01 Image size of job updated: 1041844
+	487  -  MemoryUsage of job (MB)
+	497992  -  ResidentSetSize of job (KB)
+...
+006 (404517.000.000) 07/24 20:34:44 Image size of job updated: 2026848
+	487  -  MemoryUsage of job (MB)
+	497992  -  ResidentSetSize of job (KB)
+...
+005 (404517.000.000) 07/24 20:34:44 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 01:26:20, Sys 0 00:00:37  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 01:26:20, Sys 0 00:00:37  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	259152  -  Run Bytes Sent By Job
+	5915491840  -  Run Bytes Received By Job
+	259152  -  Total Bytes Sent By Job
+	5915491840  -  Total Bytes Received By Job
+	Partitionable Resources :    Usage  Request Allocated
+	   Cpus                 :                 1         1
+	   Disk (KB)            : 15765517  7500000   9037728
+	   Memory (MB)          :      487     2100      2100
+...
