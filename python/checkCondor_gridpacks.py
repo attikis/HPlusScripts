@@ -311,8 +311,8 @@ def PrintSummaryTable(nSubmit, nDone, nFail, nActive, nRun, nHeld, nIdle, nIO, c
     table   = []
     colours = (fs, ns, ns, ns, ss, ns, es, ns, hs, ns, ts, ns, ls, ns, cys, ns, bs, ns)
     align   = "%s{0:^12}%s %s{1:^12}%s %s{2:^12}%s %s{3:^12}%s %s{4:^12}%s %s{5:^12}%s %s{6:^12}%s %s{7:^12}%s %s{8:^12}%s"% (colours)
-    #header = align.format(ns + "SUBMIT" + ns, ns + "TOTAL" + ns, ss + "DONE" + ns, es + "FAIL" + ns, hs + "ACTIVE" + ns, ts + "RUN" + ns, ls + "HELD" + ns, cys + "I/O" + ns, bs + "IDLE" + ns )
-    header = align.format("SUBMIT", "TOTAL", "DONE", "FAIL", "ACTIVE", "RUN", "HELD", "I/O", "IDLE")
+    #header = align.format("SUBMITTED", "TOTAL", "DONE", "FAIL", "ACTIVE", "RUN", "HELD", "I/O", "IDLE")
+    header = align.format("GRIDPACKS", "TOTAL", "DONE", "FAIL", "ACTIVE", "RUN", "HELD", "I/O", "IDLE")
     hLine  = "="*120
     table.append("{0:^120}".format(opts.dirName))
     table.append(hLine)
@@ -320,11 +320,9 @@ def PrintSummaryTable(nSubmit, nDone, nFail, nActive, nRun, nHeld, nIdle, nIO, c
     table.append(hLine)
     
     for c,k in enumerate(jobsDict, 0):
-        #table.append( align.format(fs + jobsDict["submit"] + ns, ns + jobsDict["total"] + ns, ss + jobsDict["done"] + ns, es + jobsDict["fail"] + ns, hs + jobsDict["active"] + ns, ts + jobsDict["run"] + ns, ls + jobsDict["held"] + ns, cys + jobsDict["IO"] + ns, bs + jobsDict["idle"] + ns ) )
         table.append( align.format(jobsDict["submit"], jobsDict["total"], jobsDict["done"], jobsDict["fail"], jobsDict["active"], jobsDict["run"], jobsDict["held"], jobsDict["IO"], jobsDict["idle"] ) )
         break
     table.append("\n")
-    #table.append(hLine)
 
     # For-loop: All table rows
     for i, row in enumerate(table, 1):
@@ -706,7 +704,8 @@ def main(opts):
     gzInFile  = "input_ChargedHiggs_TB_madspin_NLO_M*.tar.gz"
     logFile   = "ChargedHiggs_TB_madspin_NLO_M*.log"
     remapFile = "ChargedHiggs_TB_madspin_NLO_M*_codegen.log"
-    debugFile = "ChargedHiggs_TB_madspin_NLO_M*.debug" # redirected output of job submission
+    #debugFile = "ChargedHiggs_TB_madspin_NLO_M*.debug" # redirected output of job submission
+    debugFile = "*.debug"
     gpackFile = "ChargedHiggs_TB_madspin_NLO_M*tarball.tar.xz"
 
     # In Python versions 2.6 or earlier, you need to explicitly number the format fields:
