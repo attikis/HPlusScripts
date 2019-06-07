@@ -116,7 +116,12 @@ def AskUser(msg, printHeader=False):
 
 def GetNumberOfJobsWithKeyword(dirName, fileName, keyword):
     fList = []
-    cmd   = "grep -l '%s' %s/%s" % (keyword, dirName, fileName)
+    for fname in os.listdir('.'):
+        if fileName in fname:
+            break
+        else:
+            return fList
+    cmd = "grep -l '%s' %s/%s" % (keyword, dirName, fileName)
     Verbose("Popen(%s, stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=True)" % (cmd), True)
     process = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=True)
     output, err = process.communicate()
@@ -125,7 +130,7 @@ def GetNumberOfJobsWithKeyword(dirName, fileName, keyword):
     else:
         fList = output.split()
         fList = [os.path.basename(f) for f in fList]
-    return fList #xenios
+    return fList
 
 
 def GetNumberOfJobsWithKeywordOld(dirName, fileName="output_FakeBMeasurement_Group*.txt", keyword="Results are in"):
@@ -332,9 +337,12 @@ def PrintSummaryTable(nSubmit, nDone, nFail, nActive, nRun, nHeld, nIdle, nIO, c
 
     # Create table
     table   = []
-    colours = (fs, ns, ns, ns, ss, ns, es, ns, hs, ns, ts, ns, ls, ns, cys, ns, bs, ns)
-    align   = "%s{0:^12}%s %s{1:^12}%s %s{2:^12}%s %s{3:^12}%s %s{4:^12}%s | %s{5:^12}%s %s{6:^12}%s %s{7:^12}%s %s{8:^12}%s"% (colours)
-    header = align.format("GRIDPACKS", "TOTAL", "DONE", "FAIL", "ACTIVE", "RUN", "HELD", "I/O", "IDLE")
+    #colours = (fs, ns, ns, ns, ss, ns, es, ns, hs, ns, ts, ns, ls, ns, cys, ns, bs, ns)
+    #align   = "%s{0:^12}%s %s{1:^12}%s %s{2:^12}%s %s{3:^12}%s %s{4:^12}%s | %s{5:^12}%s %s{6:^12}%s %s{7:^12}%s %s{8:^12}%s"% (colours)
+    #header = align.format("GRIDPACKS", "TOTAL", "DONE", "FAIL", "ACTIVE", "RUN", "HELD", "I/O", "IDLE")
+    colours = (ns, ns, ss, ns, es, ns, hs, ns, ts, ns, ls, ns, cys, ns, bs, ns)
+    align   = "%s{0:^12}%s | %s{1:^12}%s %s{2:^12}%s %s{3:^12}%s | %s{4:^12}%s %s{5:^12}%s %s{6:^12}%s %s{7:^12}%s"% (colours)
+    header = align.format("GRIDPACKS", "DONE", "FAIL", "ACTIVE", "RUN", "HELD", "I/O", "IDLE")
     hLine  = "="*120
     table.append("{0:^120}".format(opts.dirName))
     table.append(hLine)
@@ -342,7 +350,8 @@ def PrintSummaryTable(nSubmit, nDone, nFail, nActive, nRun, nHeld, nIdle, nIO, c
     table.append(hLine)
     
     for c,k in enumerate(jobsDict, 0):
-        table.append( align.format(jobsDict["submit"], jobsDict["total"], jobsDict["done"], jobsDict["fail"], jobsDict["active"], jobsDict["run"], jobsDict["held"], jobsDict["IO"], jobsDict["idle"] ) )
+        #table.append( align.format(jobsDict["submit"], jobsDict["total"], jobsDict["done"], jobsDict["fail"], jobsDict["active"], jobsDict["run"], jobsDict["held"], jobsDict["IO"], jobsDict["idle"] ) )
+        table.append( align.format(jobsDict["submit"], jobsDict["done"], jobsDict["fail"], jobsDict["active"], jobsDict["run"], jobsDict["held"], jobsDict["IO"], jobsDict["idle"] ) )
         break
     table.append("\n")
 
@@ -668,7 +677,8 @@ def PrintCondorQ(nCards, condorQ):
 
         if i == (nActive-1):
             Verbose("", False)
-    table.append(hLine)
+    #table.append(hLine)
+    table.append("")
     nActive = counter
     
     # For-loop: All rows
