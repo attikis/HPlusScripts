@@ -2,7 +2,19 @@
 '''
 DESCRIPTION:
 Check status of multible CONDOR jobs under 
-a given sub-directory
+a given sub-directory. There will be three logfiles you can look into:
+1) The debug logfile you create when running nohup. This will indicate
+ the status of the cmsconnect submission script (submit_cmsconnect_gridpack_generation). 
+It will show you when the CODEGEN step is submitted and finished and when it starts and 
+finishes the INTEGRATE step and the tarball creation.
+
+2) Once CODEGEN is done, you will be able to see a file [card_name]_codegen.log.
+ This will show you the logs for the CODEGEN step, if any errors ocurred during this step, 
+you should be able to see the condor logfiles in the condor_logs directory.
+
+3) Once the INTEGRATE starts, you will see that in the debug logfile, and a file [card_name].log 
+will be created, this will show you the status of the remaining steps of your gridpack production, 
+including jobs submitted, running and pending and creation of your tarball.
 
 
 USAGE:
@@ -732,13 +744,16 @@ def main(opts):
         sys.exit()
         
     # Definitions
-    exeFile   = "codegen_ChargedHiggs_TB_madspin_NLO_M*.sh"
-    gzInFile  = "input_ChargedHiggs_TB_madspin_NLO_M*.tar.gz"
-    logFile   = "ChargedHiggs_TB_madspin_NLO_M*.log"
-    remapFile = "ChargedHiggs_TB_madspin_NLO_M*_codegen.log"
-    #debugFile = "ChargedHiggs_TB_madspin_NLO_M*.debug" # redirected output of job submission
-    debugFile = "*.debug"
-    gpackFile = "ChargedHiggs_TB_madspin_NLO_M*tarball.tar.xz"
+    # ChargedHiggs_TB_madspin_NLO_M3000_14Jun2019.debug
+    # ChargedHiggs_TB_madspin_NLO_M3000_slc6_amd64_gcc630_CMSSW_9_3_8_tarball.tar.xz
+    # ChargedHiggs_TB_madspin_NLO_M3000.log
+
+    exeFile   = "codegen_M*.sh"            #"codegen_ChargedHiggs_TB_madspin_NLO_M*.sh"
+    gzInFile  = "input_ChargedHiggs*.gz"   #"input_ChargedHiggs_TB_madspin_NLO_M*.tar.gz"
+    logFile   = "ChargedHiggs_M*.log"      #"ChargedHiggs_TB_madspin_NLO_M*.log"
+    remapFile = "ChargedHiggs*codegen.log" #"ChargedHiggs_TB_madspin_NLO_M*_codegen.log"
+    debugFile = "ChargedHiggs*.debug"      #"ChargedHiggs_TB_madspin_NLO_M*.debug"
+    gpackFile = "ChargedHiggs*tar.xz"      #"ChargedHiggs_TB_madspin_NLO_M*_slc6_amd64_gcc630_CMSSW_9_3_8_tarball.tar.xz"
 
     # In Python versions 2.6 or earlier, you need to explicitly number the format fields:
     align  = "{0:^5} {1:>3} {2:<6} files" # (ts, nGzIn, ns))
