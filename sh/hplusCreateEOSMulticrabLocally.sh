@@ -4,9 +4,11 @@
 # Input parameters
 # ----------------
 #   eos_dir: eos Directory 
-#   loc_dir: local directory
-# nb: The name of the eos_dir should not end with / 
+#   loc_dir: derivable local directory from the eos name
+# nb: The name of the eos_dir should not end with / and the full path should be given
+# usage:  ./mk_eos.sh /eos/uscms/store/<user>/<path> 
 #
+# LAST USED:
 # LAST USED:
 # ./hplusCreateEOSMulticrabLocally.sh /eos/uscms/store/user/aattikis/CRAB3_TransferData/multicrab_Hplus2hwAnalysis_v8030_20181205T1455
 #
@@ -27,13 +29,13 @@ echo "At directory:  " `pwd`
 echo "EOS Directory: " ${eos_dir}
 echo "Loc Directory: " ${loc_dir}
 echo "===================================================="
-#eosls -1 ${eos_dir} > dir2create.txt  # Put the dir content to be copied in a file to read it
 find ${eos_dir} > dir2create.txt
 i=0
+
 for File2Create in `awk -F: '{ print $1 }' dir2create.txt` # Read the content of the file 
 do 
    i=$((i + 1))
-#   if [ $i -gt 20 ] ; then
+#   if [ $i -gt 500 ] ; then
 #       exit
 #   fi
    if [[ -d "${File2Create}" ]] ; then
@@ -41,9 +43,12 @@ do
        echo "Creating directory" $i ":...." ${Dir2Create}
        mkdir ${Dir2Create}
    else
-       filename=${Dir2Create}/${File2Create#*"${Dir2Create}/"}
-       echo "Creating symbolic link..." $File2Create $filename
-       ln -s $File2Create $filename 
+       CrabDir=${File2Create#*"${eos_dir}/"}  # The part of the name without the $eos_dir
+       DirPath=${CrabDir%/*}                  # The directory (excluding the part from /<filename>)
+       FileName=${CrabDir#*"${DirPath}/"}     # The filename
+       FullFileName=${DirPath}/${FileName}
+       echo "Creating symbolic link..." $File2Create $FullFileName
+       ln -s $File2Create $FullFileName 
    fi
    status=$?
    if [ $status -eq 0 ];then
