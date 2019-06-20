@@ -17,7 +17,8 @@
 # Define variables
 #================================================================================================
 set INITIAL=`echo $USER | cut -c1-1`
-set DESTINATION="/afs/cern.ch/user/$INITIAL/$USER/scratch0/" #${1}
+#set DESTINATION="/afs/cern.ch/user/$INITIAL/$USER/scratch0/" #${1}
+set DESTINATION="/afs/cern.ch/user/$INITIAL/$USER/workspace/cmssw/"
 set CMSSW="CMSSW_${1}"
 set SETUPCRAB=true #${3}
 set CRAB="/cvmfs/cms.cern.ch/crab3/crab.csh"

@@ -29,17 +29,14 @@ endif
 ############################################################################# 
 set autolist
 
-############################################################################# 
-# Setup command history (type "history -c" to clean-up history
-############################################################################# 
-set histfile = ~/.history   # file to store the list of commands to remember
-set history = 100            # max number of commands to remember 
-#set histignore=ls:cd:exit:rm
 
 #############################################################################      
 # Set PATHS & Environment variables
 #############################################################################      
-setenv EOS /store/user/$USER/CRAB3_TransferData
+#setenv EOS /store/user/$USER/CRAB3_TransferData
+setenv EOS /eos/cms/store/user/attikis
+setenv BOX /eos/user/$USER_INITIAL/$USER/ #CRAB3_TransferData
+#setenv BOX /eos/home-a/attikis/CRAB3_TransferData/
 setenv PUBLIC $HOME/public
 setenv SCRATCH $HOME/scratch0
 setenv TMP /tmp/${USER}
@@ -52,51 +49,62 @@ setenv WORKSPACE /afs/cern.ch/work/$USER_INITIAL/$USER
 #############################################################################
 set prompt = '[%n@%m:%c]%#'
 
+
 #############################################################################
 # Set aliases
 #############################################################################
 alias H             'history -r | fgrep "\!*"'
 alias cmsenvUnset   'eval `scram unsetenv -sh`'
+#alias cmssw         'source ~/HPlusScripts/csh/setenv_cmssw.csh ~/scratch0/ 8_0_27 false'
+#alias cmssw         'source ~/HPlusScripts/csh/setenv_cmssw.csh /afs/cern.ch/user/a/attikis/workspace/cmssw/ 8_0_27 false'
+#alias cmssw-crab    'source ~/HPlusScripts/csh/setenv_cmssw.csh /afs/cern.ch/user/a/attikis/workspace/cmssw/ 8_0_27 true'
+#alias cmssw         'source ~/HPlusScripts/csh/setenv_cmssw.csh /afs/cern.ch/user/a/attikis/workspace/cmssw/ 10_1_5 false'
+#alias cmssw-crab    'source ~/HPlusScripts/csh/setenv_cmssw.csh /afs/cern.ch/user/a/attikis/workspace/cmssw/ 10_1_5 true'
+#alias cmssw         'source ~/HPlusScripts/csh/setenv_cmssw_hltaus.csh /afs/cern.ch/user/a/attikis/scratch0/ 10_1_7 false'
+#alias cmssw-crab    'source ~/HPlusScripts/csh/setenv_cmssw_hltaus.csh /afs/cern.ch/user/a/attikis/scratch0/ 10_1_7 true'
+#alias cmssw         'source ~/HPlusScripts/csh/setenv_cmssw_hltaus.csh /afs/cern.ch/user/a/attikis/scratch0/ 10_5_0_pre1 false'
+#alias cmssw-crab    'source ~/HPlusScripts/csh/setenv_cmssw_hltaus.csh /afs/cern.ch/user/a/attikis/scratch0/ 10_5_0_pre1 true'
+#alias cmssw         'source ~/HPlusScripts/csh/setenv_cmssw_hltaus.csh /afs/cern.ch/user/a/attikis/workspace/ 10_1_7 false'
+#alias cmssw-crab    'source ~/HPlusScripts/csh/setenv_cmssw_hltaus.csh /afs/cern.ch/user/a/attikis/workspace/ 10_1_7 true'
+alias cmssw         'source ~/HPlusScripts/csh/setenv_cmssw_hltaus.csh /afs/cern.ch/user/a/attikis/workspace/cmssw/ 10_6_0_pre4 false'
+alias cmssw-crab    'source ~/HPlusScripts/csh/setenv_cmssw_hltaus.csh /afs/cern.ch/user/a/attikis/workspace/cmssw/ 10_6_0_pre4 true'
 
-if ( "$LOCATION" == "lpc" ) then
-    alias cmssw         'source ~/HPlusScripts/csh/setenv_cmssw.csh /uscms_data/d3/aattikis/workspace/cmssw/ 8_0_30 false'
-    alias cmssw-crab    'source ~/HPlusScripts/csh/setenv_cmssw.csh /uscms_data/d3/aattikis/workspace/cmssw/ 8_0_30 true'
-    alias d3            'cd /uscms_data/d3/aattikis/workspace/'
-    alias higgs         'higgs8030'
-    alias higgs8030     'source ~/HPlusScripts/csh/setenv_higgs.csh /uscms_data/d3/aattikis/workspace/cmssw/ 8_0_30'
-    alias higgs8027     'source ~/HPlusScripts/csh/setenv_higgs.csh ~/scratch0/ 8_0_27'
-    alias higgs8024     'source ~/HPlusScripts/csh/setenv_higgs.csh /uscms_data/d3/aattikis/workspace/scratch0 8_0_24'
-    alias higgs8019     'source ~/HPlusScripts/csh/setenv_higgs.csh /uscms_data/d3/aattikis/workspace/scratch0 8_0_19'
-else if ( "$LOCATION" == "lxplus" ) then
-    alias cmssw         'source ~/HPlusScripts/csh/setenv_cmssw.csh ~/scratch0/ 8_0_27 false'
-    alias cmssw-crab    'source ~/HPlusScripts/csh/setenv_cmssw.csh ~/scratch0/ 8_0_27 true'
-    alias work          'cd /afs/cern.ch/user/a/attikis/workspace/'
-    alias higgs         'source ~/HPlusScripts/csh/setenv_higgs.csh ~/scratch0/ 8_0_24'
-    alias cmssw920      'source ~/HPlusScripts/csh/hltaus.csh 9_2_0'
-    alias cmssw910      'source ~/HPlusScripts/csh/hltaus.csh 9_1_0_pre2'
-    alias cmssw620      'source ~/HPlusScripts/csh/hltaus.csh 6_2_0_SLHC12_patch1'
-    alias limits        'source ~/HPlusScripts/csh/setenv_limits.csh ~/scratch0/ 8_1_0' #do NOT name alias "combine"
-
+alias d3            'cd /uscms_data/d3/aattikis/workspace/'
+alias work          'cd /afs/cern.ch/user/a/attikis/workspace/'
 alias emacs         'emacs -nw'
 alias glogin        'source $HOME/bin/grid_environment'
 alias grid          'source $HOME/bin/grid_environment'
 alias h             'history'
+alias higgs         'source ~/HPlusScripts/csh/setenv_higgs.csh /afs/cern.ch/user/a/attikis/workspace/cmssw/ 8_0_27'
+alias cmssw920      'source ~/HPlusScripts/csh/hltaus.csh 9_2_0'
+alias cmssw910      'source ~/HPlusScripts/csh/hltaus.csh 9_1_0_pre2'
+alias cmssw620      'source ~/HPlusScripts/csh/hltaus.csh 6_2_0_SLHC12_patch1'
+alias tkTaus        'hltaus && source setup.csh && cd NtupleAnalysis/src/TkTaus/work'
+alias tkEG          'hltaus && source setup.csh && cd NtupleAnalysis/src/TkEG/work'
+alias caloTk        'hltaus && source setup.csh && cd NtupleAnalysis/src/CaloTk/work'
+alias caloTau       'hltaus && source setup.csh && cd NtupleAnalysis/src/CaloTau/work'
+alias limits        'source ~/HPlusScripts/csh/setenv_limits.csh ~/scratch0/ 8_1_0' #do NOT name alias "combine"
+alias madgraph      'cd /afs/cern.ch/user/a/attikis/workspace/MCProduction2017/genproductions/bin/MadGraph5_aMCatNLO'
 alias l             'ls -lth'
 alias ls            'ls -pt --color=auto'
 alias lsd           'ls -lpt --color=force | grep ^d'
 alias lxplus        'ssh -N -L 10121:itrac50012-v.cern.ch:10121 attikis@lxplus.cern.ch'
+alias uscms         'ssh -Y attikis@login.uscms.org'
 alias pwd           'echo $cwd'
 alias rm            'rm -i'
 alias root          'root -l'
-alias scram6        'setenv SCRAM_ARCH $SCRAM_ARCHITECTURE'
+#alias scram530      'setenv SCRAM_ARCH $SCRAM_ARCHITECTUREgcc530'
+#alias scram600      'setenv SCRAM_ARCH $SCRAM_ARCHITECTUREgcc600'
+#alias scram630      'setenv SCRAM_ARCH $SCRAM_ARCHITECTUREgcc630'
+#alias scram700      'setenv SCRAM_ARCH $SCRAM_ARCHITECTUREgcc700'
+alias setmyscram    'setenv SCRAM_ARCH slc7_amd64_gcc700'
 alias setbrilcalc   'setenv PATH ${PATH}:$HOME/.local/bin:/afs/cern.ch/cms/lumi/brilconda-1.0.3/bin:'
 alias setcrab       'source /cvmfs/cms.cern.ch/crab3/crab.csh'
 alias ssh           'ssh -Y'
 
+
 if ( "$LOCATION" == "lxplus" ) then
-    alias hltaus        'source HPlusScripts/csh/hltaus.csh'
-    # alias hltaus 'cd /afs/cern.ch/user/a/attikis/scratch0/CMSSW_9_2_0/src/HLTausAnalysis/'
-    # alias hltaus 'cd /afs/cern.ch/user/a/attikis/scratch0/CMSSW_9_1_0_pre2/src/HLTausAnalysis/'
+    alias hltaus 'cd /afs/cern.ch/user/a/attikis/scratch0/CMSSW_10_5_0_pre1/src/HLTausAnalysis/'
 else
     alias hltaus 'echo Alias not set for LOCATION=$LOCATION'
 endif
@@ -124,6 +132,14 @@ endif
 #############################################################################
 # Configure environment variables
 #############################################################################
+echo "\n=== Setting scram architecture"
+setmyscram
+echo "\tSCRAM_ARCH is set to $SCRAM_ARCH"
+
+# set SCRAM_ARCHITECTUREgcc530="slc6_amd64_gcc530"
+# set SCRAM_ARCHITECTUREgcc600="slc6_amd64_gcc600"
+# set SCRAM_ARCHITECTUREgcc630="slc6_amd64_gcc630"
+# set SCRAM_ARCHITECTUREgcc700="slc6_amd64_gcc700"
 #setenv LD_LIBRARY_PATH '/uscms/home/${USER}/.local/lib:'
 #setenv LD_LIBRARY_PATH '/uscms/home/$USER/.local/lib:'$LD_LIBRARY_PATH
 
@@ -159,7 +175,7 @@ setenv PATH ${PATH}:$HOME/HPlusScripts/bash/
 setenv PATH ${PATH}:$HOME/HPlusScripts/python/
 setenv PATH ${PATH}:$HOME/HPlusScripts/login/
 setenv PATH ${PATH}:$HOME/HPlusScripts/lxbatch/
-setenv PATH ${PATH}:$HOME/HPlusScripts/lhchiggsstyle-v4/
+
 
 #############################################################################
 # Additional variables

@@ -18,7 +18,7 @@ where the runcmsgrid.sh script requires at least 3 parameters:
 
 
 LAST USED:
-./test_gridpack.py gridpacks_HToTB_MG5_v260/*.xz
+./test_gridpack_alex.py gridpacks_HToTB_MG5_v260/ChargedHiggs_TB_madspin_NLO_M3000_slc6_amd64_gcc630_CMSSW_9_3_8_tarball.tar.xz
 
 
 NOTE:
@@ -127,24 +127,21 @@ def main():
         outFile    = os.path.basename(tarball).replace(".tar.xz",".out")
         outFileAlt = outFile.replace(".out", "2.out")
         outputPath = os.path.join(outdirPath, outFile)
-        dirExists  = False
 
         if not os.path.exists(outdirPath):
             if outdirName != "":
                 os.makedirs(outdirPath)
             Verbose("Created directory %s" % (NoteStyle() + outdirPath + NormalStyle()), True)
         else:
-            Verbose("Directory %s already exists" % (NoteStyle() + outdirPath + NormalStyle()), True)
-            dirExists = True
-            # sys.exit()
+            Print("Directory %s exists. Exit" % (NoteStyle() + outdirPath + NormalStyle()), True)
+            sys.exit()
 
-        Print("%d/%d: Unpacking %s to %s" % (index, len(tarballs), HighlightStyle() + os.path.basename(tarball) + NormalStyle(), os.path.basename(outdirPath)), index==1)
+        Print("%d/%d: Unpacking %s to %s" % (index, len(tarballs), HighlightStyle() + os.path.basename(tarball) + NormalStyle(), outdirPath), index==1)
         if opts.verbose:
             cmd = "tar xfv %s -C %s" % (tarball, outdirPath) 
         else:
             cmd = "tar xf %s -C %s" % (tarball, outdirPath) 
-        if not dirExists:
-            os.system(cmd)
+        os.system(cmd)
 
         # Determine the madgraph version 
         logFile   = os.path.join(outdirPath, "gridpack_generation.log") 
@@ -158,8 +155,7 @@ def main():
         cmd = "cd %s && ./runcmsgrid.sh %s %s %s >& %s" % (outdirPath, nEvents, rndSeed, nCPUS, outFile)
         Verbose("%s" % (HighlightStyle() + cmd + NormalStyle()), True)
         Print("%d/%d: Producing the LHE file and redirecting output to %s" % (index, len(tarballs), HighlightStyle() + outFile + NormalStyle()), False)
-        if not dirExists:
-            os.system(cmd) #ret = Execute(cmd)
+        os.system(cmd) #ret = Execute(cmd)
 
         # Determine success/failure
         ok = "unknown"
@@ -188,12 +184,10 @@ def main():
     if len(success) > 0:
         Print("%d gridpacks ready and ok:" % (nSuccess), True)
         for i,s in enumerate(success, 1):
-            f = s.replace(os.getcwd() + "/", "")
-            Print(SuccessStyle() + f + NormalStyle(), False)
+            Print(SuccessStyle() + s + NormalStyle(), False)
     if len(fail) > 0:            
         Print("%d gridpacks failed" % (nFail), True)
         for i,f in enumerate(fail, 1):
-            f = f.replace(os.getcwd() + "/", "")
             Print(ErrorStyle() + f + NormalStyle(), False)
 
     return

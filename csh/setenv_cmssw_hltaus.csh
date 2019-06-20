@@ -23,7 +23,8 @@ set CRAB="/cvmfs/cms.cern.ch/crab3/crab.csh"
 set CRABVERSION='crab --version'
 # set SCRAM_ARCHITECTURE="slc6_amd64_gcc472"
 # set CRAB="/afs/cern.ch/cms/ccs/wm/scripts/Crab/crab.csh"
-set ENDPATH="HLTausAnalysis/"
+#set ENDPATH="HLTausAnalysis/"
+set ENDPATH="L1Trigger/"
 # set ENDPATH="HiggsAnalysis/MiniAOD2TTree/test/"
 # set ENDPATH="HiggsAnalysis/"
 
