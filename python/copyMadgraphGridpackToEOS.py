@@ -1,3 +1,49 @@
+'''
+USAGE:
+0) First get the paths of the gridpacks
+ls /afs/cern.ch/work/a/atishelm/public/gridpacks/*/* | grep 2016/ > HH_2016.txt
+ls /afs/cern.ch/work/a/atishelm/public/gridpacks/*/* | grep 2017/ > HH_2017.txt
+
+1) First copy gridpacks and check the version of madgraph:
+cp /afs/cern.ch/work/a/atishelm/public/gridpacks/gg_BulkGraviton_2017/BulkGraviton_hh_GF_HH_narrow_M1000_slc6_amd64_gcc630_CMSSW_9_3_8_tarball.tar.xz /tmp/$USER/.
+tar xf *.tgz 
+cat mgbasedir/VERSION
+
+cp /afs/cern.ch/work/a/atishelm/public/gridpacks/gg_BulkGraviton_2016/BulkGraviton_hh_GF_HH2016_narrow_M700_slc6_amd64_gcc630_CMSSW_9_3_8_tarball.tar.xz /tmp/$USER/.
+tar xf *.tgz
+cat mgbasedir/VERSION
+
+2) Once you get the MG version (e.g. 2.6.0), to check the destination.
+python copyMadgraphGridpackToEOS.py --MGversion V5_2.6.0 --file HH_2016.txt
+
+3) Ensure that year is correct (default 2017)
+python copyMadgraphGridpackToEOS.py --MGversion V5_2.6.0 --file HH_2016.txt --era 2016
+
+4) If everything is okay proceed with copying the files to cvfms
+python copyMadgraphGridpackToEOS.py --file 2016.txt --MGversion V5_2.6.5 --era 2016 --copy True
+
+
+LAST USED:
+ls /afs/cern.ch/user/l/lcadamur/public/PerElisa_2016_gridpacks/* > 2016.txt
+python copyMadgraphGridpackToEOS.py --file  2016.txt [to check MG version: copy & upack tarball & do '$cat mgbasedir/VERSION']
+python copyMadgraphGridpackToEOS.py --file 2016.txt --MGversion V5_2.6.5 [change the era path to 2016]
+python copyMadgraphGridpackToEOS.py --file 2016.txt --MGversion V5_2.6.5 --era 2016 --copy [make sure you get "ERROR: not existing so creating"]
+python copyMadgraphGridpackToEOS.py --file 2016.txt --MGversion V5_2.6.5 --era 2016 --copy True
+
+ls /afs/cern.ch/user/l/lcadamur/public/PerElisa_EDbEDbEDbBDCA/* >& 2017.txt
+
+
+NOTE:
+all files under /eos/cms/store/group/phys_generator/cvmfs/
+are automatically copied by an algorithm to a replica path under
+/cvmfs/cms.cern.ch/phys_generator/
+which is accessible from anywhere.
+For example:
+/eos/cms/store/group/phys_generator/cvmfs/gridpacks/pre2017/13TeV/madgraph/V5_2.6.5/VBF_HH_CV_1_C2V_2_C3_1_13TeV-madgraph/v1/VBF_HH_CV_1_C2V_2_C3_1_13TeV-madgraph_slc6_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz
+/cvmfs/cms.cern.ch/phys_generator/gridpacks/pre2017/13TeV/madgraph/V5_2.6.5/VBF_HH_CV_1_C2V_2_C3_1_13TeV-madgraph/v1/VBF_HH_CV_1_C2V_2_C3_1_13TeV-madgraph_slc6_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz
+Normally the file duplication takes ~1 hour or so.
+
+'''
 import os,sys
 from argparse import ArgumentParser
 
