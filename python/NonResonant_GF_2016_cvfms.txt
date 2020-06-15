@@ -1,0 +1,35 @@
+------------------------------------
+------------------------------------
+------------------------------------
+------------------------------------
+------------------------------------
+------------------------------------
+------------------------------------
+------------------------------------
+------------------------------------
+------------------------------------
+------------------------------------
+------------------------------------
+------------------------------------
+------------------------------------
+('Filename: ', 'NonResonant_GF_2016.txt')
+('copyToEos: ', False)
+('is4FS: ', False)
+('version: ', 'v1')
+('era: ', '2016')
+('MGversion: ', 'V5_2.6.5')
+No. of args:  7
+Total number of gridpack:  13
+gridpack_cvmfs_path:   /cvmfs/cms.cern.ch/phys_generator/gridpacks/pre2017/13TeV/madgraph/V5_2.6.5/GF_HH_SM/v1/GF_HH_SM_slc6_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz
+gridpack_cvmfs_path:   /cvmfs/cms.cern.ch/phys_generator/gridpacks/pre2017/13TeV/madgraph/V5_2.6.5/GF_HH_9/v1/GF_HH_9_slc6_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz
+gridpack_cvmfs_path:   /cvmfs/cms.cern.ch/phys_generator/gridpacks/pre2017/13TeV/madgraph/V5_2.6.5/GF_HH_8/v1/GF_HH_8_slc6_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz
+gridpack_cvmfs_path:   /cvmfs/cms.cern.ch/phys_generator/gridpacks/pre2017/13TeV/madgraph/V5_2.6.5/GF_HH_7/v1/GF_HH_7_slc6_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz
+gridpack_cvmfs_path:   /cvmfs/cms.cern.ch/phys_generator/gridpacks/pre2017/13TeV/madgraph/V5_2.6.5/GF_HH_6/v1/GF_HH_6_slc6_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz
+gridpack_cvmfs_path:   /cvmfs/cms.cern.ch/phys_generator/gridpacks/pre2017/13TeV/madgraph/V5_2.6.5/GF_HH_5/v1/GF_HH_5_slc6_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz
+gridpack_cvmfs_path:   /cvmfs/cms.cern.ch/phys_generator/gridpacks/pre2017/13TeV/madgraph/V5_2.6.5/GF_HH_4/v1/GF_HH_4_slc6_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz
+gridpack_cvmfs_path:   /cvmfs/cms.cern.ch/phys_generator/gridpacks/pre2017/13TeV/madgraph/V5_2.6.5/GF_HH_3/v1/GF_HH_3_slc6_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz
+gridpack_cvmfs_path:   /cvmfs/cms.cern.ch/phys_generator/gridpacks/pre2017/13TeV/madgraph/V5_2.6.5/GF_HH_2/v1/GF_HH_2_slc6_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz
+gridpack_cvmfs_path:   /cvmfs/cms.cern.ch/phys_generator/gridpacks/pre2017/13TeV/madgraph/V5_2.6.5/GF_HH_1/v1/GF_HH_1_slc6_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz
+gridpack_cvmfs_path:   /cvmfs/cms.cern.ch/phys_generator/gridpacks/pre2017/13TeV/madgraph/V5_2.6.5/GF_HH_12/v1/GF_HH_12_slc6_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz
+gridpack_cvmfs_path:   /cvmfs/cms.cern.ch/phys_generator/gridpacks/pre2017/13TeV/madgraph/V5_2.6.5/GF_HH_11/v1/GF_HH_11_slc6_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz
+gridpack_cvmfs_path:   /cvmfs/cms.cern.ch/phys_generator/gridpacks/pre2017/13TeV/madgraph/V5_2.6.5/GF_HH_10/v1/GF_HH_10_slc6_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz
