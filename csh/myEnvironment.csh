@@ -35,7 +35,9 @@ set autolist
 #############################################################################      
 #setenv EOS /store/user/$USER/CRAB3_TransferData
 setenv EOS /eos/cms/store/user/attikis
+setenv EOSHOME /eos/cms/store/user/attikis
 setenv BOX /eos/user/$USER_INITIAL/$USER/ #CRAB3_TransferData
+setenv CERNBOX /eos/user/$USER_INITIAL/$USER/ #CRAB3_TransferData
 #setenv BOX /eos/home-a/attikis/CRAB3_TransferData/
 setenv PUBLIC $HOME/public
 setenv SCRATCH $HOME/scratch0
@@ -53,21 +55,27 @@ set prompt = '[%n@%m:%c]%#'
 #############################################################################
 # Set aliases
 #############################################################################
-alias H             'history -r | fgrep "\!*"'
-alias cmsenvUnset   'eval `scram unsetenv -sh`'
-#alias cmssw         'source ~/HPlusScripts/csh/setenv_cmssw.csh ~/scratch0/ 8_0_27 false'
-#alias cmssw         'source ~/HPlusScripts/csh/setenv_cmssw.csh /afs/cern.ch/user/a/attikis/workspace/cmssw/ 8_0_27 false'
-#alias cmssw-crab    'source ~/HPlusScripts/csh/setenv_cmssw.csh /afs/cern.ch/user/a/attikis/workspace/cmssw/ 8_0_27 true'
-#alias cmssw         'source ~/HPlusScripts/csh/setenv_cmssw.csh /afs/cern.ch/user/a/attikis/workspace/cmssw/ 10_1_5 false'
-#alias cmssw-crab    'source ~/HPlusScripts/csh/setenv_cmssw.csh /afs/cern.ch/user/a/attikis/workspace/cmssw/ 10_1_5 true'
-#alias cmssw         'source ~/HPlusScripts/csh/setenv_cmssw_hltaus.csh /afs/cern.ch/user/a/attikis/scratch0/ 10_1_7 false'
-#alias cmssw-crab    'source ~/HPlusScripts/csh/setenv_cmssw_hltaus.csh /afs/cern.ch/user/a/attikis/scratch0/ 10_1_7 true'
-#alias cmssw         'source ~/HPlusScripts/csh/setenv_cmssw_hltaus.csh /afs/cern.ch/user/a/attikis/scratch0/ 10_5_0_pre1 false'
-#alias cmssw-crab    'source ~/HPlusScripts/csh/setenv_cmssw_hltaus.csh /afs/cern.ch/user/a/attikis/scratch0/ 10_5_0_pre1 true'
-#alias cmssw         'source ~/HPlusScripts/csh/setenv_cmssw_hltaus.csh /afs/cern.ch/user/a/attikis/workspace/ 10_1_7 false'
-#alias cmssw-crab    'source ~/HPlusScripts/csh/setenv_cmssw_hltaus.csh /afs/cern.ch/user/a/attikis/workspace/ 10_1_7 true'
-alias cmssw         'source ~/HPlusScripts/csh/setenv_cmssw_hltaus.csh /afs/cern.ch/user/a/attikis/workspace/cmssw/ 10_6_0_pre4 false'
-alias cmssw-crab    'source ~/HPlusScripts/csh/setenv_cmssw_hltaus.csh /afs/cern.ch/user/a/attikis/workspace/cmssw/ 10_6_0_pre4 true'
+alias H              'history -r | fgrep "\!*"'
+alias ps             'ps l'
+alias cmsenvUnset    'eval `scram unsetenv -sh`'
+#alias cmssw          'source ~/HPlusScripts/csh/setenv_cmssw.csh ~/scratch0/ 8_0_27 false'
+#alias cmssw          'source ~/HPlusScripts/csh/setenv_cmssw.csh /afs/cern.ch/user/a/attikis/workspace/cmssw/ 8_0_27 false'
+#alias cmssw-crab     'source ~/HPlusScripts/csh/setenv_cmssw.csh /afs/cern.ch/user/a/attikis/workspace/cmssw/ 8_0_27 true'
+#alias cmssw          'source ~/HPlusScripts/csh/setenv_cmssw.csh /afs/cern.ch/user/a/attikis/workspace/cmssw/ 10_1_5 false'
+#alias cmssw-crab     'source ~/HPlusScripts/csh/setenv_cmssw.csh /afs/cern.ch/user/a/attikis/workspace/cmssw/ 10_1_5 true'
+#alias cmssw          'source ~/HPlusScripts/csh/setenv_cmssw_hltaus.csh /afs/cern.ch/user/a/attikis/scratch0/ 10_1_7 false'
+#alias cmssw-crab     'source ~/HPlusScripts/csh/setenv_cmssw_hltaus.csh /afs/cern.ch/user/a/attikis/scratch0/ 10_1_7 true'
+#alias cmssw          'source ~/HPlusScripts/csh/setenv_cmssw_hltaus.csh /afs/cern.ch/user/a/attikis/scratch0/ 10_5_0_pre1 false'
+#alias cmssw-crab     'source ~/HPlusScripts/csh/setenv_cmssw_hltaus.csh /afs/cern.ch/user/a/attikis/scratch0/ 10_5_0_pre1 true'
+#alias cmssw          'source ~/HPlusScripts/csh/setenv_cmssw_hltaus.csh /afs/cern.ch/user/a/attikis/workspace/ 10_1_7 false'
+#alias cmssw-crab     'source ~/HPlusScripts/csh/setenv_cmssw_hltaus.csh /afs/cern.ch/user/a/attikis/workspace/ 10_1_7 true'
+alias cmssw          'source ~/HPlusScripts/csh/setenv_cmssw_hltaus.csh /afs/cern.ch/user/a/attikis/workspace/cmssw/ 10_6_0_pre4 false'
+alias cmssw-crab     'source ~/HPlusScripts/csh/setenv_cmssw_hltaus.csh /afs/cern.ch/user/a/attikis/workspace/cmssw/ 10_6_0_pre4 true'
+alias cmssw-crab-1   'cmssw-crab && cd /afs/cern.ch/user/a/attikis/workspace/cmssw/CMSSW_10_6_0_pre4/src/HLTausAnalysis/Raw2TTree' 
+alias cmssw-crab-2   'cmssw-crab && cd /afs/cern.ch/user/a/attikis/workspace/cmssw/CMSSW_10_6_0_pre4/src/L1Trigger/Phase2L1Taus/test/'
+alias hltaus-produce 'source ~/HPlusScripts/csh/setenv_cmssw_hltaus.csh /afs/cern.ch/user/a/attikis/workspace/cmssw/ 10_6_1_patch2 true && cd /afs/cern.ch/user/a/attikis/workspace/cmssw/CMSSW_10_6_1_patch2/src/L1Trigger/Phase2L1Taus/test/'
+alias hltaus-ntuples 'source ~/HPlusScripts/csh/setenv_cmssw_hltaus.csh /afs/cern.ch/user/a/attikis/workspace/cmssw/ 10_6_1_patch2 true && cd /afs/cern.ch/user/a/attikis/workspace/cmssw/CMSSW_10_6_1_patch2/src/HLTausAnalysis/Raw2TTree'
+alias keras         'cd ~/scratch0/CMSSW_10_2_11/src/ && cmsenv && setenv SCRAM_ARCH slc7_amd64_gcc700 && cd /afs/cern.ch/user/a/attikis/workspace/Keras_ANN/'
 
 alias d3            'cd /uscms_data/d3/aattikis/workspace/'
 alias work          'cd /afs/cern.ch/user/a/attikis/workspace/'
@@ -98,13 +106,15 @@ alias root          'root -l'
 #alias scram630      'setenv SCRAM_ARCH $SCRAM_ARCHITECTUREgcc630'
 #alias scram700      'setenv SCRAM_ARCH $SCRAM_ARCHITECTUREgcc700'
 alias setmyscram    'setenv SCRAM_ARCH slc7_amd64_gcc700'
+alias slc6          'setenv SCRAM_ARCH slc6_amd64_gcc630'
 alias setbrilcalc   'setenv PATH ${PATH}:$HOME/.local/bin:/afs/cern.ch/cms/lumi/brilconda-1.0.3/bin:'
 alias setcrab       'source /cvmfs/cms.cern.ch/crab3/crab.csh'
 alias ssh           'ssh -Y'
 
 
 if ( "$LOCATION" == "lxplus" ) then
-    alias hltaus 'cd /afs/cern.ch/user/a/attikis/scratch0/CMSSW_10_5_0_pre1/src/HLTausAnalysis/'
+    alias hltaus 'cd /afs/cern.ch/user/a/attikis/workspace/cmssw/CMSSW_10_6_0_pre4/src/HLTausAnalysis/'
+    #alias hltaus 'cd /afs/cern.ch/user/a/attikis/scratch0/CMSSW_10_5_0_pre1/src/HLTausAnalysis/'
 else
     alias hltaus 'echo Alias not set for LOCATION=$LOCATION'
 endif
