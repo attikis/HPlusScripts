@@ -1,0 +1,16 @@
+/afs/cern.ch/work/a/atishelm/public/ForElisa/gridpacks/Finish2016/Resonant_GF_Radion_2016/Radion_hh_narrow_M900_slc6_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz
+/afs/cern.ch/work/a/atishelm/public/ForElisa/gridpacks/Finish2016/Resonant_GF_Radion_2016/Radion_hh_narrow_M800_slc6_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz
+/afs/cern.ch/work/a/atishelm/public/ForElisa/gridpacks/Finish2016/Resonant_GF_Radion_2016/Radion_hh_narrow_M750_slc6_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz
+/afs/cern.ch/work/a/atishelm/public/ForElisa/gridpacks/Finish2016/Resonant_GF_Radion_2016/Radion_hh_narrow_M650_slc6_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz
+/afs/cern.ch/work/a/atishelm/public/ForElisa/gridpacks/Finish2016/Resonant_GF_Radion_2016/Radion_hh_narrow_M600_slc6_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz
+/afs/cern.ch/work/a/atishelm/public/ForElisa/gridpacks/Finish2016/Resonant_GF_Radion_2016/Radion_hh_narrow_M550_slc6_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz
+/afs/cern.ch/work/a/atishelm/public/ForElisa/gridpacks/Finish2016/Resonant_GF_Radion_2016/Radion_hh_narrow_M500_slc6_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz
+/afs/cern.ch/work/a/atishelm/public/ForElisa/gridpacks/Finish2016/Resonant_GF_Radion_2016/Radion_hh_narrow_M450_slc6_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz
+/afs/cern.ch/work/a/atishelm/public/ForElisa/gridpacks/Finish2016/Resonant_GF_Radion_2016/Radion_hh_narrow_M400_slc6_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz
+/afs/cern.ch/work/a/atishelm/public/ForElisa/gridpacks/Finish2016/Resonant_GF_Radion_2016/Radion_hh_narrow_M350_slc6_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz
+/afs/cern.ch/work/a/atishelm/public/ForElisa/gridpacks/Finish2016/Resonant_GF_Radion_2016/Radion_hh_narrow_M320_slc6_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz
+/afs/cern.ch/work/a/atishelm/public/ForElisa/gridpacks/Finish2016/Resonant_GF_Radion_2016/Radion_hh_narrow_M300_slc6_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz
+/afs/cern.ch/work/a/atishelm/public/ForElisa/gridpacks/Finish2016/Resonant_GF_Radion_2016/Radion_hh_narrow_M280_slc6_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz
+/afs/cern.ch/work/a/atishelm/public/ForElisa/gridpacks/Finish2016/Resonant_GF_Radion_2016/Radion_hh_narrow_M270_slc6_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz
+/afs/cern.ch/work/a/atishelm/public/ForElisa/gridpacks/Finish2016/Resonant_GF_Radion_2016/Radion_hh_narrow_M260_slc6_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz
+/afs/cern.ch/work/a/atishelm/public/ForElisa/gridpacks/Finish2016/Resonant_GF_Radion_2016/Radion_hh_narrow_M250_slc6_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz

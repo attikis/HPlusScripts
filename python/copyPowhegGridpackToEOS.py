@@ -1,46 +1,39 @@
 '''
 USAGE:
 0) First get the paths of the gridpacks
-ls /afs/cern.ch/work/a/atishelm/public/gridpacks/*/* | grep 2016/ > HH_2016.txt
-ls /afs/cern.ch/work/a/atishelm/public/gridpacks/*/* | grep 2017/ > HH_2017.txt
+ls /afs/cern.ch/work/a/aakpinar/public/produce_gridpack/CMSSW_10_2_22/src/genproductions/bin/Powheg/gridpacks/ggHZ/* > & VH_ggHZ_14July2020.txt
 
-1) Then copy gridpacks and check the version of madgraph:
-cp /afs/cern.ch/work/a/atishelm/public/gridpacks/gg_BulkGraviton_2017/BulkGraviton_hh_GF_HH_narrow_M1000_slc6_amd64_gcc630_CMSSW_9_3_8_tarball.tar.xz /tmp/$USER/.
+1) Then copy gridpacks and check the version of POWHEG:
+cp /afs/cern.ch/work/a/aakpinar/public/produce_gridpack/CMSSW_10_2_22/src/genproductions/bin/Powheg/gridpacks/ggHZ/ggHZ_slc7_amd64_gcc700_CMSSW_10_2_22_ggHZ_M400.tgz /tmp/$USER/.
 cd /tmp/$USER/
 tar xf *.tgz 
-cat mgbasedir/VERSION
+cat ?
 
-2) Once you get the MG version (e.g. 2.6.0), to check the destination.
-python copyMadgraphGridpackToEOS.py --MGversion V5_2.6.0 --file HH_2016.txt
+2) Once you get the POWHEH version you need to check the destination
+python 
 
 3) Ensure that year is correct (default 2017)
-python copyMadgraphGridpackToEOS.py --MGversion V5_2.6.0 --file HH_2016.txt --era 2016
+
 
 4) If everything is okay proceed with copying the files to cvfms
 python copyMadgraphGridpackToEOS.py --file 2016.txt --MGversion V5_2.6.5 --era 2016 --copy True
 
 
+USAGE:
+python copyPowhegGridpackToEOS_24May2019.py --file file.txt --era UL [test]
+python copyPowhegGridpackToEOS_24May2019.py --file file.txt --era UL --copy
+
+
 LAST USED:
-ls /afs/cern.ch/user/l/lcadamur/public/PerElisa_2016_gridpacks/* > 2016.txt
-python copyMadgraphGridpackToEOS.py --file  2016.txt [to check MG version: copy & upack tarball & do '$cat mgbasedir/VERSION']
-python copyMadgraphGridpackToEOS.py --file 2016.txt --MGversion V5_2.6.5 [change the era path to 2016]
-python copyMadgraphGridpackToEOS.py --file 2016.txt --MGversion V5_2.6.5 --era 2016 --copy [make sure you get "ERROR: not existing so creating"]
-python copyMadgraphGridpackToEOS.py --file 2016.txt --MGversion V5_2.6.5 --era 2016 --copy True
-
-ls /afs/cern.ch/user/l/lcadamur/public/PerElisa_EDbEDbEDbBDCA/* >& 2017.txt
+python copyPowhegGridpackToEOS_24May2019.py --file VH_ggHZ_14July2020.txt --era 2016
+python copyPowhegGridpackToEOS_24May2019.py --file VH_ggHZ_14July2020_alt.txt --era 2017
+python copyPowhegGridpackToEOS_24May2019.py --file VH_ggHZ_14July2020_alt.txt --era 2018
 
 
-NOTE:
-all files under /eos/cms/store/group/phys_generator/cvmfs/
-are automatically copied by an algorithm to a replica path under
-/cvmfs/cms.cern.ch/phys_generator/
-which is accessible from anywhere.
-For example:
-/eos/cms/store/group/phys_generator/cvmfs/gridpacks/pre2017/13TeV/madgraph/V5_2.6.5/VBF_HH_CV_1_C2V_2_C3_1_13TeV-madgraph/v1/VBF_HH_CV_1_C2V_2_C3_1_13TeV-madgraph_slc6_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz
-/cvmfs/cms.cern.ch/phys_generator/gridpacks/pre2017/13TeV/madgraph/V5_2.6.5/VBF_HH_CV_1_C2V_2_C3_1_13TeV-madgraph/v1/VBF_HH_CV_1_C2V_2_C3_1_13TeV-madgraph_slc6_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz
-Normally the file duplication takes ~1 hour or so.
+NOTES:
 
 '''
+
 import os,sys
 from argparse import ArgumentParser
 
@@ -50,27 +43,20 @@ parser = ArgumentParser()
 # Add more options if you like
 parser.add_argument("-f", "--file", dest="filename",
                     help="input FILE", metavar="FILE")
-
-parser.add_argument("-copy", "--copyToEos", dest="doCopy", default=False,
+parser.add_argument("-copy", "--copy", dest="doCopy", default=False,
                     help="make it to true if you want to really copy to eos")
-
-parser.add_argument("-is4FS", "--is4FS", dest="is4FS", default=False,
-                    help="make it to true if you want to make a subdir with 4FS")
 parser.add_argument("-version", "--version", dest="version", default="v1",
-                    help="make it to true if you want to make a subdir with 4FS")
+                    help="change if needed")
 parser.add_argument("-era", "--era", dest="era", default="2017",
                     help="where to keep the gridpack e.g 2017")
-parser.add_argument("-MGversion", "--MGversion", dest="mgversion", default="V5_2.6.0",
-                    help="which version of MadGraph5 e.g V5_2.6.5/V5_2.4.2")
-
 args = parser.parse_args()
 
+#print(args.filename)
+#print(args.doCopy)
 print("Filename: ",args.filename)
 print("copyToEos: ",args.doCopy)
-print("is4FS: ",args.is4FS)
 print("version: ", args.version)
 print("era: ",args.era)
-print("MGversion: ",args.mgversion)
 
 # ##############################################
 # ############ CHECK EOS PERMISSIONS ###########
@@ -93,7 +79,7 @@ print("MGversion: ",args.mgversion)
 #print "Usage: python test_copy_16Aug.py inputfile"
 #	exit(0)
 
-print "No. of args: ",len(sys.argv)
+#print "No. of args: ", len(sys.argv)
 ARGV0 = sys.argv
 inputFname = args.filename
 
@@ -105,7 +91,7 @@ if not( os.path.isfile(inputFname) ):
    exit(0)
 
 fullgridpackpaths = open(inputFname).read().splitlines()
-print "Total number of gridpack: ", len(fullgridpackpaths)
+print "Total number of gridpacks: ", len(fullgridpackpaths)
 
 #fullgridpackpaths = [
 #'/afs/cern.ch/work/w/wshi/public/MSSMD_Mneu1_60_MAD_8p5_cT_1_slc6_amd64_gcc481_CMSSW_7_1_30_tarball.tar.xz',
@@ -124,29 +110,22 @@ for fullgridpackpath in fullgridpackpaths:
 	#print('stat -c "%a %n"' +fullgridpackpath) # FIXME in future for check the permission
 	gridpackname = fullgridpackpath.split("/")[-1]
 	#print("gridpackname", gridpackname)
-	gridpackdir = gridpackname.split("_slc6")[0]
+	gridpackdir = gridpackname.split(".tgz")[0]
 	#print("gridpackdir", gridpackdir)
 	version = args.version # change if needed by hand
         if (args.era == "2016"): 
-           # basedir = '/eos/cms/store/group/phys_generator/cvmfs/gridpacks/slc6_amd64_gcc481/13TeV/madgraph'
-           basedir = '/eos/cms/store/group/phys_generator/cvmfs/gridpacks/pre2017/13TeV/madgraph'
+           basedir = '/eos/cms/store/group/phys_generator/cvmfs/gridpacks/slc6_amd64_gcc630/13TeV/Powheg'
         elif (args.era == "2017"):
-           basedir = '/eos/cms/store/group/phys_generator/cvmfs/gridpacks/2017/13TeV/madgraph'
+           basedir = '/eos/cms/store/group/phys_generator/cvmfs/gridpacks/2017/13TeV/powheg'
+        elif (args.era == "UL"):
+           basedir = '/eos/cms/store/group/phys_generator/cvmfs/gridpacks/UL/13TeV/powheg'
         else:
-           basedir = '/eos/cms/store/group/phys_generator/cvmfs/gridpacks/2018/13TeV/madgraph'
-
-        #MGversion = 'V5_2.4.2'
-        MGversion = args.mgversion #'V5_2.6.5'
-
-	if (args.is4FS):
-           eos_dirpath = basedir+'/'+MGversion+'/4FS/'+gridpackdir+'/'+version+'/'
-        else:
-           eos_dirpath = basedir+'/'+MGversion+'/'+gridpackdir+'/'+version+'/'
-
-        if (args.is4FS):
-           eos_path_to_copy = basedir+'/'+MGversion+'/4FS/'+gridpackdir+'/'+version+'/'+gridpackname
-        else:
-           eos_path_to_copy = basedir+'/'+MGversion+'/'+gridpackdir+'/'+version+'/'+gridpackname
+           basedir = '/eos/cms/store/group/phys_generator/cvmfs/gridpacks/2018/13TeV/powheg'
+           
+	# basedir = '/eos/cms/store/group/phys_generator/cvmfs/gridpacks/2017/13TeV/madgraph'
+	MGversion = 'V2'
+	eos_dirpath = basedir+'/'+MGversion+'/'+gridpackdir+'/'+version+'/'
+	eos_path_to_copy = basedir+'/'+MGversion+'/'+gridpackdir+'/'+version+'/'+gridpackname
 	#print("eos_path_to_copy", eos_path_to_copy)
 	gridpack_cvmfs_path = eos_path_to_copy.replace('/eos/cms/store/group/phys_generator/cvmfs/gridpacks/','/cvmfs/cms.cern.ch/phys_generator/gridpacks/')
         os.system('echo "------------------------------------"')
@@ -179,4 +158,13 @@ for fullgridpackpath in fullgridpackpaths:
 ######## END LOOP OVER PREPIDS ###########
 ##########################################
 os.system('echo "------------------------------------"')
+
 #        gridpack_eos_path = gridpack_cvmfs_path.replace('/cvmfs/cms.cern.ch/phys_generator/gridpacks/','/eos/cms/store/group/phys_generator/cvmfs/gridpacks/')
+
+   
+       
+ 
+        
+              
+
+              

@@ -1,0 +1,9 @@
+/afs/cern.ch/work/a/aakpinar/public/produce_gridpack/CMSSW_10_2_22/src/genproductions/bin/Powheg/gridpacks/ggHZ/2016/ggHZ_slc7_amd64_gcc700_CMSSW_10_2_22_ggHZ_M500.tgz
+/afs/cern.ch/work/a/aakpinar/public/produce_gridpack/CMSSW_10_2_22/src/genproductions/bin/Powheg/gridpacks/ggHZ/2016/ggHZ_slc7_amd64_gcc700_CMSSW_10_2_22_ggHZ_M200.tgz
+/afs/cern.ch/work/a/aakpinar/public/produce_gridpack/CMSSW_10_2_22/src/genproductions/bin/Powheg/gridpacks/ggHZ/2016/ggHZ_slc7_amd64_gcc700_CMSSW_10_2_22_ggHZ_M300.tgz
+/afs/cern.ch/work/a/aakpinar/public/produce_gridpack/CMSSW_10_2_22/src/genproductions/bin/Powheg/gridpacks/ggHZ/2016/ggHZ_slc7_amd64_gcc700_CMSSW_10_2_22_ggHZ_M150.tgz
+/afs/cern.ch/work/a/aakpinar/public/produce_gridpack/CMSSW_10_2_22/src/genproductions/bin/Powheg/gridpacks/ggHZ/2016/ggHZ_slc7_amd64_gcc700_CMSSW_10_2_22_ggHZ_M600.tgz
+/afs/cern.ch/work/a/aakpinar/public/produce_gridpack/CMSSW_10_2_22/src/genproductions/bin/Powheg/gridpacks/ggHZ/2016/ggHZ_slc7_amd64_gcc700_CMSSW_10_2_22_ggHZ_M800.tgz
+/afs/cern.ch/work/a/aakpinar/public/produce_gridpack/CMSSW_10_2_22/src/genproductions/bin/Powheg/gridpacks/ggHZ/2016/ggHZ_slc7_amd64_gcc700_CMSSW_10_2_22_ggHZ_M400.tgz
+/afs/cern.ch/work/a/aakpinar/public/produce_gridpack/CMSSW_10_2_22/src/genproductions/bin/Powheg/gridpacks/ggHZ/2016/ggHZ_slc7_amd64_gcc700_CMSSW_10_2_22_ggHZ_M1000.tgz
+/afs/cern.ch/work/a/aakpinar/public/produce_gridpack/CMSSW_10_2_22/src/genproductions/bin/Powheg/gridpacks/ggHZ/2016/ggHZ_slc7_amd64_gcc700_CMSSW_10_2_22_ggHZ_M110.tgz
