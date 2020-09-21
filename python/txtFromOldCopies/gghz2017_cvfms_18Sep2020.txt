@@ -1,0 +1,24 @@
+------------------------------------
+------------------------------------
+------------------------------------
+------------------------------------
+------------------------------------
+------------------------------------
+------------------------------------
+------------------------------------
+------------------------------------
+------------------------------------
+('Filename: ', 'gghz2017_18Sep2020.txt')
+('copyToEos: ', 'True')
+('version: ', 'v1')
+('era: ', '2017')
+Total number of gridpacks:  9
+gridpack_cvmfs_path:   /cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/powheg/V2/ggHZ_slc6_amd64_gcc700_CMSSW_10_2_22_ggHZ_M110/v1/ggHZ_slc6_amd64_gcc700_CMSSW_10_2_22_ggHZ_M110.tgz
+gridpack_cvmfs_path:   /cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/powheg/V2/ggHZ_slc6_amd64_gcc700_CMSSW_10_2_22_ggHZ_M150/v1/ggHZ_slc6_amd64_gcc700_CMSSW_10_2_22_ggHZ_M150.tgz
+gridpack_cvmfs_path:   /cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/powheg/V2/ggHZ_slc6_amd64_gcc700_CMSSW_10_2_22_ggHZ_M200/v1/ggHZ_slc6_amd64_gcc700_CMSSW_10_2_22_ggHZ_M200.tgz
+gridpack_cvmfs_path:   /cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/powheg/V2/ggHZ_slc6_amd64_gcc700_CMSSW_10_2_22_ggHZ_M300/v1/ggHZ_slc6_amd64_gcc700_CMSSW_10_2_22_ggHZ_M300.tgz
+gridpack_cvmfs_path:   /cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/powheg/V2/ggHZ_slc6_amd64_gcc700_CMSSW_10_2_22_ggHZ_M400/v1/ggHZ_slc6_amd64_gcc700_CMSSW_10_2_22_ggHZ_M400.tgz
+gridpack_cvmfs_path:   /cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/powheg/V2/ggHZ_slc6_amd64_gcc700_CMSSW_10_2_22_ggHZ_M500/v1/ggHZ_slc6_amd64_gcc700_CMSSW_10_2_22_ggHZ_M500.tgz
+gridpack_cvmfs_path:   /cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/powheg/V2/ggHZ_slc6_amd64_gcc700_CMSSW_10_2_22_ggHZ_M600/v1/ggHZ_slc6_amd64_gcc700_CMSSW_10_2_22_ggHZ_M600.tgz
+gridpack_cvmfs_path:   /cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/powheg/V2/ggHZ_slc6_amd64_gcc700_CMSSW_10_2_22_ggHZ_M800/v1/ggHZ_slc6_amd64_gcc700_CMSSW_10_2_22_ggHZ_M800.tgz
+gridpack_cvmfs_path:   /cvmfs/cms.cern.ch/phys_generator/gridpacks/2017/13TeV/powheg/V2/ggHZ_slc6_amd64_gcc700_CMSSW_10_2_22_ggHZ_M1000/v1/ggHZ_slc6_amd64_gcc700_CMSSW_10_2_22_ggHZ_M1000.tgz

@@ -1,0 +1,14 @@
+/afs/cern.ch/user/c/capalmer/public/VHHSignalGridpacks/2018/ZHH_CV_1_5_C2V_1_0_C3_1_0_13TeV-madgraph_slc6_amd64_gcc630_CMSSW_9_3_8_tarball.tar.xz
+/afs/cern.ch/user/c/capalmer/public/VHHSignalGridpacks/2018/WHH_CV_1_5_C2V_1_0_C3_1_0_13TeV-madgraph_slc6_amd64_gcc630_CMSSW_9_3_8_tarball.tar.xz
+/afs/cern.ch/user/c/capalmer/public/VHHSignalGridpacks/2018/ZHH_CV_1_0_C2V_2_0_C3_1_0_13TeV-madgraph_slc6_amd64_gcc630_CMSSW_9_3_8_tarball.tar.xz
+/afs/cern.ch/user/c/capalmer/public/VHHSignalGridpacks/2018/WHH_CV_1_0_C2V_2_0_C3_1_0_13TeV-madgraph_slc6_amd64_gcc630_CMSSW_9_3_8_tarball.tar.xz
+/afs/cern.ch/user/c/capalmer/public/VHHSignalGridpacks/2018/ZHH_CV_1_0_C2V_1_0_C3_2_0_13TeV-madgraph_slc6_amd64_gcc630_CMSSW_9_3_8_tarball.tar.xz
+/afs/cern.ch/user/c/capalmer/public/VHHSignalGridpacks/2018/WHH_CV_1_0_C2V_1_0_C3_2_0_13TeV-madgraph_slc6_amd64_gcc630_CMSSW_9_3_8_tarball.tar.xz
+/afs/cern.ch/user/c/capalmer/public/VHHSignalGridpacks/2018/ZHH_CV_1_0_C2V_1_0_C3_1_0_13TeV-madgraph_slc6_amd64_gcc630_CMSSW_9_3_8_tarball.tar.xz
+/afs/cern.ch/user/c/capalmer/public/VHHSignalGridpacks/2018/WHH_CV_1_0_C2V_1_0_C3_1_0_13TeV-madgraph_slc6_amd64_gcc630_CMSSW_9_3_8_tarball.tar.xz
+/afs/cern.ch/user/c/capalmer/public/VHHSignalGridpacks/2018/ZHH_CV_1_0_C2V_1_0_C3_0_0_13TeV-madgraph_slc6_amd64_gcc630_CMSSW_9_3_8_tarball.tar.xz
+/afs/cern.ch/user/c/capalmer/public/VHHSignalGridpacks/2018/WHH_CV_1_0_C2V_1_0_C3_0_0_13TeV-madgraph_slc6_amd64_gcc630_CMSSW_9_3_8_tarball.tar.xz
+/afs/cern.ch/user/c/capalmer/public/VHHSignalGridpacks/2018/ZHH_CV_1_0_C2V_0_0_C3_1_0_13TeV-madgraph_slc6_amd64_gcc630_CMSSW_9_3_8_tarball.tar.xz
+/afs/cern.ch/user/c/capalmer/public/VHHSignalGridpacks/2018/WHH_CV_1_0_C2V_0_0_C3_1_0_13TeV-madgraph_slc6_amd64_gcc630_CMSSW_9_3_8_tarball.tar.xz
+/afs/cern.ch/user/c/capalmer/public/VHHSignalGridpacks/2018/ZHH_CV_0_5_C2V_1_0_C3_1_0_13TeV-madgraph_slc6_amd64_gcc630_CMSSW_9_3_8_tarball.tar.xz
+/afs/cern.ch/user/c/capalmer/public/VHHSignalGridpacks/2018/WHH_CV_0_5_C2V_1_0_C3_1_0_13TeV-madgraph_slc6_amd64_gcc630_CMSSW_9_3_8_tarball.tar.xz
