@@ -40,37 +40,52 @@ For example:
 /cvmfs/cms.cern.ch/phys_generator/gridpacks/pre2017/13TeV/madgraph/V5_2.6.5/VBF_HH_CV_1_C2V_2_C3_1_13TeV-madgraph/v1/VBF_HH_CV_1_C2V_2_C3_1_13TeV-madgraph_slc6_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz
 Normally the file duplication takes ~1 hour or so.
 
+
+LINKS:
+https://martin-thoma.com/how-to-parse-command-line-arguments-in-python/
 '''
+#================================================================================================
+# Import modules
+#================================================================================================
 import os,sys
 from argparse import ArgumentParser
 
 parser = ArgumentParser()
 
-# https://martin-thoma.com/how-to-parse-command-line-arguments-in-python/
+# Default argument settings
+FILE      = None
+VERSION   = "v1" # e.g /cvmfs/cms.cern.ch/phys_generator/gridpacks/pre2017/13TeV/madgraph/V5_2.6.5/AToZhToLLTT_01j_4f_M275/v1/AToZhToLLTT_01j_4f_M275_slc6_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz
+IS4FS     = False
+ERA       = "2017"
+MGVERSION = "V5_2.6.0" #"V5_2.6.0"
+
 # Add more options if you like
-parser.add_argument("-f", "--file", dest="filename",
-                    help="input FILE", metavar="FILE")
+parser.add_argument("-f", "--file", dest="filename", metavar="FILE"
+                    help="The name of the input txt file containing the location of the gridpacks to be copied [default: %s]" % (FILE) )
 
 parser.add_argument("-copy", "--copyToEos", dest="doCopy", default=False,
-                    help="make it to true if you want to really copy to eos")
+                    help="make it to true if you want to really copy to EOS")
 
-parser.add_argument("-is4FS", "--is4FS", dest="is4FS", default=False,
-                    help="make it to true if you want to make a subdir with 4FS")
+parser.add_argument("-is4FS", "--is4FS", dest="is4FS", default=IS4FS,
+                    help="Set to \"True\" if you want to make a subdir with 4FS [default: %s]" % (IS4FS) )
+
 parser.add_argument("-version", "--version", dest="version", default="v1",
-                    help="make it to true if you want to make a subdir with 4FS")
-parser.add_argument("-era", "--era", dest="era", default="2017",
-                    help="where to keep the gridpack e.g 2017")
-parser.add_argument("-MGversion", "--MGversion", dest="mgversion", default="V5_2.6.0",
-                    help="which version of MadGraph5 e.g V5_2.6.5/V5_2.4.2")
+                    help="The gridpack version (to be used as subdirectory in the cvmfs path) [default: %s]" % (VERSION) )
+
+parser.add_argument("-era", "--era", dest="era", default=ERA,
+                    help="The era/year of collision data that the gridpack corresponds to (to be used as subdirectory in the cvmfs path) [default: %s]" % (ERA) )
+
+parser.add_argument("-MGversion", "--MGversion", dest="mgversion", default=MGVERSION,
+                    help="The version of MadGraph5 (to be used as subdirectory in the cvmfs path) [default: %s]" % (MGVERSION) )
 
 args = parser.parse_args()
 
-print("Filename: ",args.filename)
-print("copyToEos: ",args.doCopy)
-print("is4FS: ",args.is4FS)
-print("version: ", args.version)
-print("era: ",args.era)
-print("MGversion: ",args.mgversion)
+print("Filename: " , args.filename)
+print("copyToEos: ", args.doCopy)
+print("is4FS: "    , args.is4FS)
+print("version: "  , args.version)
+print("era: "      , args.era)
+print("MGversion: ", args.mgversion)
 
 # ##############################################
 # ############ CHECK EOS PERMISSIONS ###########
