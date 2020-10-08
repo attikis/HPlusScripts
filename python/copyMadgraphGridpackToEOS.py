@@ -60,7 +60,7 @@ ERA       = "2017"
 MGVERSION = "V5_2.6.0" #"V5_2.6.0"
 
 # Add more options if you like
-parser.add_argument("-f", "--file", dest="filename", metavar="FILE"
+parser.add_argument("-f", "--file", dest="filename", metavar="FILE",
                     help="The name of the input txt file containing the location of the gridpacks to be copied [default: %s]" % (FILE) )
 
 parser.add_argument("-copy", "--copyToEos", dest="doCopy", default=False,
