@@ -1,5 +1,6 @@
 #!/bin/tcsh
 # Designed to be executed under CMSSW/src/ directory only!
+# Creates a tarball of all CMSSW and HiggsAnalysis contents required for running HT condor jobs
 set timeStamp=`date +"%d%b%y"`
 set CMSSWv=`pwd | grep -o -m 1 "CMSSW_.*/" | tr -d "/"`
 
