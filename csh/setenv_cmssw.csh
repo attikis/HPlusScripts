@@ -57,11 +57,11 @@ if ($SETUPCRAB == true) then
 
 
     echo "\n=== Request a proxy to VO CMS. This looks for the user's Grid certificate in the  $HOME/.globus/ directory."
-    set requestProxy='voms-proxy-init --voms cms'.
+    set requestProxy='voms-proxy-init --voms cms -valid 192:00'
 
     
-    echo "\n=== Request a longer validity using the --valid option. To request a proxy valid for seven days (168 hours)"
-    set requestProxy7Days='voms-proxy-init --voms cms --valid 168:00'
+    echo "\n=== Request a longer validity using the --valid option. To request a proxy valid for eight days (192 hours)"
+    set requestProxy7Days='voms-proxy-init --voms cms --valid 192:00'
     $requestProxy7Days
     # The proxy is saved in the /tmp/ directory of the current machine in a file named x509up_u<user-id>.
     # The user-id can be obtained by executing the command 'id -u'. Proxies are not specific to a login session;

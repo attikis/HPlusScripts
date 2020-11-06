@@ -33,7 +33,8 @@ cd $DESTINATION/$CMSSW/src/$ENDPATH
 
 
 echo "\n=== Setting Standalone environment"
-source setup.csh
+#source setup.csh # renamed due to clash with LCG script
+source setenv.csh
 
 
 echo "\n=== Done"
