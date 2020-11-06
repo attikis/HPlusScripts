@@ -227,7 +227,7 @@ def main(opts):
     os.chdir(opts.dirName)
 
     # Settings
-    analyses  = ["Hplus2tbAnalysis", "FakeBMeasurement"]
+    analyses  = ["Hplus2hwAnalysisWithTop", "FakeBMeasurement"]
     nSyst     = len(opts.systVarsList)
     groupDict = {}
     jdlList   = []
@@ -270,7 +270,7 @@ def main(opts):
                 f.write("Error  = error_%s.txt\n"  % (fileName) )
                 f.write("Log    = log_%s.txt\n"    % (fileName) )
                 f.write("x509userproxy = /tmp/x509up_u52142\n")
-                f.write("Arguments = %s NewTopAndBugFixAndSF_TopMassLE%s_BDT%s_Group%s_Syst%s %s %s\n" % (analysis, opts.topMass, opts.BDT, group, syst, group, syst) )
+                f.write("Arguments = %s %s_%s_Group%s_Syst%s %s %s\n" % (analysis, opts.finalState, opts.region, group, syst, group, syst) )
                 f.write("Queue 1\n")
                 f.close()
                 jdlList.append(jdl)
@@ -305,10 +305,12 @@ if __name__ == "__main__":
     # Default settings
     VERBOSE   = False
     SYSTVARS  = None
-    CODEPATH  = "/uscms_data/d3/aattikis/workspace/cmssw/CMSSW_8_0_30/src"
+    CODEPATH  = "/uscms_data/d3/aattikis/workspace/cmssw/CMSSW_10_6_17/src"
     MCRABPATH = "/uscms_data/d3/aattikis/workspace/multicrab"
-    MCRAB     = "multicrab_Hplus2tbAnalysis_v8030_20180508T0644"
+    MCRAB     = "multicrab-Hplus2hwAnalysis-CMSSW10_6_17-Run2016BCDEFGH-dataVersion2016_102X-29Sep2020"
     DIRNAME   = None
+    FINALSTATE= None
+    REGION    = None
 
     # Define the available script options
     parser = OptionParser(usage="Usage: %prog [options]", add_help_option=True, conflict_handler="resolve")
@@ -331,24 +333,26 @@ if __name__ == "__main__":
     parser.add_option("-d", "--dirName", dest="dirName", action="store",
                       help="Name of directory to be created where all the output will be stored [default: %s]" % (DIRNAME) )
 
-    parser.add_option("--topMass", dest="topMass", action="store", default=None,
-                      help="Top mass cut used in analuysis [default: %s]" % (None) )
+    parser.add_option("--finalState", dest="finalState", action="store", default = FINALSTATE,
+                      help="The final state you wish to run on (different analyzer)  (default: %s)" % (FINALSTATE) )
 
-    parser.add_option("--bdt", dest="BDT", action="store", default=None,
-                      help="BDT cut used in analuysis [default: %s]" % (None) )
+    parser.add_option("--region", dest="region", action="store", default = REGION,
+                      help="The region you wish to run on (different cuts)  (default: %s)" % (REGION) )
 
     (opts, parseArgs) = parser.parse_args()
 
-    if opts.topMass == None:
-        Print("Please provide a top mass cut value (--topMass 500)", True)
+    opts.fsList = ["ETau", "MuTau"]
+    if opts.finalState == None:
+        raise Exception("Please provide a valid --finalState option: \"%s\"" % ("\", \"".join(opts.fsList)) )
 
-    if opts.BDT == None:
-        Print("Please provide a BDT cut value (--bdt 0p40)", True)
+    opts.regionList = ["SR", "VR1", "VR2"]
+    if opts.region == None:
+        raise Exception("Please provide a valid --region option: \"%s\"" % ("\", \"".join(opts.regionList)) )
 
     # Define output dir name
-    date = datetime.date.today().strftime('%d%b%Y')    #date = datetime.date.today().strftime('%d-%b-%Y')
+    timeStamp = datetime.datetime.now().strftime("%d%b%Y_%Hh%Mm%Ss")
     if opts.dirName == None:
-        opts.dirName = "TopMassLE%s_BDT%s_AbsEta0p8_1p4_2p0_Pt_60_90_160_300_Stat_%s" % (opts.topMass, opts.BDT, date)
+        opts.dirName = "Hplus2hwAnalysisWithTop_%s_%s_%s" % (opts.finalState, opts.region, timeStamp)
     else:
         opts.dirName += "_%s" % (date)
 
@@ -358,7 +362,6 @@ if __name__ == "__main__":
         opts.doSystematics = True
         opts.systVarsList = opts.systVars.split(",")
     else:
-        #opts.systVarsList = ["JES", "JER", "BTagSF", "TopPt", "PUWeight",  "TopTagSF"]
         opts.systVarsList = ["JES", "JER", "BTagSF", "PUWeight",  "TopTagSF"]
 
     # Call the main function
