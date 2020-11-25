@@ -1,3 +1,0 @@
-Error in <TCling::RegisterModule>: cannot find dictionary module FrameworkDict_rdict.pcm
-echodrwxr-xr-x: Command not found.
-[2MB/5.908MB][ 33%][================>                                 ][0B/s]  [5.908MB/5.908MB][100%][==================================================][0B/s]  [5.908MB/5.908MB][100%][==================================================][0B/s]  

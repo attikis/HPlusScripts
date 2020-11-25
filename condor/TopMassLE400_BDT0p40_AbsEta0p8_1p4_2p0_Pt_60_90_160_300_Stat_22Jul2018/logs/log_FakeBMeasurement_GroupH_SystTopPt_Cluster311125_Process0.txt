@@ -1,3 +1,0 @@
-009 (311125.000.000) 07/22 09:55:30 Job was aborted by the user.
-	via condor_rm (by user aattikis)
-...
