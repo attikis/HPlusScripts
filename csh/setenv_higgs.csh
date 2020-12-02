@@ -33,7 +33,8 @@ cd $DESTINATION/$CMSSW/src/$ENDPATH
 
 
 echo "\n=== Setting Standalone environment"
-source setup.csh
+#source setup.csh # old
+source setenv.csh # new
 
 
 echo "\n=== Done"
