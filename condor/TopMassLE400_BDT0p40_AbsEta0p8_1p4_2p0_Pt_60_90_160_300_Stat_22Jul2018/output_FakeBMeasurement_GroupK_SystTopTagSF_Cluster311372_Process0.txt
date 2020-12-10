@@ -1,204 +1,0 @@
-
-=== Running on:
-cmswn1946.fnal.gov 
-/storage/local/data1/condor/execute/dir_1428256
-/storage/local/data1/condor/execute/dir_1428256
-
-=== Untarring the code tarball
-
-=== Untarring the multicrab dir tarball
-
-=== Changing dir to HiggsAnalysis and sourcing setup.csh
-
-=== Sourcing lpc environments (Hand-picked from CMSSW_8_0_24)
-To update:
-1) create a developer area (cmsrel):
-cmsrel CMSWW_X_Y_Z
-2) source the CMSSW environment (cmsenv):
-cd  CMSWW_X_Y_Z/src/
-cmssev
-3) Look the new paths with 'scram tool list' and 'scram tool info'
-[See setup.csh for more details]
-
-=== Loop over directories under NtupleAnalysis/src
-PYTHONPATH is /storage/local/data1/condor/execute/dir_1428256/HiggsAnalysis/.python:/cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib
-
-=== The environment variables set are:
-LOCATION is lpc
-HIGGSANALYSIS_BASE is /storage/local/data1/condor/execute/dir_1428256/HiggsAnalysis
-PATHPREFIX is .python
-ROOTSYS is /cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00
-LD_LIBRARY_PATH is /storage/local/data1/condor/execute/dir_1428256/HiggsAnalysis/NtupleAnalysis/lib:/cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib:/cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/gcc/4.9.3/lib64:/cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/gcc/4.9.3/lib:/cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/xrootd/4.0.4-kpegke2/lib:/cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/xz/5.2.1/lib:/cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/python/2.7.6-kpegke/lib:/cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/libjpg/8b/lib:/cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/libpng/1.6.16/lib:/cvmfs/cms.cern.ch/slc6_amd64_gcc493/cms/cmssw/CMSSW_7_6_5/external/slc6_amd64_gcc493/lib/
-ROOT_INCLUDE_PATH is -I//cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/include:/storage/local/data1/condor/execute/dir_1428256/HiggsAnalysis/NtupleAnalysis/src:/storage/local/data1/condor/execute/dir_1428256/HiggsAnalysis/NtupleAnalysis/external:/storage/local/data1/condor/execute/dir_1428256/HiggsAnalysis/NtupleAnalysis/
-PYTHONPATH is /storage/local/data1/condor/execute/dir_1428256/HiggsAnalysis/.python:/cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/lib
-PATH is /storage/local/data1/condor/execute/dir_1428256/HiggsAnalysis/NtupleAnalysis/scripts:/cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/python/2.7.6-kpegke/bin://cvmfs/cms.cern.ch/slc6_amd64_gcc493/lcg/root/6.06.00/bin:/cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/gcc/4.9.3/bin:/cvmfs/cms.cern.ch/slc6_amd64_gcc493/external/xrootd/4.0.4-kpegke2/bin:/cvmfs/cms.cern.ch/common:/cvmfs/cms.cern.ch/bin:/usr/krb5/bin:/bin:/usr/bin:/usr/libexec/condor:/bin:/usr/bin:/usr/krb5/bin:/usr/lib64/qt-3.3/bin:/opt/puppetlabs/bin:/usr/kerberos/sbin:/usr/kerberos/bin:/cvmfs/cms.cern.ch/common:/cvmfs/cms.cern.ch/bin:/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin:/opt/puppetlabs/bin:/opt/puppetlabs/bin
-/storage/local/data1/condor/execute/dir_1428256/HiggsAnalysis
-
-=== Changing dir to NtupleAnalysis/src/FakeBMeasurement/work/
-
-=== Running the analysis by executing runSystematics.py as follows:
-./runSystematics.py -m /storage/local/data1/condor/execute/dir_1428256/multicrab_Hplus2tbAnalysis_v8030_20180508T0644/ --doSystematics --group K
-
-===  main.py
-	Pileup reweighting will be done according to the sum of:
-	[1;34mJetHT_Run2016B_03Feb2017_ver2_v2_273150_275376
-	JetHT_Run2016C_03Feb2017_v1_275656_276283
-	JetHT_Run2016D_03Feb2017_v1_276315_276811
-	JetHT_Run2016E_03Feb2017_v1_276831_277420
-	JetHT_Run2016F_03Feb2017_v1_277932_278800
-	JetHT_Run2016F_03Feb2017_v1_278801_278808
-	JetHT_Run2016G_03Feb2017_v1_278820_280385
-	JetHT_Run2016H_03Feb2017_ver2_v1_281613_284035
-	JetHT_Run2016H_03Feb2017_ver3_v1_284036_284044[0;0m
-===  scaleFactors.pyc
-	Setting top-tag misid (data and MC) filename to "topMisID_BDT0p40_TopMassCut400.json"
-	Setting top-tag tagging efficiency (data and MC) filename to "toptagEff_BDT0p40_GenuineTT_TopMassCut400.json"
-===  scaleFactors.pyc
-	Opening file "/storage/local/data1/condor/execute/dir_1428256/HiggsAnalysis/NtupleAnalysis/data/toptagEff_BDT0p40_GenuineTT_TopMassCut400.json" for reading the top-tag efficiencies
-	Setting top-tag tagging efficiency uncertainties (MC) filename to "toptagEffUncert_BDT0p40_GenuineTT_TopMassCut400.json"
-===  scaleFactors.pyc
-	Opening file "/storage/local/data1/condor/execute/dir_1428256/HiggsAnalysis/NtupleAnalysis/data/toptagEffUncert_BDT0p40_GenuineTT_TopMassCut400.json" for reading the top-tag efficiency ucertainties
-===  AnalysisBuilder.py
-	Analysis type set to [1;34mHToTB[0;0m
-===  AnalysisBuilder.py
-	Created nominal module [1;34mFakeBMeasurement_80to1000_Run2016[0;0m
-	Created variation module [1;34mFakeBMeasurement_80to1000_Run2016_SystVarTopTagSFPlus[0;0m
-	Created variation module [1;34mFakeBMeasurement_80to1000_Run2016_SystVarTopTagSFMinus[0;0m
-=== runSystematics.py:
-	Running process (no PROOF)
-===  main.py
-	Created output directory [1;34mFakeBMeasurement_180722_110353[0;0m
-===  main.py
-	Will process 6 datasets in total:
-	1) [1;34mWJetsToQQ_HT_600ToInf[0;0m
-	2) [1;34mWWTo4Q[0;0m
-	3) [1;34mWZ[0;0m
-	4) [1;34mWZ_ext1[0;0m
-	5) [1;34mZJetsToQQ_HT600toInf[0;0m
-	6) [1;34mZZTo4Q[0;0m
-===  main.py
-	Processing dataset (1/6)
-	UsePUweights            : 1                                                           
-	UseTopPtCorrection      : 0                                                           
-	Dataset                 : WJetsToQQ_HT_600ToInf                                       
-	 (0 %) at 0 MB/s       	Estimated time          : 01:26  (10.83 %) at 4.57 MB/s       	Estimated time          : 01:25  (11.91 %) at 5.44 MB/s       	Estimated time          : 01:25  (12.99 %) at 0 MB/s       	Estimated time          : 01:21  (14.07 %) at 9.62 MB/s       	Estimated time          : 01:20  (15.16 %) at 0 MB/s       	Estimated time          : 01:19  (16.24 %) at 7.18 MB/s       	Estimated time          : 01:17  (17.32 %) at 0 MB/s       	Estimated time          : 01:17  (18.4 %) at 0 MB/s       	Estimated time          : 01:18  (19.49 %) at 4.14 MB/s       	Estimated time          : 01:15  (20.57 %) at 7.94 MB/s       	Estimated time          : 01:16  (21.65 %) at 0 MB/s       	Estimated time          : 01:14  (22.73 %) at 6.81 MB/s       	Estimated time          : 01:14  (23.82 %) at 0 MB/s       	Estimated time          : 01:12  (24.9 %) at 0 MB/s       	Estimated time          : 01:10  (25.98 %) at 8.21 MB/s       	Estimated time          : 01:11  (27.06 %) at 0.0444 MB/s       	Estimated time          : 01:10  (28.15 %) at 0 MB/s       	Estimated time          : 01:07  (29.23 %) at 11.5 MB/s       	Estimated time          : 01:07  (30.31 %) at 0 MB/s       	Estimated time          : 01:06  (31.39 %) at 5.49 MB/s       	Estimated time          : 01:04  (32.48 %) at 0.076 MB/s       	Estimated time          : 01:03  (33.56 %) at 4.32 MB/s       	Estimated time          : 01:04  (34.64 %) at 0.0301 MB/s       	Estimated time          : 01:04  (35.72 %) at 4.08 MB/s       	Estimated time          : 01:02  (36.81 %) at 0.0814 MB/s       	Estimated time          : 01:01  (37.89 %) at 3.99 MB/s       	Estimated time          : 01:00  (38.97 %) at 0.0865 MB/s       	Estimated time          : 00:59  (40.05 %) at 4.45 MB/s       	Estimated time          : 00:58  (41.14 %) at 0 MB/s       	Estimated time          : 00:57  (42.22 %) at 5.31 MB/s       	Estimated time          : 00:56  (43.3 %) at 0.0595 MB/s       	Estimated time          : 00:55  (44.38 %) at 4.58 MB/s       	Estimated time          : 00:54  (45.47 %) at 0 MB/s       	Estimated time          : 00:53  (46.55 %) at 4.7 MB/s       	Estimated time          : 00:51  (47.63 %) at 0 MB/s       	Estimated time          : 00:50  (48.72 %) at 6.24 MB/s       	Estimated time          : 00:49  (49.8 %) at 0 MB/s       	Estimated time          : 00:48  (50.88 %) at 6.71 MB/s       	Estimated time          : 00:46  (51.96 %) at 0 MB/s       	Estimated time          : 00:45  (53.05 %) at 7.59 MB/s       	Estimated time          : 00:44  (54.13 %) at 0 MB/s       	Estimated time          : 00:43  (55.21 %) at 3.46 MB/s       	Estimated time          : 00:42  (56.29 %) at 0.0428 MB/s       	Estimated time          : 00:41  (57.38 %) at 5.88 MB/s       	Estimated time          : 00:40  (58.46 %) at 0.0326 MB/s       	Estimated time          : 00:39  (59.54 %) at 6.1 MB/s       	Estimated time          : 00:38  (60.62 %) at 5.54 MB/s       	Estimated time          : 00:37  (61.71 %) at 0.0574 MB/s       	Estimated time          : 00:36  (62.79 %) at 4.57 MB/s       	Estimated time          : 00:35  (63.87 %) at 0.0514 MB/s       	Estimated time          : 00:34  (64.95 %) at 4.47 MB/s       	Estimated time          : 00:33  (66.04 %) at 0.0607 MB/s       	Estimated time          : 00:32  (67.12 %) at 10.4 MB/s       	Estimated time          : 00:31  (68.2 %) at 0.0421 MB/s       	Estimated time          : 00:30  (69.28 %) at 6.75 MB/s       	Estimated time          : 00:29  (70.37 %) at 0.0664 MB/s       	Estimated time          : 00:27  (71.45 %) at 6.95 MB/s       	Estimated time          : 00:26  (72.53 %) at 0 MB/s       	Estimated time          : 00:25  (73.61 %) at 4.96 MB/s       	Estimated time          : 00:24  (74.7 %) at 0.0509 MB/s       	Estimated time          : 00:23  (75.78 %) at 5.38 MB/s       	Estimated time          : 00:22  (76.86 %) at 0.0507 MB/s       	Estimated time          : 00:21  (77.94 %) at 7.66 MB/s       	Estimated time          : 00:20  (79.03 %) at 0.0463 MB/s       	Estimated time          : 00:19  (80.11 %) at 8.28 MB/s       	Estimated time          : 00:18  (81.19 %) at 0.0607 MB/s       	Estimated time          : 00:17  (82.27 %) at 9.53 MB/s       	Estimated time          : 00:16  (83.36 %) at 0.0809 MB/s       	Estimated time          : 00:15  (84.44 %) at 5.22 MB/s       	Estimated time          : 00:14  (85.52 %) at 0.0536 MB/s       	Estimated time          : 00:12  (86.6 %) at 7.63 MB/s       	Estimated time          : 00:11  (87.69 %) at 0.0271 MB/s       	Estimated time          : 00:10  (88.77 %) at 5.9 MB/s       	Estimated time          : 00:09  (89.85 %) at 0 MB/s       	Estimated time          : 00:08  (90.93 %) at 7.41 MB/s       	Estimated time          : 00:07  (92.02 %) at 0.0596 MB/s       	Estimated time          : 00:06  (93.1 %) at 7.12 MB/s       	Estimated time          : 00:05  (94.18 %) at 0 MB/s       	Estimated time          : 00:04  (95.26 %) at 5.42 MB/s       	Estimated time          : 00:03  (96.35 %) at 0.061 MB/s       	Estimated time          : 00:02  (97.43 %) at 5.94 MB/s       	Estimated time          : 00:01  (98.51 %) at 0 MB/s       	Estimated time          : 00:00  (99.6 %) at 1.37 MB/s       
-	Total entries processed : 184748
-	Read Calls              : 210                                                         
-	Read Speed              : 2.4 MB/s                                                    
-	Read Size               : 298.0 MB                                                    
-	Read Percent            : 96.5 %                                                      
-	Real time               : [1;34m0:02:04 (h:mm:ss)[0;0m                              
-	CPU time                : 119.3 s                                                     
-===  main.py
-	Processing dataset (2/6)
-	UsePUweights            : 1                                                           
-	UseTopPtCorrection      : 0                                                           
-	Dataset                 : WWTo4Q                                                      
-	 (0 %) at 0 MB/s       
-	Total entries processed : 14033
-	Read Calls              : 44                                                          
-	Read Speed              : 1.4 MB/s                                                    
-	Read Size               : 29.2 MB                                                     
-	Read Percent            : 96.4 %                                                      
-	Real time               : [1;34m0:00:21 (h:mm:ss)[0;0m                              
-	CPU time                : 20.5 s                                                      
-===  main.py
-	Processing dataset (3/6)
-	UsePUweights            : 1                                                           
-	UseTopPtCorrection      : 0                                                           
-	Dataset                 : WZ                                                          
-	 (0 %) at 0 MB/s       
-	Total entries processed : 3678
-	Read Calls              : 15                                                          
-	Read Speed              : 0.6 MB/s                                                    
-	Read Size               : 11.4 MB                                                     
-	Read Percent            : 96.1 %                                                      
-	Real time               : [1;34m0:00:18 (h:mm:ss)[0;0m                              
-	CPU time                : 17.0 s                                                      
-===  main.py
-	Processing dataset (4/6)
-	UsePUweights            : 1                                                           
-	UseTopPtCorrection      : 0                                                           
-	Dataset                 : WZ_ext1                                                     
-	 (0 %) at 0 MB/s       
-	Total entries processed : 10892
-	Read Calls              : 16                                                          
-	Read Speed              : 1.0 MB/s                                                    
-	Read Size               : 21.7 MB                                                     
-	Read Percent            : 97.2 %                                                      
-	Real time               : [1;34m0:00:22 (h:mm:ss)[0;0m                              
-	CPU time                : 21.9 s                                                      
-===  main.py
-	Processing dataset (5/6)
-	UsePUweights            : 1                                                           
-	UseTopPtCorrection      : 0                                                           
-	Dataset                 : ZJetsToQQ_HT600toInf                                        
-	 (0 %) at 0 MB/s       	Estimated time          : 07:08  (6.831 %) at 1.44 MB/s       	Estimated time          : 07:18  (7.514 %) at 1.38 MB/s       	Estimated time          : 07:07  (8.197 %) at 0 MB/s       	Estimated time          : 07:22  (8.881 %) at 1.21 MB/s       	Estimated time          : 07:22  (9.564 %) at 0 MB/s       	Estimated time          : 07:21  (10.25 %) at 1.61 MB/s       	Estimated time          : 07:24  (10.93 %) at 0 MB/s       	Estimated time          : 07:18  (11.61 %) at 1.89 MB/s       	Estimated time          : 07:24  (12.3 %) at 2.21 MB/s       	Estimated time          : 07:19  (12.98 %) at 0 MB/s       	Estimated time          : 07:13  (13.66 %) at 0 MB/s       	Estimated time          : 07:14  (14.35 %) at 1.7 MB/s       	Estimated time          : 07:07  (15.03 %) at 0 MB/s       	Estimated time          : 07:02  (15.71 %) at 2.3 MB/s       	Estimated time          : 06:56  (16.39 %) at 0 MB/s       	Estimated time          : 06:50  (17.08 %) at 2.49 MB/s       	Estimated time          : 06:48  (17.76 %) at 0 MB/s       	Estimated time          : 06:46  (18.44 %) at 1.94 MB/s       	Estimated time          : 06:36  (19.13 %) at 0 MB/s       	Estimated time          : 06:33  (19.81 %) at 2.12 MB/s       	Estimated time          : 06:32  (20.49 %) at 1.84 MB/s       	Estimated time          : 06:29  (21.18 %) at 0 MB/s       	Estimated time          : 06:27  (21.86 %) at 2.21 MB/s       	Estimated time          : 06:24  (22.54 %) at 0 MB/s       	Estimated time          : 06:19  (23.23 %) at 0 MB/s       	Estimated time          : 06:17  (23.91 %) at 1.49 MB/s       	Estimated time          : 06:14  (24.59 %) at 1.79 MB/s       	Estimated time          : 06:07  (25.28 %) at 0 MB/s       	Estimated time          : 06:04  (25.96 %) at 1.77 MB/s       	Estimated time          : 06:02  (26.64 %) at 0 MB/s       	Estimated time          : 05:57  (27.32 %) at 2.11 MB/s       	Estimated time          : 05:54  (28.01 %) at 0 MB/s       	Estimated time          : 05:50  (28.69 %) at 1.93 MB/s       	Estimated time          : 05:48  (29.37 %) at 0 MB/s       	Estimated time          : 05:44  (30.06 %) at 1.78 MB/s       	Estimated time          : 05:43  (30.74 %) at 1.33 MB/s       	Estimated time          : 05:39  (31.42 %) at 0 MB/s       	Estimated time          : 05:34  (32.11 %) at 2.07 MB/s       	Estimated time          : 05:32  (32.79 %) at 0 MB/s       	Estimated time          : 05:29  (33.47 %) at 1.6 MB/s       	Estimated time          : 05:24  (34.16 %) at 0 MB/s       	Estimated time          : 05:22  (34.84 %) at 1.41 MB/s       	Estimated time          : 05:18  (35.52 %) at 0 MB/s       	Estimated time          : 05:15  (36.21 %) at 3.01 MB/s       	Estimated time          : 05:11  (36.89 %) at 0 MB/s       	Estimated time          : 05:07  (37.57 %) at 2.42 MB/s       	Estimated time          : 05:04  (38.25 %) at 0 MB/s       	Estimated time          : 04:59  (38.94 %) at 2.75 MB/s       	Estimated time          : 04:56  (39.62 %) at 0 MB/s       	Estimated time          : 04:53  (40.3 %) at 1.78 MB/s       	Estimated time          : 04:51  (40.99 %) at 0 MB/s       	Estimated time          : 04:48  (41.67 %) at 1.85 MB/s       	Estimated time          : 04:44  (42.35 %) at 2.42 MB/s       	Estimated time          : 04:40  (43.04 %) at 0 MB/s       	Estimated time          : 04:37  (43.72 %) at 1.91 MB/s       	Estimated time          : 04:33  (44.4 %) at 0 MB/s       	Estimated time          : 04:30  (45.09 %) at 2.12 MB/s       	Estimated time          : 04:27  (45.77 %) at 0 MB/s       	Estimated time          : 04:24  (46.45 %) at 1.68 MB/s       	Estimated time          : 04:21  (47.14 %) at 0 MB/s       	Estimated time          : 04:18  (47.82 %) at 1.99 MB/s       	Estimated time          : 04:14  (48.5 %) at 2.46 MB/s       	Estimated time          : 04:10  (49.18 %) at 0 MB/s       	Estimated time          : 04:07  (49.87 %) at 2.24 MB/s       	Estimated time          : 04:03  (50.55 %) at 0 MB/s       	Estimated time          : 04:00  (51.23 %) at 1.8 MB/s       	Estimated time          : 03:56  (51.92 %) at 0 MB/s       	Estimated time          : 03:53  (52.6 %) at 1.98 MB/s       	Estimated time          : 03:49  (53.28 %) at 0 MB/s       	Estimated time          : 03:45  (53.97 %) at 3.13 MB/s       	Estimated time          : 03:42  (54.65 %) at 0 MB/s       	Estimated time          : 03:39  (55.33 %) at 1.5 MB/s       	Estimated time          : 03:36  (56.02 %) at 0 MB/s       	Estimated time          : 03:32  (56.7 %) at 1.62 MB/s       	Estimated time          : 03:29  (57.38 %) at 0 MB/s       	Estimated time          : 03:26  (58.07 %) at 1.56 MB/s       	Estimated time          : 03:23  (58.75 %) at 0 MB/s       	Estimated time          : 03:19  (59.43 %) at 1.97 MB/s       	Estimated time          : 03:16  (60.11 %) at 0 MB/s       	Estimated time          : 03:13  (60.8 %) at 1.82 MB/s       	Estimated time          : 03:09  (61.48 %) at 1.69 MB/s       	Estimated time          : 03:06  (62.16 %) at 0 MB/s       	Estimated time          : 03:03  (62.85 %) at 1.69 MB/s       	Estimated time          : 03:00  (63.53 %) at 0 MB/s       	Estimated time          : 02:56  (64.21 %) at 2.12 MB/s       	Estimated time          : 02:52  (64.9 %) at 0 MB/s       	Estimated time          : 02:49  (65.58 %) at 1.59 MB/s       	Estimated time          : 02:46  (66.26 %) at 1.72 MB/s       	Estimated time          : 02:43  (66.95 %) at 0 MB/s       	Estimated time          : 02:39  (67.63 %) at 2.16 MB/s       	Estimated time          : 02:36  (68.31 %) at 0 MB/s       	Estimated time          : 02:32  (68.99 %) at 1.99 MB/s       	Estimated time          : 02:29  (69.68 %) at 0 MB/s       	Estimated time          : 02:25  (70.36 %) at 1.65 MB/s       	Estimated time          : 02:22  (71.04 %) at 0 MB/s       	Estimated time          : 02:19  (71.73 %) at 1.93 MB/s       	Estimated time          : 02:15  (72.41 %) at 0.899 MB/s       	Estimated time          : 02:12  (73.09 %) at 2.66 MB/s       	Estimated time          : 02:09  (73.78 %) at 0 MB/s       	Estimated time          : 02:05  (74.46 %) at 0 MB/s       	Estimated time          : 02:01  (75.14 %) at 2.74 MB/s       	Estimated time          : 01:58  (75.83 %) at 0 MB/s       	Estimated time          : 01:55  (76.51 %) at 2.2 MB/s       	Estimated time          : 01:52  (77.19 %) at 0 MB/s       	Estimated time          : 01:48  (77.88 %) at 2.38 MB/s       	Estimated time          : 01:45  (78.56 %) at 0 MB/s       	Estimated time          : 01:45  (78.63 %) at 0 MB/s       	Estimated time          : 01:45  (78.7 %) at 0 MB/s       	Estimated time          : 01:44  (78.76 %) at 9.61 MB/s       	Estimated time          : 01:44  (78.83 %) at 0 MB/s       	Estimated time          : 01:44  (78.9 %) at 0 MB/s       	Estimated time          : 01:43  (78.97 %) at 0 MB/s       	Estimated time          : 01:42  (79.24 %) at 0 MB/s       	Estimated time          : 01:39  (79.92 %) at 0 MB/s       	Estimated time          : 01:35  (80.61 %) at 2.43 MB/s       	Estimated time          : 01:32  (81.29 %) at 1.62 MB/s       	Estimated time          : 01:29  (81.97 %) at 0 MB/s       	Estimated time          : 01:25  (82.66 %) at 2.19 MB/s       	Estimated time          : 01:22  (83.34 %) at 0 MB/s       	Estimated time          : 01:19  (84.02 %) at 2.24 MB/s       	Estimated time          : 01:15  (84.71 %) at 0 MB/s       	Estimated time          : 01:12  (85.39 %) at 2.36 MB/s       	Estimated time          : 01:08  (86.07 %) at 0 MB/s       	Estimated time          : 01:05  (86.76 %) at 2.47 MB/s       	Estimated time          : 01:01  (87.44 %) at 2.01 MB/s       	Estimated time          : 00:58  (88.12 %) at 0 MB/s       	Estimated time          : 00:54  (88.81 %) at 2.34 MB/s       	Estimated time          : 00:51  (89.49 %) at 0 MB/s       	Estimated time          : 00:48  (90.17 %) at 2.11 MB/s       	Estimated time          : 00:44  (90.85 %) at 0 MB/s       	Estimated time          : 00:41  (91.54 %) at 2.23 MB/s       	Estimated time          : 00:38  (92.22 %) at 0 MB/s       	Estimated time          : 00:34  (92.9 %) at 4.71 MB/s       	Estimated time          : 00:31  (93.59 %) at 0 MB/s       	Estimated time          : 00:28  (94.27 %) at 0 MB/s       	Estimated time          : 00:24  (94.95 %) at 2.33 MB/s       	Estimated time          : 00:21  (95.64 %) at 0 MB/s       	Estimated time          : 00:18  (96.32 %) at 1.83 MB/s       	Estimated time          : 00:14  (97 %) at 0 MB/s       	Estimated time          : 00:11  (97.69 %) at 2.45 MB/s       	Estimated time          : 00:08  (98.37 %) at 1.99 MB/s       	Estimated time          : 00:04  (99.05 %) at 0 MB/s       	Estimated time          : 00:01  (99.74 %) at 0.524 MB/s       
-	Total entries processed : 292775
-	Read Calls              : 104                                                         
-	Read Speed              : 1.1 MB/s                                                    
-	Read Size               : 544.8 MB                                                    
-	Read Percent            : 97.2 %                                                      
-	Real time               : [1;34m0:08:27 (h:mm:ss)[0;0m                              
-	CPU time                : 492.6 s                                                     
-===  main.py
-	Processing dataset (6/6)
-	UsePUweights            : 1                                                           
-	UseTopPtCorrection      : 0                                                           
-	Dataset                 : ZZTo4Q                                                      
-	 (0 %) at 0 MB/s       	Estimated time          : 10:28  (5.395 %) at 1.3 MB/s       	Estimated time          : 10:26  (5.934 %) at 2.06 MB/s       	Estimated time          : 10:14  (6.473 %) at 0 MB/s       	Estimated time          : 10:12  (7.013 %) at 1.6 MB/s       	Estimated time          : 09:56  (7.552 %) at 0 MB/s       	Estimated time          : 09:51  (8.092 %) at 2.22 MB/s       	Estimated time          : 09:50  (8.631 %) at 0 MB/s       	Estimated time          : 09:47  (9.171 %) at 1.69 MB/s       	Estimated time          : 09:44  (9.71 %) at 0 MB/s       	Estimated time          : 09:43  (10.25 %) at 1.98 MB/s       	Estimated time          : 09:36  (10.79 %) at 0 MB/s       	Estimated time          : 09:40  (11.33 %) at 0 MB/s       	Estimated time          : 09:35  (11.87 %) at 1.74 MB/s       	Estimated time          : 09:32  (12.41 %) at 0 MB/s       	Estimated time          : 09:28  (12.95 %) at 2.25 MB/s       	Estimated time          : 09:31  (13.49 %) at 0 MB/s       	Estimated time          : 09:31  (14.03 %) at 1.87 MB/s       	Estimated time          : 09:26  (14.57 %) at 0 MB/s       	Estimated time          : 09:21  (15.1 %) at 0 MB/s       	Estimated time          : 09:24  (15.64 %) at 1.52 MB/s       	Estimated time          : 09:16  (16.18 %) at 0 MB/s       	Estimated time          : 09:13  (16.72 %) at 1.55 MB/s       	Estimated time          : 09:13  (17.26 %) at 1.74 MB/s       	Estimated time          : 09:11  (17.8 %) at 0 MB/s       	Estimated time          : 09:07  (18.34 %) at 0 MB/s       	Estimated time          : 09:01  (18.88 %) at 1.93 MB/s       	Estimated time          : 08:59  (19.42 %) at 0 MB/s       	Estimated time          : 09:01  (19.96 %) at 1.51 MB/s       	Estimated time          : 08:57  (20.5 %) at 0 MB/s       	Estimated time          : 08:54  (21.04 %) at 1.43 MB/s       	Estimated time          : 08:49  (21.58 %) at 0 MB/s       	Estimated time          : 08:45  (22.12 %) at 1.61 MB/s       	Estimated time          : 08:38  (22.66 %) at 0 MB/s       	Estimated time          : 08:37  (23.2 %) at 1.4 MB/s       	Estimated time          : 08:32  (23.74 %) at 0 MB/s       	Estimated time          : 08:31  (24.28 %) at 1.63 MB/s       	Estimated time          : 08:25  (24.81 %) at 0 MB/s       	Estimated time          : 08:24  (25.35 %) at 1.34 MB/s       	Estimated time          : 08:23  (25.89 %) at 0 MB/s       	Estimated time          : 08:17  (26.43 %) at 2.66 MB/s       	Estimated time          : 08:13  (26.97 %) at 0 MB/s       	Estimated time          : 08:10  (27.51 %) at 1.58 MB/s       	Estimated time          : 08:08  (28.05 %) at 0 MB/s       	Estimated time          : 08:08  (28.59 %) at 1.11 MB/s       	Estimated time          : 08:07  (28.64 %) at 0 MB/s       	Estimated time          : 08:07  (28.7 %) at 0 MB/s       	Estimated time          : 08:06  (28.75 %) at 0 MB/s       	Estimated time          : 08:03  (29.13 %) at 0 MB/s       	Estimated time          : 07:57  (29.67 %) at 2.85 MB/s       	Estimated time          : 07:51  (30.21 %) at 0 MB/s       	Estimated time          : 07:46  (30.75 %) at 0 MB/s       	Estimated time          : 07:40  (31.29 %) at 2.29 MB/s       	Estimated time          : 07:36  (31.83 %) at 0 MB/s       	Estimated time          : 07:31  (32.37 %) at 2.31 MB/s       	Estimated time          : 07:25  (32.91 %) at 0 MB/s       	Estimated time          : 07:22  (33.45 %) at 0.597 MB/s       	Estimated time          : 07:18  (33.99 %) at 2.21 MB/s       	Estimated time          : 07:16  (34.52 %) at 0 MB/s       	Estimated time          : 07:10  (35.06 %) at 3.19 MB/s       	Estimated time          : 07:05  (35.6 %) at 0 MB/s       	Estimated time          : 07:00  (36.14 %) at 2.18 MB/s       	Estimated time          : 06:57  (36.68 %) at 0 MB/s       	Estimated time          : 06:54  (37.22 %) at 1.64 MB/s       	Estimated time          : 06:49  (37.76 %) at 0 MB/s       	Estimated time          : 06:46  (38.3 %) at 1.64 MB/s       	Estimated time          : 06:42  (38.84 %) at 0 MB/s       	Estimated time          : 06:37  (39.38 %) at 2.13 MB/s       	Estimated time          : 06:34  (39.92 %) at 0 MB/s       	Estimated time          : 06:31  (40.46 %) at 1.94 MB/s       	Estimated time          : 06:26  (41 %) at 0 MB/s       	Estimated time          : 06:22  (41.54 %) at 1.78 MB/s       	Estimated time          : 06:18  (42.08 %) at 0 MB/s       	Estimated time          : 06:15  (42.62 %) at 2.3 MB/s       	Estimated time          : 06:10  (43.16 %) at 0 MB/s       	Estimated time          : 06:08  (43.7 %) at 1.38 MB/s       	Estimated time          : 06:04  (44.24 %) at 0 MB/s       	Estimated time          : 06:01  (44.77 %) at 2.07 MB/s       	Estimated time          : 05:57  (45.31 %) at 0 MB/s       	Estimated time          : 05:53  (45.85 %) at 2.33 MB/s       	Estimated time          : 05:48  (46.39 %) at 0 MB/s       	Estimated time          : 05:44  (46.93 %) at 0 MB/s       	Estimated time          : 05:42  (47.47 %) at 1.46 MB/s       	Estimated time          : 05:37  (48.01 %) at 0 MB/s       	Estimated time          : 05:34  (48.55 %) at 2.4 MB/s       	Estimated time          : 05:31  (49.09 %) at 0 MB/s       	Estimated time          : 05:27  (49.63 %) at 2.2 MB/s       	Estimated time          : 05:24  (50.17 %) at 0 MB/s       	Estimated time          : 05:20  (50.71 %) at 2.35 MB/s       	Estimated time          : 05:15  (51.25 %) at 0 MB/s       	Estimated time          : 05:11  (51.79 %) at 2.74 MB/s       	Estimated time          : 05:07  (52.33 %) at 0 MB/s       	Estimated time          : 05:04  (52.87 %) at 0 MB/s       	Estimated time          : 05:01  (53.41 %) at 1.73 MB/s       	Estimated time          : 04:58  (53.95 %) at 0 MB/s       	Estimated time          : 04:54  (54.48 %) at 2.22 MB/s       	Estimated time          : 04:51  (55.02 %) at 0 MB/s       	Estimated time          : 04:47  (55.56 %) at 2 MB/s       	Estimated time          : 04:44  (56.1 %) at 0 MB/s       	Estimated time          : 04:39  (56.64 %) at 3.1 MB/s       	Estimated time          : 04:37  (57.18 %) at 0 MB/s       	Estimated time          : 04:33  (57.72 %) at 0 MB/s       	Estimated time          : 04:29  (58.26 %) at 1.75 MB/s       	Estimated time          : 04:26  (58.8 %) at 0 MB/s       	Estimated time          : 04:22  (59.34 %) at 2.82 MB/s       	Estimated time          : 04:19  (59.88 %) at 0 MB/s       	Estimated time          : 04:15  (60.42 %) at 2.48 MB/s       	Estimated time          : 04:11  (60.96 %) at 0 MB/s       	Estimated time          : 04:08  (61.5 %) at 2.32 MB/s       	Estimated time          : 04:04  (62.04 %) at 0 MB/s       	Estimated time          : 04:01  (62.58 %) at 0 MB/s       	Estimated time          : 03:58  (63.12 %) at 1.56 MB/s       	Estimated time          : 03:54  (63.66 %) at 0 MB/s       	Estimated time          : 03:50  (64.19 %) at 2.43 MB/s       	Estimated time          : 03:47  (64.73 %) at 0 MB/s       	Estimated time          : 03:45  (65.27 %) at 0.952 MB/s       	Estimated time          : 03:44  (65.33 %) at 0 MB/s       	Estimated time          : 03:44  (65.38 %) at 0 MB/s       	Estimated time          : 03:43  (65.44 %) at 0 MB/s       	Estimated time          : 03:41  (65.81 %) at 0 MB/s       	Estimated time          : 03:37  (66.35 %) at 2.57 MB/s       	Estimated time          : 03:33  (66.89 %) at 0 MB/s       	Estimated time          : 03:30  (67.43 %) at 2.12 MB/s       	Estimated time          : 03:27  (67.97 %) at 0 MB/s       	Estimated time          : 03:23  (68.51 %) at 0 MB/s       	Estimated time          : 03:19  (69.05 %) at 2.01 MB/s       	Estimated time          : 03:15  (69.59 %) at 0 MB/s       	Estimated time          : 03:12  (70.13 %) at 2.21 MB/s       	Estimated time          : 03:09  (70.67 %) at 0 MB/s       	Estimated time          : 03:06  (71.21 %) at 1.6 MB/s       	Estimated time          : 03:02  (71.75 %) at 0 MB/s       	Estimated time          : 02:59  (72.29 %) at 2.23 MB/s       	Estimated time          : 02:55  (72.83 %) at 0 MB/s       	Estimated time          : 02:52  (73.37 %) at 1.59 MB/s       	Estimated time          : 02:49  (73.9 %) at 0 MB/s       	Estimated time          : 02:45  (74.44 %) at 0 MB/s       	Estimated time          : 02:42  (74.98 %) at 2.45 MB/s       	Estimated time          : 02:38  (75.52 %) at 0 MB/s       	Estimated time          : 02:34  (76.06 %) at 1.57 MB/s       	Estimated time          : 02:31  (76.6 %) at 0 MB/s       	Estimated time          : 02:28  (77.14 %) at 1.23 MB/s       	Estimated time          : 02:24  (77.68 %) at 0 MB/s       	Estimated time          : 02:21  (78.22 %) at 2.35 MB/s       	Estimated time          : 02:17  (78.76 %) at 0 MB/s       	Estimated time          : 02:13  (79.3 %) at 2.68 MB/s       	Estimated time          : 02:10  (79.84 %) at 0 MB/s       	Estimated time          : 02:06  (80.38 %) at 2.31 MB/s       	Estimated time          : 02:03  (80.92 %) at 0 MB/s       	Estimated time          : 01:59  (81.46 %) at 0 MB/s       	Estimated time          : 01:56  (82 %) at 1.21 MB/s       	Estimated time          : 01:53  (82.54 %) at 0 MB/s       	Estimated time          : 01:49  (83.08 %) at 2.7 MB/s       	Estimated time          : 01:46  (83.61 %) at 0 MB/s       	Estimated time          : 01:42  (84.15 %) at 2.71 MB/s       	Estimated time          : 01:38  (84.69 %) at 0 MB/s       	Estimated time          : 01:35  (85.23 %) at 0 MB/s       	Estimated time          : 01:31  (85.77 %) at 2.39 MB/s       	Estimated time          : 01:28  (86.31 %) at 0 MB/s       	Estimated time          : 01:24  (86.85 %) at 1.53 MB/s       	Estimated time          : 01:21  (87.39 %) at 0 MB/s       	Estimated time          : 01:18  (87.93 %) at 2.37 MB/s       	Estimated time          : 01:14  (88.47 %) at 0 MB/s       	Estimated time          : 01:11  (89.01 %) at 2.18 MB/s       	Estimated time          : 01:07  (89.55 %) at 0 MB/s       	Estimated time          : 01:04  (90.09 %) at 0 MB/s       	Estimated time          : 01:00  (90.63 %) at 2.4 MB/s       	Estimated time          : 00:57  (91.17 %) at 0 MB/s       	Estimated time          : 00:53  (91.71 %) at 1.68 MB/s       	Estimated time          : 00:50  (92.25 %) at 0 MB/s       	Estimated time          : 00:46  (92.79 %) at 2.15 MB/s       	Estimated time          : 00:43  (93.33 %) at 0 MB/s       	Estimated time          : 00:39  (93.86 %) at 2.26 MB/s       	Estimated time          : 00:36  (94.4 %) at 0 MB/s       	Estimated time          : 00:32  (94.94 %) at 0 MB/s       	Estimated time          : 00:29  (95.48 %) at 1.96 MB/s       	Estimated time          : 00:25  (96.02 %) at 0 MB/s       	Estimated time          : 00:22  (96.56 %) at 2.35 MB/s       	Estimated time          : 00:18  (97.1 %) at 0 MB/s       	Estimated time          : 00:15  (97.64 %) at 1.91 MB/s       	Estimated time          : 00:11  (98.18 %) at 0 MB/s       	Estimated time          : 00:08  (98.72 %) at 1.6 MB/s       	Estimated time          : 00:04  (99.26 %) at 0 MB/s       	Estimated time          : 00:01  (99.8 %) at 0.59 MB/s       
-	Total entries processed : 370747
-	Read Calls              : 111                                                         
-	Read Speed              : 0.9 MB/s                                                    
-	Read Size               : 608.0 MB                                                    
-	Read Percent            : 98.2 %                                                      
-	Real time               : [1;34m0:11:03 (h:mm:ss)[0;0m                              
-	CPU time                : 650.6 s                                                     
-===  main.py
-	Processed all 6 datasets
-	Real time       : [1;34m0:22:35 (h:mm:ss)[0;0m
-	CPU time        : 1322.0 s (97.6 % of real time)
-	Read size       : 1513.1 MB                     
-	Read speed      : 0.4 MB/s                      
-===  main.py
-	Results are in [92mFakeBMeasurement_180722_110353[0;0m
-=== runSystematics.py:
-	Total elapsed time is 0 days, 0 hours, 23 mins, 6 secs
-
-=== Listing all directories
-
-=== Listing the latest directory
-FakeBMeasurement_180722_110353/
-
-=== Determining output dir using ls and grep commands
-
-=== Output dir determined to be FakeBMeasurement_180722_110353/
-
-=== Tarball name will be FakeBMeasurement_NewTopAndBugFixAndSF_TopMassLE400_BDT0p40_GroupK_SystTopTagSF_11h-03m-23s-22Jul2018_11h-26m-32s-22Jul2018.tgz
-
-=== Compressing the output dir FakeBMeasurement_180722_110353/ into tarball file FakeBMeasurement_NewTopAndBugFixAndSF_TopMassLE400_BDT0p40_GroupK_SystTopTagSF_11h-03m-23s-22Jul2018_11h-26m-32s-22Jul2018.tgz
-FakeBMeasurement_180722_110353/
-FakeBMeasurement_180722_110353/lumi.json
-FakeBMeasurement_180722_110353/multicrab.cfg
-FakeBMeasurement_180722_110353/ZJetsToQQ_HT600toInf/
-FakeBMeasurement_180722_110353/ZJetsToQQ_HT600toInf/res/
-FakeBMeasurement_180722_110353/ZJetsToQQ_HT600toInf/res/histograms-ZJetsToQQ_HT600toInf.root
-FakeBMeasurement_180722_110353/WJetsToQQ_HT_600ToInf/
-FakeBMeasurement_180722_110353/WJetsToQQ_HT_600ToInf/res/
-FakeBMeasurement_180722_110353/WJetsToQQ_HT_600ToInf/res/histograms-WJetsToQQ_HT_600ToInf.root
-FakeBMeasurement_180722_110353/ZZTo4Q/
-FakeBMeasurement_180722_110353/ZZTo4Q/res/
-FakeBMeasurement_180722_110353/ZZTo4Q/res/histograms-ZZTo4Q.root
-FakeBMeasurement_180722_110353/WZ_ext1/
-FakeBMeasurement_180722_110353/WZ_ext1/res/
-FakeBMeasurement_180722_110353/WZ_ext1/res/histograms-WZ_ext1.root
-FakeBMeasurement_180722_110353/WZ/
-FakeBMeasurement_180722_110353/WZ/res/
-FakeBMeasurement_180722_110353/WZ/res/histograms-WZ.root
-FakeBMeasurement_180722_110353/WWTo4Q/
-FakeBMeasurement_180722_110353/WWTo4Q/res/
-FakeBMeasurement_180722_110353/WWTo4Q/res/histograms-WWTo4Q.root
-
-=== Copying output tarball FakeBMeasurement_NewTopAndBugFixAndSF_TopMassLE400_BDT0p40_GroupK_SystTopTagSF_11h-03m-23s-22Jul2018_11h-26m-32s-22Jul2018.tgz to store/user/aattikis/CONDOR_TransferData
-
-=== Delete everything from /storage/local/data1/condor/execute/dir_1428256 before exiting

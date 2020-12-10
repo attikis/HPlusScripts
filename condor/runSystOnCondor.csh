@@ -19,23 +19,33 @@ set ANALYSISDIR = ${1}
 set LABEL       = ${2}
 set GROUP       = ${3}
 set SYSTEMATICS = ${4}
+set MCRABTARBALL= "<multicrab_Hplus2hwAnalysis.tgz>"
+set CODETARBALL = "<HiggsAnalysis.tgz>"
+set CMSSW_EOS   = /store/user/$USER/CONDOR_TransferData/CMMSSW
+set MCRAB_EOS   = /store/user/$USER/CONDOR_TransferData/multicrab
+set HOSTNAME    = `hostname -A`
 
-set TARBALL = multicrab_Hplus2tbAnalysis_v8030_20180508T0644
-
-echo "\n=== Running on:" 
-hostname -A
+echo "\n=== User $USER is running on $HOSTNAME" 
 pwd
 echo ${_CONDOR_SCRATCH_DIR}
 source /cvmfs/cms.cern.ch/cmsset_default.csh
 
-echo "\n=== Untarring the code tarball"
-tar -xf HiggsAnalysis.tgz
-rm -rf HiggsAnalysis.tgz
 
-echo "\n=== Untarring the multicrab dir tarball"
-tar -xf $TARBALL.tgz
+echo "\n=== Copying the CMSSW tarball from $CMSSW_EOS"
+xrdcp root://cmseos.fnal.gov//${CMSSW_EOS}/${CODETARBALL} .
+xrdcp root://cmseos.fnal.gov//${MCRAB_EOS}/${MCRABTARBALL} .
 
-# Source the environment settings script
+
+echo "\n=== Untarring the code tarball (will remove after unpacking)"
+tar -xf ${CODETARBALL} .
+rm -f ${CODETARBALL} .
+
+
+echo "\n=== Untarring the multicrab dir tarball (will remove after unpacking)"
+tar -xf $MCRABTARBALL.tgz
+rm -f $MCRABTARBALL.tgz
+
+
 echo "\n=== Changing dir to HiggsAnalysis and sourcing setup.csh"
 cd HiggsAnalysis
 source setup.csh

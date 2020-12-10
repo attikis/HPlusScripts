@@ -106,7 +106,7 @@ def AskUser(msg, printHeader=False):
         AskUser(msg)
 
 
-def GetNumberOfJobsWithKeyword(dirName, fileName="output_FakeBMeasurement_Group*.txt", keyword="Results are in"):
+def GetNumberOfJobsWithKeyword(dirName, fileName="output_*_Group*.txt", keyword="Results are in"):
     cmd = "cat %s/%s | grep -c '%s' " % (dirName, fileName, keyword)
     process = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=True)
     output, err = process.communicate()
@@ -117,7 +117,7 @@ def GetNumberOfJobsWithKeyword(dirName, fileName="output_FakeBMeasurement_Group*
     return nJobs
 
 
-def GetJobsWithKeyword(dirName, analysis= "FakeBMeasurement", keyword="Results are in"):
+def GetJobsWithKeyword(dirName, analysis= "Hplus2hwAnalysis", keyword="Results are in"):
 
     # Return items
     jdlList = []
@@ -127,13 +127,7 @@ def GetJobsWithKeyword(dirName, analysis= "FakeBMeasurement", keyword="Results a
     eosList = []
 
     # Get EOS files (if job fails corresponding file must be removed!)
-    files, filesH2tb, filesFakeB = GetOutputFiles(opts.eosdir)
-    if analysis == "FakeBMeasurement":
-        filesInEOS = filesFakeB
-    elif analysis == "Hplus2tbAnalysis":
-        filesInEOS = filesH2tb
-    else:
-        raise Exception("Invalid analysis type \"%s\" selected!" % (analysis))
+    files, filesInEOS = GetOutputFiles(opts.eosdir, keyword="Hplus2hwAnalysis")
 
     # Define files to search
     fileName = "error_%s_Group*.txt" % (analysis)
@@ -296,7 +290,8 @@ def GetSummary(nRunTotal, nDoneTotal, infoDict, printSummary=True):
     return jobsDict, table
 
 
-def GetOutputFiles(eosdir):
+
+def GetOutputFiles(eosdir, keyword="Hplus2tbAnalysis"):
     cmd = "eos root://cmseos.fnal.gov ls %s" % (eosdir)
     process = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=True)
     output, err = process.communicate()
@@ -309,23 +304,19 @@ def GetOutputFiles(eosdir):
         if o.endswith(".tgz") == False:
             output.remove(o)
     
-    # Separate into "Hplus2tbAnalysis" and "FakeBMeasurement"
-    outputH2tb  = []
-    outputFakeB = []
+    # Keyword-specific output
+    outputKeyword  = []
     for i, o in enumerate(output, 1):
 
-        if "Hplus2tbAnalysis" in o:
+        if keyword in o:
             Verbose(hs + o + ns, i ==1)
-            outputH2tb.append(o)
-
-        if "FakeBMeasurement" in o:
-            Verbose(ts + o + ns, i==1)
-            outputFakeB.append(o)
+            outputKeyword.append(o)
 
     # If no results found
     if len(output) < 1:
-        return [], [], []
-    return output, outputH2tb, outputFakeB
+        return [], []
+    else:
+        return output, outputKeyword
     
 
 def GetJobStatusDict(username, keyword="Total for query: "):
@@ -384,9 +375,9 @@ def GetJobStatusDict(username, keyword="Total for query: "):
 def GetSystToOutputDict(filesList):
     '''
     The input file list (fList) contains all the
-    output files of a given analysis (e.g. Hplus2tbAnalysis or
-    FakeBMeasurement). But they are for all systematics considered
-
+    output files of a given analysis (e.g. Hplus2tbAnalysis or Hplus2hwAnalysis).
+    But they are for all systematics considered.
+    
     This functions returns them in a dictionary so that:
     dict["Systematic"] = list-of-files-for-Systematic
     '''
@@ -522,46 +513,25 @@ def main(opts):
 
 
     # Determine total number of jobs (using jdl files)
-    nRunH2tb  = GetNumberOfJobs(opts.dirName, "run_Hplus2tbAnalysis*.jdl")
-    nRunFakeB = GetNumberOfJobs(opts.dirName, "run_FakeBMeasurement*.jdl")
-    nRunTotal = GetNumberOfJobs(opts.dirName, "run*.jdl")
-    Verbose("Found %s%d%s run files (Hplus2tbAnalysis=%d, FakeBMeasurement=%d)" % (ts, nRunTotal, ns, nRunH2tb, nRunFakeB), True) 
-
+    nRun = GetNumberOfJobs(opts.dirName, "run*.jdl")
+    Verbose("Found %s run files" % (ts + str(nRun) + ns), True) 
 
     # Determine total number of jobs (using output files)
-    nOutputH2tb  = GetNumberOfJobs(opts.dirName, "output_Hplus2tbAnalysis*.txt")
-    nOutputFakeB = GetNumberOfJobs(opts.dirName, "output_FakeBMeasurement*.txt")
-    nOutputTotal = nOutputH2tb + nOutputFakeB
-    Verbose("Found %s%d%s output files (Hplus2tbAnalysis=%d, FakeBMeasurement=%d)" % (ts, nOutputTotal, ns, nOutputH2tb, nOutputFakeB), False)
-
+    nOutput = GetNumberOfJobs(opts.dirName, "output_*.txt")
+    Verbose("Found %s output files" % (ts + str(nOutput) + ns), False)
 
     # Determine total number of jobs (using error files)
-    nErrorH2tb  = GetNumberOfJobs(opts.dirName, "error_Hplus2tbAnalysis*.txt")
-    nErrorFakeB = GetNumberOfJobs(opts.dirName, "error_FakeBMeasurement*.txt")
-    nErrorTotal = nErrorH2tb + nErrorFakeB
-    Verbose("Found %s%d%s error files (Hplus2tbAnalysis=%d, FakeBMeasurement=%d)" % (ts, nErrorTotal, ns, nErrorH2tb, nErrorFakeB), False)
+    nError = GetNumberOfJobs(opts.dirName, "error_*.txt")
+    Verbose("Found %s error files" % (ts + str(nError) + ns), False)
     
-
     # Determine total number of done jobs (using error files)
-    nDoneH2tb  = 0
-    nDoneFakeB = 0
-    if nOutputH2tb > 0:
-        nDoneH2tb  = GetNumberOfJobsWithKeyword(opts.dirName, "output_Hplus2tbAnalysis*.txt", "Results are in")
-    if nOutputFakeB> 0:
-        nDoneFakeB = GetNumberOfJobsWithKeyword(opts.dirName, "output_FakeBMeasurement*.txt", "Results are in")
-    nDoneTotal = nDoneH2tb + nDoneFakeB
-    Verbose("Found %s%d%s jobs done (Hplus2tbAnalysis=%d, FakeBMeasurement=%d)" % (ts, nDoneTotal, ns, nDoneH2tb, nDoneFakeB), False)
+    nDone = GetNumberOfJobsWithKeyword(opts.dirName, "output_*.txt", "Results are in")
+    Verbose("Found %s jobs done" % (ts + str(nDone) + ns), False)
 
 
     # Determine total number of failed jobs (using error files)
-    nFailH2tb  = 0
-    nFailFakeB = 0
-    if nErrorH2tb > 0:
-        nFailH2tb  = GetNumberOfJobsWithKeyword(opts.dirName, "error_Hplus2tbAnalysis*.txt", "Results are in")
-    if nErrorFakeB > 0:
-        nFailFakeB = GetNumberOfJobsWithKeyword(opts.dirName, "error_FakeBMeasurement*.txt", "Results are in")
-    nFailTotal = nFailH2tb + nFailFakeB
-    Verbose("Found %s%d%s jobs failed (Hplus2tbAnalysis=%d, FakeBMeasurement=%d)" % (ts, nFailTotal, ns, nFailH2tb, nFailFakeB), False)
+    nFail = GetNumberOfJobsWithKeyword(opts.dirName, "error_*.txt", "Results are in")
+    Verbose("Found %s jobs failed" % (ts + str(nFail) + ns), False)
 
 
     Verbose("Create a job status summary table", True)
@@ -585,15 +555,12 @@ def main(opts):
 
 
     Verbose("Get the failed jobs", True)
-    jdlList, errList, outList, logList, eosList = GetJobsWithKeyword(opts.dirName, analysis="Hplus2tbAnalysis", keyword="There was a crash.") 
+    jdlList, errList, outList, logList, eosList = GetJobsWithKeyword(opts.dirName, analysis="Hplus2hwAnalysis", keyword="There was a crash.") 
     ResubmitFailedJobs(jdlList, errList, outList, logList, eosList)
-
-    jdlList_, errList_, outList_, logList_, eosList_ = GetJobsWithKeyword(opts.dirName, analysis="FakeBMeasurement", keyword="There was a crash.") 
-    ResubmitFailedJobs(jdlList_, errList_, outList_, logList_, eosList_)
 
 
     if opts.getoutput:
-        if nErrorH2tb > 0 or nErrorFakeB > 0:
+        if nError > 0:
             Print(es + "Not all jobs are in \"done\" mode. Aborting retrieval of output!" + ns, True)
             return
 
@@ -602,16 +569,13 @@ def main(opts):
         else:
             Verbose("Found %s jobs in %s state!" % (jobsDict["done"], ss + "DONE" + ns), True)
             
-        files, filesH2tb, filesFakeB = GetOutputFiles(opts.eosdir)
-        Print("Found %d files in %s (Hplus2tbAnalysis=%d, FakeBMeasurement=%d)" % (len(files), opts.eosdir, len(filesH2tb), len(filesFakeB)), True)
-        
+        files, filesKeyword = GetOutputFiles(opts.eosdir, keyword="Hplus2hwAnalysis")
+        Print("Found %d files in %s" % (len(files), opts.eosdir), True)
+
 
         Verbose("Get mapping of systematic->fileList", True)
-        filesSystH2tb  = GetSystToOutputDict(filesH2tb)
-        filesSystFakeB = GetSystToOutputDict(filesFakeB)
-
-        RetrieveUnpackCleanupFiles(filesSystH2tb, "Hplus2tbAnalysis")
-        RetrieveUnpackCleanupFiles(filesSystFakeB, "FakeBMeasurement")
+        filesSyst  = GetSystToOutputDict(filesKeyword)
+        RetrieveUnpackCleanupFiles(filesSystH2tb, "Hplus2hwAnalysis")
 
     Print("Done", True)
     return
