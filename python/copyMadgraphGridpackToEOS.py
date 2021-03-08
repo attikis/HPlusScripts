@@ -42,156 +42,184 @@ Normally the file duplication takes ~1 hour or so.
 
 
 LINKS:
+https://github.com/gourangakole/MCContact/blob/master/copyMadgraphGridpackToEOS_29May2019.py
 https://martin-thoma.com/how-to-parse-command-line-arguments-in-python/
 '''
+
 #================================================================================================
 # Import modules
 #================================================================================================
 import os,sys
 from argparse import ArgumentParser
+import ShellStyles as ShellStyles 
 
-parser = ArgumentParser()
 
-# Default argument settings
-FILE      = None
-VERSION   = "v1" # e.g /cvmfs/cms.cern.ch/phys_generator/gridpacks/pre2017/13TeV/madgraph/V5_2.6.5/AToZhToLLTT_01j_4f_M275/v1/AToZhToLLTT_01j_4f_M275_slc6_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz
-IS4FS     = False
-ERA       = "2017"
-MGVERSION = "V5_2.6.0" #"V5_2.6.0"
+#================================================================================================
+# Function Definition
+#================================================================================================
+ss = ShellStyles.SuccessStyle()
+ns = ShellStyles.NormalStyle()
+ts = ShellStyles.NoteStyle()
+hs = ShellStyles.HighlightAltStyle()
+ls = ShellStyles.HighlightStyle()
+es = ShellStyles.ErrorStyle()
+cs = ShellStyles.CaptionStyle()
 
-# Add more options if you like
-parser.add_argument("-f", "--file", dest="filename", metavar="FILE",
-                    help="The name of the input txt file containing the location of the gridpacks to be copied [default: %s]" % (FILE) )
 
-parser.add_argument("-copy", "--copyToEos", dest="doCopy", default=False,
-                    help="make it to true if you want to really copy to EOS")
+#================================================================================================
+# Function Definition
+#================================================================================================
+def Verbose(msg, printHeader=False):
+    '''
+    Calls Print() only if verbose options is set to true.
+    '''
+    if not args.verbose:
+        return
+    Print(msg, printHeader)
+    return
 
-parser.add_argument("-is4FS", "--is4FS", dest="is4FS", default=IS4FS,
-                    help="Set to \"True\" if you want to make a subdir with 4FS [default: %s]" % (IS4FS) )
+def Print(msg, printHeader=True):
+    '''
+    Simple print function. If verbose option is enabled prints, otherwise does nothing.
+    '''
+    fName = __file__.split("/")[-1]
+    if printHeader:
+        print "=== ", fName
+    print "\t", msg
+    return
 
-parser.add_argument("-version", "--version", dest="version", default="v1",
-                    help="The gridpack version (to be used as subdirectory in the cvmfs path) [default: %s]" % (VERSION) )
-
-parser.add_argument("-era", "--era", dest="era", default=ERA,
-                    help="The era/year of collision data that the gridpack corresponds to (to be used as subdirectory in the cvmfs path) [default: %s]" % (ERA) )
-
-parser.add_argument("-MGversion", "--MGversion", dest="mgversion", default=MGVERSION,
-                    help="The version of MadGraph5 (to be used as subdirectory in the cvmfs path) [default: %s]" % (MGVERSION) )
-
-args = parser.parse_args()
-
-print("Filename: " , args.filename)
-print("copyToEos: ", args.doCopy)
-print("is4FS: "    , args.is4FS)
-print("version: "  , args.version)
-print("era: "      , args.era)
-print("MGversion: ", args.mgversion)
-
-# ##############################################
+'''
 # ############ CHECK EOS PERMISSIONS ###########
-# ##############################################
 # print('assign 755 to all EOS gridpack directories'); sys.stdout.flush()
 # os.system('find /eos/cms/store/group/phys_generator/cvmfs/gridpacks/ -type d -exec chmod 755 {} +')
 # print('assign 644 to all EOS gridpack files'); sys.stdout.flush()
 # os.system('find /eos/cms/store/group/phys_generator/cvmfs/gridpacks/ -type f -exec chmod 644 {} +');
 # sys.exit(1)
-# ##############################################
-# ########## END CHECK EOS PERMISSIONS #########
-# ##############################################
+'''
 
-#my_path = '/tmp/'+os.environ['USER']+'/replace_gridpacks/'
+def getBasedirByEra(era):
+    baseDir = "/eos/cms/store/group/phys_generator/cvmfs/gridpacks/"
+    eosDict = {}
+    eosDict["2016"] = os.path.join(baseDir, "pre2017/13TeV/madgraph")
+    eosDict["2017"] = os.path.join(baseDir, "2017/13TeV/madgraph")
+    eosDict["2018"] = os.path.join(baseDir, "2018/13TeV/madgraph")
+    eosDict["UL"]   = os.path.join(baseDir, "UL/13TeV/madgraph")
 
-#----------------------------------------------------------------------
-# main
-#----------------------------------------------------------------------
-#if len(sys.argv)<2:
-#print "Usage: python test_copy_16Aug.py inputfile"
-#	exit(0)
+    if era in eosDict.keys():
+        return eosDict[era]
+    else:
+        msg = "Invalid era '%s'" % (era)
+        raise Exception(es + msg + ns)        
 
-print "No. of args: ",len(sys.argv)
-ARGV0 = sys.argv
-inputFname = args.filename
+def main():
 
+    # Retrieve the (local) path of the gridpacks from the input file
+    pathList   = open(args.filename).read().splitlines()
+    nGridpacks = len(pathList)
+    Print("Will attempt to copy %d gridpacks to CVMFS" % (nGridpacks), True)
 
-# this is working
-#fullgridpackpaths = open("/afs/cern.ch/user/g/gkole/work/public/abcd_v2.txt").read().splitlines()
-if not( os.path.isfile(inputFname) ):
-   print "WARNING!!! " + str(inputFname) + " not found!"
-   exit(0)
+    # For-loop: All gridpacks
+    for index, path in enumerate(pathList, 0):
+        Print("%d/%d %s" % (index+1, nGridpacks, ts + path + ns), True)
 
-fullgridpackpaths = open(inputFname).read().splitlines()
-print "Total number of gridpack: ", len(fullgridpackpaths)
-
-#fullgridpackpaths = [
-#'/afs/cern.ch/work/w/wshi/public/MSSMD_Mneu1_60_MAD_8p5_cT_1_slc6_amd64_gcc481_CMSSW_7_1_30_tarball.tar.xz',
-#'/afs/cern.ch/work/w/wshi/public/MSSMD_Mneu1_60_MAD_8p5_cT_2_slc6_amd64_gcc481_CMSSW_7_1_30_tarball.tar.xz',
-#'/afs/cern.ch/work/w/wshi/public/MSSMD_Mneu1_60_MAD_8p5_cT_3_slc6_amd64_gcc481_CMSSW_7_1_30_tarball.tar.xz',
-#'/eos/cms/store/user/gkole/Hgg/MC_contact/2017_gridpack/ggh/ggh012j_5f_NLO_FXFX_125_slc6_amd64_gcc481_CMSSW_7_1_30_tarball.tar.xz',
-#           ]
-
-
-##########################################
-######## START LOOP OVER EACH GRIDPACK #########
-##########################################
-for fullgridpackpath in fullgridpackpaths:
-
-        #os.system('echo '+fullgridpackpath) # this is just for prining initial full path
-	#print('stat -c "%a %n"' +fullgridpackpath) # FIXME in future for check the permission
-	gridpackname = fullgridpackpath.split("/")[-1]
-	#print("gridpackname", gridpackname)
-	gridpackdir = gridpackname.split("_slc6")[0]
-	#print("gridpackdir", gridpackdir)
-	version = args.version # change if needed by hand
-        if (args.era == "2016"): 
-           # basedir = '/eos/cms/store/group/phys_generator/cvmfs/gridpacks/slc6_amd64_gcc481/13TeV/madgraph'
-           basedir = '/eos/cms/store/group/phys_generator/cvmfs/gridpacks/pre2017/13TeV/madgraph'
-        elif (args.era == "2017"):
-           basedir = '/eos/cms/store/group/phys_generator/cvmfs/gridpacks/2017/13TeV/madgraph'
-        else:
-           basedir = '/eos/cms/store/group/phys_generator/cvmfs/gridpacks/2018/13TeV/madgraph'
-
-        #MGversion = 'V5_2.4.2'
-        MGversion = args.mgversion #'V5_2.6.5'
-
+        #os.system('echo '+path) # this is just for prining initial full path
+	#print('stat -c "%a %n"' +path) # FIXME in future for check the permission
+	gridpackname = path.split("/")[-1]
+	gridpackdir  = gridpackname.split("_slc7")[0]
+	version      = args.version
+        basedir      = getBasedirByEra(args.era)
+        MGversion    = args.mgversion
+        eos_dirpath  = os.path.join(basedir,MGversion,gridpackdir,version)
+        eos_path_to_copy = os.path.join(basedir,MGversion,gridpackdir,version,gridpackname)
 	if (args.is4FS):
-           eos_dirpath = basedir+'/'+MGversion+'/4FS/'+gridpackdir+'/'+version+'/'
-        else:
-           eos_dirpath = basedir+'/'+MGversion+'/'+gridpackdir+'/'+version+'/'
+           eos_dirpath      = os.path.join(basedir,MGversion,gridpackdir,version)
+           eos_path_to_copy = os.path.join(basedir,MGversion,gridpackdir,version,gridpackname)
 
-        if (args.is4FS):
-           eos_path_to_copy = basedir+'/'+MGversion+'/4FS/'+gridpackdir+'/'+version+'/'+gridpackname
-        else:
-           eos_path_to_copy = basedir+'/'+MGversion+'/'+gridpackdir+'/'+version+'/'+gridpackname
-	#print("eos_path_to_copy", eos_path_to_copy)
+        Verbose("eos_path_to_copy = %s" % (eos_path_to_copy), True)
 	gridpack_cvmfs_path = eos_path_to_copy.replace('/eos/cms/store/group/phys_generator/cvmfs/gridpacks/','/cvmfs/cms.cern.ch/phys_generator/gridpacks/')
-        os.system('echo "------------------------------------"')
-	print "gridpack_cvmfs_path:  ", gridpack_cvmfs_path
-	if not os.path.exists(eos_dirpath):
-		print "ERROR: not existing so creating"
-		print('eos mkdir -p ' + eos_dirpath);sys.stdout.flush() 
-		if(args.doCopy):
-			print "copy"
-			os.system('eos mkdir -p ' + eos_dirpath);sys.stdout.flush()
 
-	if not os.path.isfile(eos_path_to_copy):
-		print('eos cp ' +fullgridpackpath+ ' '+eos_path_to_copy); sys.stdout.flush()
-		if(args.doCopy):
-			print "copy"
-			os.system('eos cp ' +fullgridpackpath+ ' '+eos_path_to_copy); sys.stdout.flush()
-		
-        #os.system('mkdir -p '+my_path+'/'+prepid)
-        #os.chdir(my_path+'/'+prepid)
-        #os.system('wget -q https://cms-pdmv.cern.ch/mcm/public/restapi/requests/get_fragment/'+prepid+' -O '+prepid)
-        #gridpack_cvmfs_path = os.popen('grep \/cvmfs '+prepid).read()
-        #gridpack_cvmfs_path = gridpack_cvmfs_path.split('\'')[1]
-	#print (gridpack_cvmfs_path)
-	#os.system('tar xf '+gridpack_cvmfs_path+' -C'+my_path+'/'+prepid)
-	#os.system('more '+my_path+'/'+prepid+'/'+'runcmsgrid.sh | grep "FORCE IT TO"')
-	#os.system('grep _CONDOR_SCRATCH_DIR '+my_path+'/'+prepid+'/'+'mgbasedir/Template/LO/SubProcesses/refine.sh')
-	#os.system('echo "------------------------------------"')
-#        os.system('rm '+prepid)
-##########################################
-######## END LOOP OVER PREPIDS ###########
-##########################################
-os.system('echo "------------------------------------"')
-#        gridpack_eos_path = gridpack_cvmfs_path.replace('/cvmfs/cms.cern.ch/phys_generator/gridpacks/','/eos/cms/store/group/phys_generator/cvmfs/gridpacks/')
+	Verbose("gridpack_cvmfs_path = %s" % (gridpack_cvmfs_path), True)
+
+        # Check that the destination directory exists
+	if not os.path.exists(eos_dirpath):
+            cmd = 'eos mkdir -p ' + eos_dirpath
+            Verbose("CVMFS directory %s does not exist" % (eos_dirpath), False)
+            if(args.copy):
+                Print(ss + cmd + ns, False)
+                os.system(cmd)
+                
+        # Check that the gridpack exists
+        if not os.path.isfile(eos_path_to_copy):
+            cmd = 'eos cp %s %s' % (path, eos_path_to_copy)
+            Verbose("CVMFS file %s does not exist" % (eos_path_to_copy), False)
+            if(args.copy):
+                Print(ss + cmd + ns, False)
+                os.system(cmd)
+        else:
+            print(eos_path_to_copy)
+    return
+
+if __name__ == "__main__":
+
+    # Default argument settings
+    COPY      = False
+    ERA       = "2017"
+    FILE      = None
+    IS4FS     = False
+    MGVERSION = "V5_2.6.5"
+    VERBOSE   = False
+    VERSION   = "v1" # e.g /cvmfs/cms.cern.ch/phys_generator/gridpacks/pre2017/13TeV/madgraph/V5_2.6.5/AToZhToLLTT_01j_4f_M275/v1/AToZhToLLTT_01j_4f_M275_slc6_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz
+    
+    parser = ArgumentParser()
+    
+    # Add more options if you like
+    parser.add_argument("-v", "--verbose", dest="verbose", default=VERBOSE, action="store_true",
+                        help="Verbose mode for debugging purposes [default: %s]" % (VERBOSE) )
+    
+    parser.add_argument("-f", "--file", dest="filename", metavar="FILE",
+                        help="The name of the input txt file containing the location of the gridpacks to be copied [default: %s]" % (FILE) )
+    
+    parser.add_argument("--copy", dest="copy", default=COPY, action="store_true",
+                        help="Flag that enables the copying step of the script, so that the files are transferred to EOS [default: %s]" % (COPY) )
+    
+    parser.add_argument("--is4FS", dest="is4FS", default=IS4FS,
+                        help="Set to \"True\" if you want to make a subdir with 4FS [default: %s]" % (IS4FS) )
+    
+    parser.add_argument("--version", dest="version", default="v1",
+                        help="The gridpack version (to be used as subdirectory in the cvmfs path) [default: %s]" % (VERSION) )
+    
+    parser.add_argument("--era", dest="era", default=ERA,
+                        help="The era/year of collision data that the gridpack corresponds to (to be used as subdirectory in the cvmfs path) [default: %s]" % (ERA) )
+    
+    parser.add_argument("-MGversion", "--MGversion", dest="mgversion", default=MGVERSION,
+                        help="The version of MadGraph5 (to be used as subdirectory in the cvmfs path) [default: %s]" % (MGVERSION) )
+
+    args = parser.parse_args()
+
+    Print("Filename ...: %s" % (args.filename) , True)
+    Print("version.....: %s" % (args.version)  , False)
+    Print("era.........: %s" % (args.era)      , False)
+    Print("MGversion...: %s" % (args.mgversion), False)
+    Print("copyToEos...: %s" % (args.copy)     , False)
+    Print("is4FS.......: %s" % (args.is4FS)    , False)
+    Print("Verbose ....: %s" % (args.verbose)  , False)
+    
+    # Sanity check: Input file
+    if not os.path.isfile(args.filename):
+        msg = "File '%s' not found" % (args.filename)
+        raise Exception(es + msg + ns)
+    else:
+        msg = "The input file is %s" % (hs + args.filename + ns)
+        Verbose(msg, True)
+        
+    # Sanity check: Era
+    myEras = ["2016", "2017", "2018", "UL"]
+    if args.era not in myEras:
+        msg = "Unsupported era '%s'" % (args.era)
+        raise Exception(es + msg + ns)
+    else:
+        msg = "The selected era is %s" % (hs + args.era + ns)
+        Verbose(msg, True)
+    
+    # Call the main function
+    main()
